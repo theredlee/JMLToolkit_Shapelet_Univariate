@@ -33,10 +33,12 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.lblGapSizeRatio = aGUIComponents.lblGapSizeRatio;
         this.lblImputation = aGUIComponents.lblImputation;
         this.eigenSeriesInterpolation = aGUIComponents.eigenSeriesInterpolation;
-        this.lblLabelList = aGUIComponents.lblLabelList;
+        this.lblLabel_TS_List = aGUIComponents.lblLabel_TS_List;
+        this.lblLabel_shapelet_List = aGUIComponents.lblLabel_shapelet_List;
         this.lblTimeseries = aGUIComponents.lblTimeseries;
         this.lblShapelet = aGUIComponents.lblShapelet;
         this.lblStackmodel = aGUIComponents.lblStackmodel;
+        this.lblLogo = aGUIComponents.lblLogo;
         /*** initializeJSpinner --**/
         this.spinner = aGUIComponents.spinner;
         /*** initializeJButton --**/
@@ -104,10 +106,15 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         /*** initializeJPanel --**/
         this.centerChartPanel = aGUIComponents.centerChartPanel;
         this.topRightPanel = aGUIComponents.topRightPanel;
-        this.centercenterChartPanel = aGUIComponents.centercenterChartPanel;
+        this.bottomChartPanel = aGUIComponents.bottomChartPanel;
+        this.distanceHistPanel = aGUIComponents.distanceHistPanel;
+        this.weightHistPanel = aGUIComponents.weightHistPanel;
         /*** initializeLayeredPane --**/
         this.layeredPane_CenterChart = aGUIComponents.layeredPane_CenterChart;
         this.layeredPane_TopRightChart = aGUIComponents.layeredPane_TopRightChart;
         this.layeredPane_BottomChart = aGUIComponents.layeredPane_BottomChart;
+        this.layeredPane_distanceHist = aGUIComponents.layeredPane_distanceHist;
+        this.layeredPane_weightHist = aGUIComponents.layeredPane_weightHist;
+        this.layeredPane_logo = aGUIComponents.layeredPane_logo;
     }
 }

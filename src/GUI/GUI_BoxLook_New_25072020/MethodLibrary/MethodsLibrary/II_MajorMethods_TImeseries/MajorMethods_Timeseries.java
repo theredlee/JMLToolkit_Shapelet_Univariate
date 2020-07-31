@@ -477,10 +477,14 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         */
 
         this.aGUIComponents.centerChartPanel.add(this.aVariables.centerChart);
-        this.aGUIComponents.centercenterChartPanel.add(this.aVariables.bottomChart);
+        this.aGUIComponents.bottomChartPanel.add(this.aVariables.bottomChart);
 
+//        this.aVariables.centerChart.setBounds(this.aGUIComponents.centerChartPanel.getBounds().x,
+//                this.aGUIComponents.centerChartPanel.getBounds().y,
+//                this.aGUIComponents.centerChartPanel.getBounds().width,
+//                this.aGUIComponents.centerChartPanel.getBounds().height);
         this.aVariables.centerChart.setSize( this.aGUIComponents.centerChartPanel.getSize() );
-        this.aVariables.bottomChart.setSize( this.aGUIComponents.centercenterChartPanel.getSize() );
+        this.aVariables.bottomChart.setSize( this.aGUIComponents.bottomChartPanel.getSize() );
 
         this.aVariables.centerChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
 //        centerChart.getAxisX().setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/

@@ -14,7 +14,9 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeFont --**/
     public Font myFont, font;
     /*** initializeJLabels --**/
-    public JLabel lblZoomScale, lblHorizontallyMove, lblShapeletsNumSelector, lblMissingRatio, lblGapSizeRatio, lblImputation, eigenSeriesInterpolation, lblLabelList, lblTimeseries, lblShapelet, lblStackmodel;
+    public JLabel lblZoomScale, lblHorizontallyMove, lblShapeletsNumSelector, lblMissingRatio,
+            lblGapSizeRatio, lblImputation, eigenSeriesInterpolation, lblLabel_TS_List,
+            lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblLogo;
     /*** initializeJSpinner --**/
     public JSpinner spinner;
     /*** initializeJButton --**/
@@ -34,8 +36,8 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJScrollPane --**/
     public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelLabelListScrollPane, bspcoverInfoScrollPane;
     /*** initializeJPanel --**/
-    public JPanel centerChartPanel, topRightPanel, centercenterChartPanel;
+    public JPanel centerChartPanel, topRightPanel, bottomChartPanel, distanceHistPanel, weightHistPanel;
     /*** initializeLayeredPane --**/
-    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart;
+    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo;
     /*** -------------------------------------------------------**/
 }
