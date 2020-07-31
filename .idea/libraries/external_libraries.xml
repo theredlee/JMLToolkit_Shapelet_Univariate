@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="external_libraries">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/external_libraries/libsvm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/external_libraries/java-plugin-1.6.0.23.jar!/" />
+      <root url="jar://$PROJECT_DIR$/external_libraries/jxl-2.6.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/external_libraries/weka_3.7.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

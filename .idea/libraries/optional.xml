@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="optional">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/external_libraries/happy-library-1.3/libs/optional/expression4j.jar!/" />
+      <root url="jar://$PROJECT_DIR$/external_libraries/happy-library-1.3/libs/optional/commons-lang-2.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
