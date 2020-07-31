@@ -262,7 +262,7 @@ public class DistanceClassification extends DistanceClassification_abstract {
         infoClassificaationTest("\n" + str);
     }
 
-    public void classificationTest_v3() throws FileNotFoundException, UnsupportedEncodingException {
+    public ArrayList<ArrayList<ArrayList<double[]>>> classificationTest_v3() throws FileNotFoundException, UnsupportedEncodingException {
         //[0]: d0, [1]: d1, [2]: label
 
 //        int TP_0 = 0, FN_0 = 0, FP_0 = 0, TN_0 = 0;
@@ -273,6 +273,14 @@ public class DistanceClassification extends DistanceClassification_abstract {
 
         ArrayList<Double>[] aShapeletDouble = this.aVariables.shapeletDouble;
         ArrayList<Integer> shapelet_Labellist = this.aVariables.shapeletLabelArrayList;
+
+        if(TS_labelList.size()!=shapelet_Labellist.size()){
+            Logger logger
+                    = Logger.getLogger(
+                    DistanceClassification.class.getName());
+            // log messages using log(Level level, String msg)
+            logger.log(Level.WARNING, "Labels error -0: Number of shapelet labels error don't equals to number of time series labels.");
+        }
 
         double distance;
         int labelIndex = 0;
@@ -296,46 +304,43 @@ public class DistanceClassification extends DistanceClassification_abstract {
         System.out.println("shapelet_count_0: " + shapelet_count_0);
         System.out.println("shapelet_count_1: " + shapelet_count_1);
 
-        // Each class of shapelett output a file
-        ArrayList<ArrayList<double[]>> outputArray_0, outputArray_1;
-        outputArray_0 = new ArrayList<>();
-        outputArray_1 = new ArrayList<>();
+        ArrayList<ArrayList<ArrayList<double[]>>> distance_all = new ArrayList<>();
 
-        for(ArrayList<Double> aShapelet: aShapeletDouble){
-            int shapelet_Label = aShapelet.get(labelIndex).intValue();
-            ArrayList<double[]> myArrayList = new ArrayList<>();
-
-            for(double TS_label: TS_labelList){
-                datasetLabeled = aDataSet.FilterByLabel(TS_label);
-                for(DataInstance aInstance: datasetLabeled.instances){
-                    double[] ary = new double[2];
-//                    System.out.println( "TS_Label: " +  "-----------------------------------------> "+ TS_label );
-//                outputArray[2].add(TS_label);
-                    distance = getShortestDistance_unit(aInstance, aShapelet);
-                    ary[0] = distance;
-                    ary[1] = TS_label;
-                    myArrayList.add(ary);
+        for(int numLabels = 0; numLabels<TS_labelList.size(); numLabels++){
+            ArrayList<ArrayList<double[]>> outputArray_ = new ArrayList<>();
+            // Each class of shapelett output a file
+            int shapelet_Label = -1;
+            for(ArrayList<Double> aShapelet: aShapeletDouble){
+                shapelet_Label = aShapelet.get(labelIndex).intValue();
+                ArrayList<double[]> myArrayList = new ArrayList<>();
+                for(double TS_label: TS_labelList){
+                    datasetLabeled = aDataSet.FilterByLabel(TS_label);
+                    int TSnum = 0; // The retrieving makes sense only if all classes follow the same order: label order -> TS default order from this.aVariables.dataSet
+                    for(DataInstance aInstance: datasetLabeled.instances){
+                        int dimensions = 3; // dimensions = 3 [0]: distance, [1]: label, [2]: time series number
+                        double[] ary = new double[dimensions];
+                        distance = getShortestDistance_unit(aInstance, aShapelet);
+                        ary[0] = distance;
+                        ary[1] = TS_label;
+                        ary[2] = TSnum;
+                        myArrayList.add(ary);
+                        TSnum++;
+                    }
                 }
+                outputArray_.add(myArrayList);
             }
-
-            if(shapelet_Label==0){
-                outputArray_0.add(myArrayList);
-//                if(outputArray_0.get(0).get(0)[1]==0.0){
-//                    System.out.println("Tell me!");
-//                }
-            }else if(shapelet_Label==1){
-                outputArray_1.add(myArrayList);
-            }else{
+            if(shapelet_Label==-1){
                 Logger logger
                         = Logger.getLogger(
                         DistanceClassification.class.getName());
                 // log messages using log(Level level, String msg)
-                logger.log(Level.WARNING, "Number of shapelet labels error I. ");
+                logger.log(Level.WARNING, "Shapelet labels has not been initialized. Error I. ");
+            }else{
+                distance_all.set(shapelet_Label, outputArray_);
             }
         }
 
-        outputFile_v2(outputArray_0, "outputArray_0") ;
-        outputFile_v2(outputArray_1, "outputArray_1");
+        return distance_all;
     }
 
     public double getShortestDistance_unit(DataInstance aInstance, ArrayList<Double> currentShapelet){ /*** Every plot after loading shapelet should calculate the distance between shapelet and TS **/
