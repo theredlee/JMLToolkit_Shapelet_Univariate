@@ -22,7 +22,7 @@ public class GUIComponents extends GUIComponents_abstract {
     public void info(String str){
         Logger logger
                 = Logger.getLogger(
-                GUIComponents.class.getName());
+                GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents.class.getName());
 
         logger.info(" ----- msg: " + str + " is activated. ");
     }
@@ -794,12 +794,12 @@ public class GUIComponents extends GUIComponents_abstract {
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_logo);
         layeredPane_logo.add(lblLogo, Integer.valueOf(0));
-        }
+    }
 
     /*** main --------------------------------------------**/
     public static void main( String [] args )
     {
-        GUIComponents winGUIComponents = new GUIComponents();
+        GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents winGUIComponents = new GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents();
         winGUIComponents.frmTimeSeries.setVisible(true);
 
     }

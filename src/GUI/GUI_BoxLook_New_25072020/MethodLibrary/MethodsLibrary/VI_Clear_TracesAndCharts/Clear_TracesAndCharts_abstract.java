@@ -20,10 +20,10 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
     }
 
     public void initializePartners(ComponentsAddListners aComponentsAddListners, MajorMethods_Timeseries aMajorMethods_Timeseries,
-                                 MajorMethods_Shapelet aMajorMethods_Shapelet, SetInfo_Charts aSetInfo_Charts,
-                                 SetScaleAndPosition_AllCharts aSetScaleAndPosition_AllCharts,
-                                 Clear_TracesAndCharts aClear_TracesAndCharts,
-                                 SortData aSortData){
+                                   MajorMethods_Shapelet aMajorMethods_Shapelet, SetInfo_Charts aSetInfo_Charts,
+                                   SetScaleAndPosition_AllCharts aSetScaleAndPosition_AllCharts,
+                                   Clear_TracesAndCharts aClear_TracesAndCharts,
+                                   SortData aSortData){
         /*** No self **/
         /*** No reference no need to assign as well **/
 //        this.aComponentsAddListners = aComponentsAddListners;

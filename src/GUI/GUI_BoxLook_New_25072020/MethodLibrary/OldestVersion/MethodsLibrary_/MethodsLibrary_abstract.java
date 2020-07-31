@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public abstract class MethodsLibrary_abstract {
     JFrame frmTimeSeries;
     JPanel centerChartPanel;
-    JPanel centercenterChartPanel;
+    JPanel bottomChartPanel;
     JPanel topRightPanel;
     JLayeredPane frmTimeSeriesLayerFirst;
     JList timeSeriesList;

@@ -16,7 +16,7 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.shapeletLabelArrayList = aVariables.shapeletLabelArrayList;
         this.shapeletLabelCountArrayList = aVariables.shapeletLabelCountArrayList;
         this.TS_labelArryList = aVariables.TS_labelArryList;
-        this.TS_shapeletLabelCountArrayList = aVariables.TS_shapeletLabelCountArrayList;
+        this.shapelet_LabelCountArrayList = aVariables.shapelet_LabelCountArrayList;
         this.centerChart = aVariables.centerChart;
         this.topRightChart = aVariables.topRightChart;
         this.bottomChart = aVariables.bottomChart;

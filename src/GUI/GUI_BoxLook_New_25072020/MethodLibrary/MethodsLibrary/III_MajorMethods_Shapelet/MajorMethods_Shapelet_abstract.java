@@ -1,6 +1,7 @@
 package GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.III_MajorMethods_Shapelet;
 
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
+import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.DistanceClassification;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.II_MajorMethods_TImeseries.MajorMethods_Timeseries;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.I_ComponentsAddListners.ComponentsAddListners;
@@ -19,13 +20,14 @@ public abstract class MajorMethods_Shapelet_abstract extends MajorMethods_Shapel
         this.aVariables = aVariables;
     }
 
-    public void initializePartners(ComponentsAddListners aComponentsAddListners, MajorMethods_Timeseries aMajorMethods_Timeseries,
-                                 MajorMethods_Shapelet aMajorMethods_Shapelet, SetInfo_Charts aSetInfo_Charts,
-                                 SetScaleAndPosition_AllCharts aSetScaleAndPosition_AllCharts,
-                                 Clear_TracesAndCharts aClear_TracesAndCharts,
-                                 SortData aSortData){
+    public void initializePartners(DistanceClassification aDistanceClassification, ComponentsAddListners aComponentsAddListners, MajorMethods_Timeseries aMajorMethods_Timeseries,
+                                   MajorMethods_Shapelet aMajorMethods_Shapelet, SetInfo_Charts aSetInfo_Charts,
+                                   SetScaleAndPosition_AllCharts aSetScaleAndPosition_AllCharts,
+                                   Clear_TracesAndCharts aClear_TracesAndCharts,
+                                   SortData aSortData){
         /*** No self **/
         /*** No reference no need to assign as well **/
+        this.aDistanceClassification = aDistanceClassification;
 //        this.aComponentsAddListners = aComponentsAddListners;
         this.aMajorMethods_Timeseries = aMajorMethods_Timeseries;
 //        this.aMajorMethods_Shapelet = aMajorMethods_Shapelet;
@@ -46,5 +48,9 @@ public abstract class MajorMethods_Shapelet_abstract extends MajorMethods_Shapel
     protected void selectShapletPlotModel_centerChart(){
         this.aClear_TracesAndCharts.removeAllTraces_centerChart();
         this.aClear_TracesAndCharts.addTraceBack_pointsKept_centerChart();
+    };
+
+    protected void infoClassificaationTest(String str){
+        this.aSetInfo_Charts.infoClassificaationTest(str);
     };
 }

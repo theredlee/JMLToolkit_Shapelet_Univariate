@@ -1,6 +1,7 @@
 package GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.III_MajorMethods_Shapelet;
 
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
+import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.DistanceClassification;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.II_MajorMethods_TImeseries.MajorMethods_Timeseries;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.I_ComponentsAddListners.ComponentsAddListners;
@@ -15,6 +16,7 @@ public abstract class MajorMethods_Shapelet_declare_abstract {
     protected Variables aVariables;
 
     /*** No self **/
+    protected DistanceClassification aDistanceClassification;
     protected ComponentsAddListners aComponentsAddListners;
     protected MajorMethods_Timeseries aMajorMethods_Timeseries;
 //    protected MajorMethods_Shapelet aMajorMethods_Shapelet;

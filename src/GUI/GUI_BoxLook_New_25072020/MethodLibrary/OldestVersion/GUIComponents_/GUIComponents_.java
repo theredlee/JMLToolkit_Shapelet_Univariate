@@ -681,12 +681,12 @@ public class GUIComponents_ extends GUIComponents_abstract {
 
 
         /***  -------------------------------- * */
-        centercenterChartPanel = new JPanel();
-        centercenterChartPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED,
+        bottomChartPanel = new JPanel();
+        bottomChartPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED,
                 null, null, null, null),
                 "Timeseries only", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        centercenterChartPanel.setBounds(0, 0, 905, 188); /*** 171, 380, 905, 171 ***/
+        bottomChartPanel.setBounds(0, 0, 905, 188); /*** 171, 380, 905, 171 ***/
     }
 
 
@@ -720,7 +720,7 @@ public class GUIComponents_ extends GUIComponents_abstract {
         layeredPane_BottomChart.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_BottomChart);
-        layeredPane_BottomChart.add(centercenterChartPanel, Integer.valueOf(0));
+        layeredPane_BottomChart.add(bottomChartPanel, Integer.valueOf(0));
     }
 
     /*** main --------------------------------------------**/

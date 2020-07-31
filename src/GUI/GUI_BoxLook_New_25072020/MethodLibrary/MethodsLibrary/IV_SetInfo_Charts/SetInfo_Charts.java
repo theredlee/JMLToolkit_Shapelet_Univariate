@@ -57,4 +57,8 @@ public class SetInfo_Charts extends SetInfo_Charts_abstract {
             logger.log(Level.WARNING, e.toString());
         }
     }
+
+    public void infoClassificaationTest(String str){
+        this.aGUIComponents.bspcoverInfoTextArea.setText("Classification test: " + str);
+    }
 }

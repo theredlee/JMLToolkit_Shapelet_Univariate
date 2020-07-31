@@ -120,6 +120,21 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         initializeShapletContainer();
         classfyShapeletLabels();
         setShapeletLabelJList();
+
+        /*** Classification test **/
+//        while(true){
+//            if(!(this.aVariables.dataSet==null || this.aVariables.shapeletDouble==null
+//                    || this.aVariables.TS_labelArryList==null || this.aVariables.shapeletLabelArrayList==null)){
+//                break;
+//            }
+//        };
+//        infoClassificaationTest("\nClassification test is on process ... ");
+//        try {
+//            this.aDistanceClassification.classificationTest();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+
     }
     /*---------------------------------------------------------------
     **                  classfyShapeletLabels()                     **
@@ -431,31 +446,31 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     public double getShortestDistance(){ /*** Every plot after loading shapelet should calculate the distance between shapelet and TS **/
         int startPosition = 0;
         double distanceBetweenST = 0;
-        double distanceTmp = Double.MAX_VALUE;;
+        double distanceMin = Double.MAX_VALUE;;
         for(int i=0; i<(this.aVariables.TSDataInstance.features.size()-(this.aVariables.currentShapelet.size()-1)); i++ ){ // Discard first label
             // index in indexthis.aVariables.currentShapelet
             distanceBetweenST = 0;
-            for(int j=1; j< this.aVariables.currentShapelet.size(); j++){ // j=1 -> discard first label
+            for(int j=1; j<this.aVariables.currentShapelet.size(); j++){ // j=1 -> discard first label
                 // index in indexthis.aVariables.currentShapelet
                 distanceBetweenST += Math.pow(this.aVariables.TSDataInstance.features.get(j+i).value - this.aVariables.currentShapelet.get(j), 2.0);
             }
             distanceBetweenST = Math.sqrt(distanceBetweenST);
             //System.out.println("distanceBetweenST "+distanceBetweenST);
-            if(distanceBetweenST < distanceTmp){
-                distanceTmp = distanceBetweenST;
+            if(distanceBetweenST < distanceMin){
+                distanceMin = distanceBetweenST;
                 startPosition = i; /*** Interesting **/
             }
         }
 //        System.out.println("From drawShapeletTrace_centerChart() -> startPoint: " + startPosition);
         this.aVariables.globalStartPosition = startPosition;
 
-        return distanceBetweenST;
+        return distanceMin/((this.aVariables.currentShapelet.size()-1)*1.0);
     }
 
-    public double getShortestDistance(ArrayList<Double> currentShapelet){ /*** Every plot after loading shapelet should calculate the distance between shapelet and TS **/
+    public void getShortestDistance(ArrayList<Double> currentShapelet){ /*** Every plot after loading shapelet should calculate the distance between shapelet and TS **/
         int startPosition = 0;
         double distanceBetweenST = 0;
-        double distanceTmp = Double.MAX_VALUE;;
+        double distanceMin = Double.MAX_VALUE;;
         for(int i=0; i<(this.aVariables.TSDataInstance.features.size()-(currentShapelet.size()-1)); i++ ){
             distanceBetweenST = 0;
             for(int j=0; j< currentShapelet.size(); j++){
@@ -463,15 +478,13 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             }
             distanceBetweenST = Math.sqrt(distanceBetweenST);
             //System.out.println("distanceBetweenST "+distanceBetweenST);
-            if(distanceBetweenST < distanceTmp){
-                distanceTmp = distanceBetweenST;
+            if(distanceBetweenST < distanceMin){
+                distanceMin = distanceBetweenST;
                 startPosition = i; /*** Interesting **/
             }
         }
 //        System.out.println("From drawShapeletTrace_centerChart() -> startPoint: " + startPosition);
         this.aVariables.globalStartPosition = startPosition;
-
-        return distanceBetweenST;
     }
 
     /*---------------------------------------------------------------

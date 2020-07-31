@@ -140,21 +140,21 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         try{
             /*** Load Label ***/
             ArrayList<Integer> TS_labelArryList = new ArrayList<> ();
-            ArrayList<Integer> TS_shapeletLabelCountArrayList = new ArrayList<> ();
+            ArrayList<Integer> shapelet_LabelCountArrayList = new ArrayList<> ();
 
             for(Double d : this.aVariables.dataSet.GetnominalLabels()){
                 TS_labelArryList.add(d.intValue());
             }
 
             for(Integer label: TS_labelArryList){
-                TS_shapeletLabelCountArrayList.add(this.aVariables.dataSet.FilterByLabel(label).instances.size());
+                shapelet_LabelCountArrayList.add(this.aVariables.dataSet.FilterByLabel(label).instances.size());
             }
 
             System.out.println("TS_labelArryList: " + TS_labelArryList);
-            System.out.println("TS_shapeletLabelCountArrayList: " + TS_shapeletLabelCountArrayList);
+            System.out.println("shapelet_LabelCountArrayList: " + shapelet_LabelCountArrayList);
 
             this.aVariables.TS_labelArryList = TS_labelArryList;
-            this.aVariables.TS_shapeletLabelCountArrayList = TS_shapeletLabelCountArrayList;
+            this.aVariables.shapelet_LabelCountArrayList = shapelet_LabelCountArrayList;
         }catch(Exception exc)
         {
             exc.printStackTrace();
@@ -479,10 +479,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aGUIComponents.centerChartPanel.add(this.aVariables.centerChart);
         this.aGUIComponents.bottomChartPanel.add(this.aVariables.bottomChart);
 
-//        this.aVariables.centerChart.setBounds(this.aGUIComponents.centerChartPanel.getBounds().x,
-//                this.aGUIComponents.centerChartPanel.getBounds().y,
-//                this.aGUIComponents.centerChartPanel.getBounds().width,
-//                this.aGUIComponents.centerChartPanel.getBounds().height);
         this.aVariables.centerChart.setSize( this.aGUIComponents.centerChartPanel.getSize() );
         this.aVariables.bottomChart.setSize( this.aGUIComponents.bottomChartPanel.getSize() );
 

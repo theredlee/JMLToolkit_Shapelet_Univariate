@@ -100,7 +100,7 @@ public class MethodsLibrary_ extends MethodsLibrary_abstract {
         alphabetSizeTextField = myGUIComponents.alphabetSizeTextField;
         pcoverTextField = myGUIComponents.pcoverTextField;
         centerChartPanel = myGUIComponents.centerChartPanel;
-        centercenterChartPanel = myGUIComponents.centercenterChartPanel;
+        bottomChartPanel = myGUIComponents.bottomChartPanel;
         labelTextField = myGUIComponents.labelTextField;
         imputeCheckBox = myGUIComponents.imputeCheckBox;
         shapeletJList = myGUIComponents.shapeletJList;
@@ -714,10 +714,10 @@ public class MethodsLibrary_ extends MethodsLibrary_abstract {
         */
 
         centerChartPanel.add(centerChart);
-        centercenterChartPanel.add(bottomChart);
+        bottomChartPanel.add(bottomChart);
 
         centerChart.setSize( centerChartPanel.getSize() );
-        bottomChart.setSize( centercenterChartPanel.getSize() );
+        bottomChart.setSize( bottomChartPanel.getSize() );
 
         centerChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
 //        centerChart.getAxisX().setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/

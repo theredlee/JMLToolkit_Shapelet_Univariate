@@ -1,6 +1,7 @@
 package GUI.GUI_BoxLook_New_25072020.Controller.II_MethodsController;
 
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
+import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.DistanceClassification;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.III_MajorMethods_Shapelet.MajorMethods_Shapelet;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.II_MajorMethods_TImeseries.MajorMethods_Timeseries;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
@@ -22,13 +23,18 @@ public abstract class MethodsController_abstract extends MethodsController_decla
         this.aClear_TracesAndCharts = new Clear_TracesAndCharts(aGUIComponents, aVariables);
         this.aSortData = new SortData(aGUIComponents, aVariables);
 
+        this.aDistanceClassification = new DistanceClassification(aGUIComponents, aVariables);
+        this.aDistanceClassification.initializePartners(this.aComponentsAddListners, this.aMajorMethods_Timeseries, this.aMajorMethods_Shapelet,
+                this.aSetInfo_Charts, this.aSetScaleAndPosition_AllCharts, this.aClear_TracesAndCharts,
+                this.aSortData);
+
         this.aComponentsAddListners.initializePartners(this.aComponentsAddListners, this.aMajorMethods_Timeseries, this.aMajorMethods_Shapelet,
                 this.aSetInfo_Charts, this.aSetScaleAndPosition_AllCharts, this.aClear_TracesAndCharts,
                 this.aSortData);
         this.aMajorMethods_Timeseries.initializePartners(this.aComponentsAddListners, this.aMajorMethods_Timeseries, this.aMajorMethods_Shapelet,
                 this.aSetInfo_Charts, this.aSetScaleAndPosition_AllCharts, this.aClear_TracesAndCharts,
                 this.aSortData);
-        this.aMajorMethods_Shapelet.initializePartners(this.aComponentsAddListners, this.aMajorMethods_Timeseries, this.aMajorMethods_Shapelet,
+        this.aMajorMethods_Shapelet.initializePartners(this.aDistanceClassification, this.aComponentsAddListners, this.aMajorMethods_Timeseries, this.aMajorMethods_Shapelet,
                 this.aSetInfo_Charts, this.aSetScaleAndPosition_AllCharts, this.aClear_TracesAndCharts,
                 this.aSortData);
         this.aSetInfo_Charts.initializePartners(this.aComponentsAddListners, this.aMajorMethods_Timeseries, this.aMajorMethods_Shapelet,

@@ -22,7 +22,7 @@ public abstract class Variables_declare_abstract {
     public ArrayList<Double>[] shapeletDouble, shapeletsWithCurrentLabel;
     public ArrayList<Double> currentShapelet;
     public ArrayList<Integer> shapeletLabelArrayList, shapeletLabelCountArrayList;
-    public ArrayList<Integer> TS_labelArryList, TS_shapeletLabelCountArrayList;
+    public ArrayList<Integer> TS_labelArryList, shapelet_LabelCountArrayList;
     /*** Charts **/
     public Chart2D centerChart, topRightChart, bottomChart;
     /*** TS --- **/
