@@ -26,20 +26,20 @@ public class SortData extends SortData_abstract {
      ---------------------------------------------------------------*/
     public void sortedByLength(){
         /*** Default sorted ASC***/
-        ArrayList<Double>[] shapeletDoubleTemp = this.aVariables.shapeletDouble;
+        ArrayList<Double>[] shapeletDoubleTemp = this.aVariables.SPLet_double;
 
-        int[] myArray = new int[this.aVariables.shapeletDouble.length];
+        int[] myArray = new int[this.aVariables.SPLet_double.length];
 
-        for(int i=0; i < this.aVariables.shapeletDouble.length; i++){
+        for(int i = 0; i < this.aVariables.SPLet_double.length; i++){
 //            System.out.println("shapelet [" + i + "] length: "+ shapeletDouble[i].size());
-            myArray[i] = this.aVariables.shapeletDouble[i].size(); /*** Each shapelet length (size) to myArray ***/
+            myArray[i] = this.aVariables.SPLet_double[i].size(); /*** Each shapelet length (size) to myArray ***/
         }
 
         /*** Binary Insertion Sort ***/
         for (int i = 1; i < myArray.length; i++)
         {
             int x = myArray[i];
-            ArrayList<Double> x_shapelet = this.aVariables.shapeletDouble[i];
+            ArrayList<Double> x_shapelet = this.aVariables.SPLet_double[i];
 
             // Find location to insert using binary search
             int j = Math.abs(Arrays.binarySearch(myArray, 0, i, x) + 1);
@@ -58,10 +58,10 @@ public class SortData extends SortData_abstract {
 
 //        System.out.println("shapelet length: "+currentShapelet.size());
 
-        this.aVariables.shapeletDouble = shapeletDoubleTemp;
+        this.aVariables.SPLet_double = shapeletDoubleTemp;
 
-        for(int i=0; i<this.aVariables.shapeletDouble.length; i++) {
-            System.out.println("shapeletDouble[" + i + "] length: " + this.aVariables.shapeletDouble[i].size());
+        for(int i = 0; i<this.aVariables.SPLet_double.length; i++) {
+            System.out.println("shapeletDouble[" + i + "] length: " + this.aVariables.SPLet_double[i].size());
         }
     }
 
@@ -73,7 +73,7 @@ public class SortData extends SortData_abstract {
     public void sortedASC(){
 
         DefaultListModel shapeletJListModelASC = new DefaultListModel();
-        for(int i = 0; i < this.aVariables.shapeletDouble.length; i++)
+        for(int i = 0; i < this.aVariables.SPLet_double.length; i++)
         {
             shapeletJListModelASC.addElement(String.valueOf(i));
         }
@@ -90,7 +90,7 @@ public class SortData extends SortData_abstract {
     public void sortedDESC(){
 
         DefaultListModel shapeletJListModelDESC = new DefaultListModel();
-        for(int i = this.aVariables.shapeletDouble.length - 1; i >= 0; i--)
+        for(int i = this.aVariables.SPLet_double.length - 1; i >= 0; i--)
         {
             shapeletJListModelDESC.addElement(String.valueOf(i));
         }

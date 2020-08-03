@@ -154,7 +154,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             System.out.println("shapelet_LabelCountArrayList: " + shapelet_LabelCountArrayList);
 
             this.aVariables.TS_labelArryList = TS_labelArryList;
-            this.aVariables.shapelet_LabelCountArrayList = shapelet_LabelCountArrayList;
+            this.aVariables.SPLet_labelCountArrayList = shapelet_LabelCountArrayList;
         }catch(Exception exc)
         {
             exc.printStackTrace();
@@ -202,9 +202,9 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 this.aGUIComponents.timeSeriesRangeMinTextField.setText("0");
             }else{ /*** Else ... **/
                 startPoint = Integer.parseInt(this.aGUIComponents.timeSeriesRangeMinTextField.getText());
-                this.aVariables.lastTSListIndex = this.aGUIComponents.TS_List.getSelectedIndex();
+                this.aVariables.lastTSIndex = this.aGUIComponents.TS_List.getSelectedIndex();
             }
-            System.out.println("lastTimeseriesListIndex: " + this.aVariables.lastTSListIndex);
+            System.out.println("lastTimeseriesListIndex: " + this.aVariables.lastTSIndex);
 
             int timeSeriesListLen = this.aVariables.dataset_withCurrentLabel.instances.size(); /*** After reassign the values, get the size **/
             endPoint = timeSeriesListLen;
@@ -234,7 +234,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             /*** This setting will invoke the value change of timeseries list twice **/
             if(this.aGUIComponents.TS_List.getModel().getSize() > 0)
             {
-                this.aGUIComponents.TS_List.setSelectedIndex(this.aVariables.lastTSListIndex); /** default index: 0 **/
+                this.aGUIComponents.TS_List.setSelectedIndex(this.aVariables.lastTSIndex); /** default index: 0 **/
             }
         }catch(Exception exc)
         {
@@ -271,7 +271,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             this.aGUIComponents.labelTextField.setVisible(true);
             this.aGUIComponents.labelTextField.setText("Label class: " + ((int) this.aVariables.TSDataInstance.target));
 
-            if(this.aVariables.loadShapeletYesOrNo){
+            if(this.aVariables.load_SPLet_YesOrNo){
 //                drawShapeletTrace_CenterChart();
 //                shapelet_dotANDLine_plot();
                 /*** stackModel **/
@@ -632,7 +632,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             /*** 1. Draw shapelet first, -> It will clear all the traces on center chart and add TS trace back
              * (Because of the temp shapelet traces) **/
-            if(this.aVariables.loadShapeletYesOrNo){
+            if(this.aVariables.load_SPLet_YesOrNo){
                 /*** Normal model **/
                 /*** Why we call this? Because every time the distance between shapelet and TS is different! **/
                 shapelet_dotANDLine_plot();
@@ -831,12 +831,12 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
-                if(this.aVariables.firstTSDrawing && this.aVariables.loadShapeletYesOrNo){
+                if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
                     /*** -> **/
                     System.out.println("Ever invoked");
                     this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
 
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
                     System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
@@ -902,14 +902,14 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
 //                System.out.println("drawTSTrace_horizontally_BottomChart() -> this.aVariables.firstTSDrawing: " + this.aVariables.firstTSDrawing);
-                if(this.aVariables.firstTSDrawing && this.aVariables.loadShapeletYesOrNo){
+                if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
                     /***** Update to the latest shapelet ***/
                     System.out.println("Ever invoked");
                     this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
                     /*** -> **/
 
                     /*** **/
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
                     System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
@@ -1212,7 +1212,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
-                if(this.aVariables.firstTSDrawing_linePlot && this.aVariables.loadShapeletYesOrNo){
+                if(this.aVariables.firstTSDrawing_linePlot && this.aVariables.load_SPLet_YesOrNo){
                     /*** -> **/
                     
 //                    System.out.println("Ever invoked");

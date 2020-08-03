@@ -11,7 +11,7 @@ public class Variables extends Variables_abstract {
 
     public void initializeVariables(){
         this.initializeTS = true;
-        this.loadShapeletYesOrNo = false;
+        this.load_SPLet_YesOrNo = false;
         this.initialize_TS_list = true;
         this.setting_TS_listModal = false;
         this.firstTSDrawing = true;
@@ -21,7 +21,7 @@ public class Variables extends Variables_abstract {
         this.globalStartPosition = 0;
         this.globalBestMatchSP = 0;
         this.globalBestMatchEP = 0;
-        this.lastTSListIndex = 0; // Default value = 0
+        this.lastTSIndex = 0; // Default value = 0
         this.bottomTSTraceCount = 0; // Default value = 0
         this.root = System.getProperty("user.dir");
     }

@@ -33,7 +33,7 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
         interpolatedTSMark_centerChart.removeAllPoints();
         */
         if(getLoadShapeletYesOrNo()){
-            this.aVariables.shapeletTrace_centerChart.removeAllPoints();
+            this.aVariables.SPLet_trace_centerChart.removeAllPoints();
         }
 
         /*** No need to clear the points on shapeletTrace_topRightChart **/
