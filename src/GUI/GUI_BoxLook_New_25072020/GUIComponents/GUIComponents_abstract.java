@@ -103,12 +103,14 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.shapeLetScrollPane = aGUIComponents.shapeLetScrollPane;
         this.labelLabelListScrollPane = aGUIComponents.labelLabelListScrollPane;
         this.bspcoverInfoScrollPane = aGUIComponents.bspcoverInfoScrollPane;
+        this.multiChartsScrollPane = aGUIComponents.multiChartsScrollPane;
         /*** initializeJPanel --**/
         this.centerChartPanel = aGUIComponents.centerChartPanel;
         this.topRightPanel = aGUIComponents.topRightPanel;
         this.bottomChartPanel = aGUIComponents.bottomChartPanel;
         this.distanceHistPanel = aGUIComponents.distanceHistPanel;
         this.weightHistPanel = aGUIComponents.weightHistPanel;
+        this.multiJpanelsPanel = aGUIComponents.multiJpanelsPanel;
         /*** initializeLayeredPane --**/
         this.layeredPane_CenterChart = aGUIComponents.layeredPane_CenterChart;
         this.layeredPane_TopRightChart = aGUIComponents.layeredPane_TopRightChart;

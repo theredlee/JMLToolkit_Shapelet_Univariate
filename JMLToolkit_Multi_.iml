@@ -11,5 +11,6 @@
     <orderEntry type="library" name="jar_files" level="project" />
     <orderEntry type="library" name="external_libraries" level="project" />
     <orderEntry type="library" name="org.happy.library-1.3" level="project" />
+    <orderEntry type="library" name="miglayout-4.0-swing" level="project" />
   </component>
 </module>

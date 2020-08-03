@@ -1,5 +1,10 @@
 package GUI.GUI_BoxLook_New_25072020.GUIComponents;
 
+import info.monitorenter.gui.chart.Chart2D;
+import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
+import info.monitorenter.util.Range;
+import net.miginfocom.swing.MigLayout;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -44,8 +49,8 @@ public class GUIComponents extends GUIComponents_abstract {
         initializeJTextArea();
         initializeJCheckBox();
         initializeJList();
-        initializeJScrollPane();
         initializeJPanel();
+        initializeJScrollPane();
         initializeLayeredPaneForChart();
 
     }
@@ -57,11 +62,11 @@ public class GUIComponents extends GUIComponents_abstract {
     /*** initializeMeasurements --------------------------------------------**/
     private void initializeMeasurements() {
         /***  -------------------------------- **/
-        deskTopX = 200;
+        deskTopX = 50;
         deskTopY = 30;
         frameX = 0;
         frameY = 0;
-        frameWidth = 1110;
+        frameWidth = 1110+250;
         frameHeight = 820;
         frameCentroidX = (frameX + frameWidth)/2;
         frameCentroidY = (frameY + frameHeight)/2;
@@ -127,14 +132,14 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         lblZoomScale = new JLabel("Zoom Scale:");
         lblZoomScale.setFont(myFont);
-        lblZoomScale.setBounds(596-400, 440, 100, 25);    /***209, 16, 101, 15 ***/
+        lblZoomScale.setBounds(596-430, 440, 100, 25);    /***209, 16, 101, 15 ***/
         frmTimeSeriesLayerFirst.add(lblZoomScale);
 
 
         /***  -------------------------------- **/
         lblHorizontallyMove = new JLabel("Horizontal Shift / Zoom:");
         lblHorizontallyMove.setFont(myFont);
-        lblHorizontallyMove.setBounds(762-400, 440, 200, 25);    /***209, 16, 101, 15 ***/
+        lblHorizontallyMove.setBounds(762-450, 440, 200, 25);    /***209, 16, 101, 15 ***/
         frmTimeSeriesLayerFirst.add(lblHorizontallyMove);
 
 
@@ -227,7 +232,7 @@ public class GUIComponents extends GUIComponents_abstract {
     private void initializeJSpinner(){
         /***  -------------------------------- **/
         spinner = new JSpinner(new SpinnerNumberModel(1.0, 0.5, 2.5, .1));
-        spinner.setBounds(682-400, 440, 50, 25);
+        spinner.setBounds(682-430, 440, 50, 25);
         spinner.setPreferredSize(new Dimension(45, spinner.getPreferredSize().height));
         frmTimeSeriesLayerFirst.add(spinner);
     }
@@ -238,7 +243,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         btnZoomIn = new JButton("Zoom In");
         btnZoomIn.setFont(myFont);
-        btnZoomIn.setBounds(frameCentroidX + 400-400,  frameCentroidY + 25, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+        btnZoomIn.setBounds(frameCentroidX + 400-520,  frameCentroidY + 25, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
         btnZoomIn.setBackground(Color.WHITE);
         frmTimeSeriesLayerFirst.add(btnZoomIn);
 
@@ -246,7 +251,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         btnZoomOut = new JButton("Zoom Out");
         btnZoomOut.setFont(myFont);
-        btnZoomOut.setBounds(frameCentroidX + 400-400, frameCentroidY + 65, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+        btnZoomOut.setBounds(frameCentroidX + 400-520, frameCentroidY + 65, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
         btnZoomOut.setBackground(Color.WHITE);
         frmTimeSeriesLayerFirst.add(btnZoomOut);
 
@@ -254,7 +259,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         btnMoveLeft = new JButton("Left");
         btnMoveLeft.setFont(myFont);
-        btnMoveLeft.setBounds((frameCentroidX + 400 - 20-400),  frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 460, 485, 50, 25 **/
+        btnMoveLeft.setBounds((frameCentroidX + 400 - 20-520),  frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 460, 485, 50, 25 **/
         btnMoveLeft.setBackground(Color.WHITE);
         frmTimeSeriesLayerFirst.add(btnMoveLeft);
 
@@ -262,7 +267,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         btnMoveRight = new JButton("Right");
         btnMoveRight.setFont(myFont);
-        btnMoveRight.setBounds(frameCentroidX + 445-400, frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 500, 485, 50, 25 **/
+        btnMoveRight.setBounds(frameCentroidX + 445-520, frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 500, 485, 50, 25 **/
         btnMoveRight.setBackground(Color.WHITE);
         frmTimeSeriesLayerFirst.add(btnMoveRight);
 
@@ -655,44 +660,6 @@ public class GUIComponents extends GUIComponents_abstract {
     }
 
 
-    /*** initializeJScrollPane --------------------------------------------**/
-    private void initializeJScrollPane(){
-        /***  -------------------------------- **/
-        TS_labelScrollPane = new JScrollPane(TS_labelList_Horizontal);
-        TS_labelScrollPane.setBounds( TS_labelList_Horizontal.getBounds() );
-        frmTimeSeriesLayerFirst.add(TS_labelScrollPane);
-
-
-        /***  -------------------------------- **/
-//        labelScrollPane = new JScrollPane(labelList);
-//        labelScrollPane.setBounds( labelList.getBounds() );
-//        frmTimeSeriesLayerFirst.add(labelScrollPane);
-
-
-        /***  -------------------------------- **/
-        timeSeriesScrollPane = new JScrollPane(TS_List);
-        timeSeriesScrollPane.setBounds( TS_List.getBounds() );
-        frmTimeSeriesLayerFirst.add(timeSeriesScrollPane);
-
-
-        /***  -------------------------------- **/
-        shapeLetScrollPane = new JScrollPane(shapeletJList);
-        shapeLetScrollPane.setBounds(shapeletJList.getBounds());
-        frmTimeSeriesLayerFirst.add(shapeLetScrollPane);
-
-        /***  -------------------------------- **/
-        labelLabelListScrollPane = new JScrollPane(shapeletLabelJList);
-        labelLabelListScrollPane.setBounds(shapeletLabelJList.getBounds());
-        frmTimeSeriesLayerFirst.add(labelLabelListScrollPane);
-
-
-        /***  -------------------------------- **/
-        bspcoverInfoScrollPane = new JScrollPane(bspcoverInfoTextArea);
-        bspcoverInfoScrollPane.setBounds(bspcoverInfoTextArea.getBounds());
-        frmTimeSeriesLayerFirst.add(bspcoverInfoScrollPane);
-    }
-
-
     /*** initializeJPanel --------------------------------------------**/
     private void initializeJPanel(){
         /***  -------------------------------- **/
@@ -701,6 +668,7 @@ public class GUIComponents extends GUIComponents_abstract {
                 "Time series & shapelets", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
         centerChartPanel.setBounds(0, 0, 905-400, 250); /*** 171, 119, 905, 211 ***/
+//        centerChartPanel.setBounds(0, 0, (905-400)/2, (250)/2); /*** 171, 119, 905, 211 ***/
 
 
         /***  -------------------------------- **/
@@ -725,14 +693,66 @@ public class GUIComponents extends GUIComponents_abstract {
         distanceHistPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null),
                 "Distance histogram", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        distanceHistPanel.setBounds(0, 0, 905-500, 350); /*** 171, 119, 905, 211 ***/
+        distanceHistPanel.setBounds(0, 0, 905-520, 350); /*** 171, 119, 905, 211 ***/
 
         /***  -------------------------------- **/
         weightHistPanel = new JPanel();
         weightHistPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null),
                 "Weight histogram", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        weightHistPanel.setBounds(0, 0, 905-500, 350); /*** 171, 119, 905, 211 ***/
+        weightHistPanel.setBounds(0, 0, 905-520, 350); /*** 171, 119, 905, 211 ***/
+
+        /***  -------------------------------- **/
+        multiJpanelsPanel = new JPanel();
+//        multiJpanelsPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null),
+//                "Multi-charts", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
+
+        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]5[]", "[]10[]"));
+    }
+
+
+    /*** initializeJScrollPane --------------------------------------------**/
+    private void initializeJScrollPane(){
+        /***  -------------------------------- **/
+        TS_labelScrollPane = new JScrollPane(TS_labelList_Horizontal);
+        TS_labelScrollPane.setBounds( TS_labelList_Horizontal.getBounds() );
+        frmTimeSeriesLayerFirst.add(TS_labelScrollPane);
+
+
+        /***  -------------------------------- **/
+        timeSeriesScrollPane = new JScrollPane(TS_List);
+        timeSeriesScrollPane.setBounds( TS_List.getBounds() );
+        frmTimeSeriesLayerFirst.add(timeSeriesScrollPane);
+
+
+        /***  -------------------------------- **/
+        shapeLetScrollPane = new JScrollPane(shapeletJList);
+        shapeLetScrollPane.setBounds(shapeletJList.getBounds());
+        frmTimeSeriesLayerFirst.add(shapeLetScrollPane);
+
+        /***  -------------------------------- **/
+        labelLabelListScrollPane = new JScrollPane(shapeletLabelJList);
+        labelLabelListScrollPane.setBounds(shapeletLabelJList.getBounds());
+        frmTimeSeriesLayerFirst.add(labelLabelListScrollPane);
+
+
+        /***  -------------------------------- **/
+        bspcoverInfoScrollPane = new JScrollPane(bspcoverInfoTextArea);
+        bspcoverInfoScrollPane.setBounds(bspcoverInfoTextArea.getBounds());
+        frmTimeSeriesLayerFirst.add(bspcoverInfoScrollPane);
+
+
+        /***  -------------------------------- **/
+        multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
+        multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        multiChartsScrollPane.setBounds(690, 170, (905-400)/2+10, 620);
+        frmTimeSeriesLayerFirst.add(multiChartsScrollPane);
+
+//        for(int i=0; i<10; i++){
+//            Chart2D aChart = new Chart2D();
+//            aChart.setPreferredSize(new Dimension(200, 100));
+//            multiJpanelsPanel.add(aChart);
+//        }
     }
 
 
@@ -771,7 +791,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_distanceHist = new JLayeredPane();
-        layeredPane_distanceHist.setBounds(171+905-400+20, 170-30, 905-500, 350);
+        layeredPane_distanceHist.setBounds(171+905-400+20+265, 170-30, 905-520, 350);
         layeredPane_distanceHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_distanceHist);
@@ -780,7 +800,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_weightHist = new JLayeredPane();
-        layeredPane_weightHist.setBounds(171+905-400+20, 170-30+350+10, 905-500, 290);
+        layeredPane_weightHist.setBounds(171+905-400+20+265, 170-30+350+10, 905-520, 290);
         layeredPane_weightHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_weightHist);

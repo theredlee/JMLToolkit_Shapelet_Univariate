@@ -444,6 +444,14 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      ---------------------------------------------------------------*/
     public void createTSChartsAndTraces(){
 
+        //
+//        for(int i=0; i<10; i++){
+//            Chart2D aChart = new Chart2D();
+//            aChart.setPreferredSize(new Dimension(200, 100));
+//            this.aGUIComponents.multiJpanelsPanel.add(aChart);
+//        }
+        //
+
         this.aVariables.centerChartXL = -10;
         this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+10;
         System.out.println("centerChartXR: " + this.aVariables.centerChartXR);
