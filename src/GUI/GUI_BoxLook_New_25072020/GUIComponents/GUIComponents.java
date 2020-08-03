@@ -693,21 +693,14 @@ public class GUIComponents extends GUIComponents_abstract {
         distanceHistPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null),
                 "Distance histogram", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        distanceHistPanel.setBounds(0, 0, 905-520, 350); /*** 171, 119, 905, 211 ***/
+        distanceHistPanel.setBounds(0, 0, 905-540, 350); /*** 171, 119, 905, 211 ***/
 
         /***  -------------------------------- **/
         weightHistPanel = new JPanel();
         weightHistPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null),
                 "Weight histogram", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        weightHistPanel.setBounds(0, 0, 905-520, 350); /*** 171, 119, 905, 211 ***/
-
-        /***  -------------------------------- **/
-        multiJpanelsPanel = new JPanel();
-//        multiJpanelsPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null),
-//                "Multi-charts", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
-
-        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]5[]", "[]10[]"));
+        weightHistPanel.setBounds(0, 0, 905-540, 350); /*** 171, 119, 905, 211 ***/
     }
 
 
@@ -743,10 +736,9 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
-        multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        multiChartsScrollPane.setBounds(690, 170, (905-400)/2+10, 620);
-        frmTimeSeriesLayerFirst.add(multiChartsScrollPane);
+//        multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
+//        multiChartsScrollPane.setBounds(690, 170, (905-400)/2, 620);
+//        frmTimeSeriesLayerFirst.add(multiChartsScrollPane);
 
 //        for(int i=0; i<10; i++){
 //            Chart2D aChart = new Chart2D();
@@ -791,7 +783,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_distanceHist = new JLayeredPane();
-        layeredPane_distanceHist.setBounds(171+905-400+20+265, 170-30, 905-520, 350);
+        layeredPane_distanceHist.setBounds(171+905-400+20+285, 170-30, 905-540, 350);
         layeredPane_distanceHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_distanceHist);
@@ -800,7 +792,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_weightHist = new JLayeredPane();
-        layeredPane_weightHist.setBounds(171+905-400+20+265, 170-30+350+10, 905-520, 290);
+        layeredPane_weightHist.setBounds(171+905-400+20+285, 170-30+350+10, 905-540, 290);
         layeredPane_weightHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_weightHist);

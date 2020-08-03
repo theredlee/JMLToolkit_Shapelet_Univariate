@@ -20,6 +20,7 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.centerChart = aVariables.centerChart;
         this.topRightChart = aVariables.topRightChart;
         this.bottomChart = aVariables.bottomChart;
+        this.multiCharts = aVariables.multiCharts;
         this.TSMark_centerChart = aVariables.TSMark_centerChart;
         this.TSMark_bottomChart = aVariables.TSMark_bottomChart;
         this.TSTrace = aVariables.TSTrace;

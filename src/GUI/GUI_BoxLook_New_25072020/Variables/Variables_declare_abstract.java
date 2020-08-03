@@ -6,6 +6,7 @@ import Looks.ShapeletLook;
 import Looks.TSLook;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.ITrace2D;
+import info.monitorenter.gui.chart.traces.Trace2DLtd;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public abstract class Variables_declare_abstract {
     public ArrayList<Integer> TS_labelArryList;
     /*** Charts **/
     public Chart2D centerChart, topRightChart, bottomChart;
+    public Chart2D[] multiCharts;
     /*** TS --- **/
     public ITrace2D TSMark_centerChart, TSMark_bottomChart;
     public ITrace2D TSTrace;

@@ -353,7 +353,7 @@ public class DistanceClassification extends DistanceClassification_abstract {
                         }
                     }
                     aQuickSort.sort(outterArr, 0, TScount - 1);
-                    aQuickSort.printArray(outterArr);
+//                    aQuickSort.printArray(outterArr);
 //                    System.out.println(" " + SPlet_count + "--- ");
 //                    System.out.println("\n" + "-------------------- " + SPlet_count);
                     SPlet_count++;

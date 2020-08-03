@@ -117,8 +117,8 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
      ---------------------------------------------------------------*/
     public void setScaleAndPosition(){
         this.aVariables.oldScale = 1.0;
-        this.aVariables.centerChartXL = -10;
-        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+10;
+        this.aVariables.centerChartXL = -5;
+        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+5;
     }
 
     public void spinnerSetScale(){

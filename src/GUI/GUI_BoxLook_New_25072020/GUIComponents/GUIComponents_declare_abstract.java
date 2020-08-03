@@ -36,7 +36,7 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJScrollPane --**/
     public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelLabelListScrollPane, bspcoverInfoScrollPane, multiChartsScrollPane;
     /*** initializeJPanel --**/
-    public JPanel centerChartPanel, topRightPanel, bottomChartPanel, distanceHistPanel, weightHistPanel, multiJpanelsPanel;
+    public JPanel centerChartPanel, topRightPanel, bottomChartPanel, distanceHistPanel, weightHistPanel;
     /*** initializeLayeredPane --**/
     public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo;
     /*** -------------------------------------------------------**/

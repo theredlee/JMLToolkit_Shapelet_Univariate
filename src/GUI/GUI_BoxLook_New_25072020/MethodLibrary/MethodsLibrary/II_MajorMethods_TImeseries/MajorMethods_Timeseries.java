@@ -20,6 +20,7 @@ import info.monitorenter.gui.chart.traces.Trace2DLtd;
 import info.monitorenter.gui.chart.traces.painters.TracePainterDisc;
 import info.monitorenter.gui.chart.traces.painters.TracePainterLine;
 import info.monitorenter.util.Range;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -445,11 +446,22 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
     public void createTSChartsAndTraces(){
 
         //
-//        for(int i=0; i<10; i++){
-//            Chart2D aChart = new Chart2D();
-//            aChart.setPreferredSize(new Dimension(200, 100));
-//            this.aGUIComponents.multiJpanelsPanel.add(aChart);
-//        }
+        JPanel multiJpanelsPanel = new JPanel();
+        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]1[]", "[]5[]"));
+        this.aVariables.multiCharts = new Chart2D[10];
+        for(int i=0; i<10; i++){
+            Chart2D aChart = new Chart2D();
+            aChart.setPreferredSize(new Dimension((905-400)/2, (250)/2));
+            multiJpanelsPanel.add(aChart);
+            this.aVariables.multiCharts[i] = aChart;
+        }
+
+        JScrollPane multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
+        multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        multiChartsScrollPane.setBounds(685, 170, (905-400)/2+40, 620);
+        this.aGUIComponents.multiChartsScrollPane = multiChartsScrollPane;
+        this.aGUIComponents.frmTimeSeriesLayerFirst.add(this.aGUIComponents.multiChartsScrollPane);
+
         //
 
         this.aVariables.centerChartXL = -10;
@@ -471,11 +483,21 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.TSTrace.setStroke(new BasicStroke(4));
 
         this.aVariables.centerChart.addTrace(this.aVariables.TSTrace);
+
         /*** **/
 
         /*** initialize the localTrace **/
         this.aLocalLineTrace = new Trace2DLtd(null);;
         this.aVariables.centerChart.addTrace(this.aLocalLineTrace);
+
+        /*** **/
+        this.aVariables.multiCharts[0].addTrace(this.aVariables.TSTrace);
+        this.aVariables.multiCharts[0].addTrace(this.aLocalLineTrace);
+        this.aVariables.multiCharts[0].getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
+        this.aVariables.multiCharts[0].getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
+//        this.aVariables.multiCharts[0].getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-10, this.aVariables.dataset_withCurrentLabel.numFeatures+10)));
+//        System.out.println();
+        /*** **/
 
         /*
         interpolatedTimeSeriesTrace = new Trace2DLtd(null);
@@ -492,11 +514,11 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         this.aVariables.centerChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
 //        centerChart.getAxisX().setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
-        this.aVariables.centerChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-10, this.aVariables.dataset_withCurrentLabel.numFeatures+10)));
+        this.aVariables.centerChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-5, this.aVariables.dataset_withCurrentLabel.numFeatures+5)));
 
         this.aVariables.bottomChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
 //        bottomChart.getAxisX().setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
-        this.aVariables.bottomChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-10, this.aVariables.dataset_withCurrentLabel.numFeatures+10)));
+        this.aVariables.bottomChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-5, this.aVariables.dataset_withCurrentLabel.numFeatures+5)));
 
         this.aVariables.centerChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
 
@@ -504,7 +526,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         /*---------------------------------------------------------------
          ---------------------------------------------------------------*/
-
         /*---------------------------------------------------------------
          ******************************************************************/
 
