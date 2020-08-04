@@ -462,7 +462,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         JScrollPane multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
         multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        multiChartsScrollPane.setBounds(68+3, 190, (905-400)/2+40, 600);
+        multiChartsScrollPane.setBounds(680+3, 190, (905-400)/2+40, 600);
         this.aGUIComponents.multiChartsScrollPane = multiChartsScrollPane;
         this.aGUIComponents.frmTimeSeriesLayerFirst.add(this.aGUIComponents.multiChartsScrollPane);
 
