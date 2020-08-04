@@ -85,6 +85,7 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.lblMultiChartNum = aGUIComponents.lblMultiChartNum;
         this.lblMultiChartSPLetNum = aGUIComponents.lblMultiChartSPLetNum;
         this.lblMultiChartSPLetClass = aGUIComponents.lblMultiChartSPLetClass;
+        this.lblTopk = aGUIComponents.lblTopk;
         /*** initializeJTextArea --**/
         this.bspcoverInfoTextArea = aGUIComponents.bspcoverInfoTextArea;
         this.textAreaInOnChart_I = aGUIComponents.textAreaInOnChart_I;

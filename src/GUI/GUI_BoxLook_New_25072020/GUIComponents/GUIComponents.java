@@ -221,10 +221,12 @@ public class GUIComponents extends GUIComponents_abstract {
         lblLogo.setBounds(0,0,140,15*3); /*** 171,130,83,15 ***/
 
         /***  -------------------------------- **/
-        lblTopTenCharts = new JLabel("Top 10 shortest distance time series to shapelet: ", SwingConstants.CENTER);
-        lblTopTenCharts.setFont(new Font("SansSerif", Font.PLAIN, 12));
-        lblTopTenCharts.setForeground(Color.red);
-        lblTopTenCharts.setBounds(0, 2,300,15); /*** 171,130,83,15 ***/
+        lblTopTenCharts = new JLabel("Top 10 shortest distances from time series to shapelets", SwingConstants.CENTER);
+        lblTopTenCharts.setFont(new Font("SansSerif", Font.CENTER_BASELINE, 11));
+        lblTopTenCharts.setOpaque(true);
+        lblTopTenCharts.setBackground(Color.WHITE);
+        lblTopTenCharts.setForeground(Color.RED);
+        lblTopTenCharts.setBounds(0, 0,320,30); /*** 171,130,83,15 ***/
         frmTimeSeriesLayerFirst.add(lblTopTenCharts);
 
     }
@@ -509,7 +511,7 @@ public class GUIComponents extends GUIComponents_abstract {
         centerChartTSLabelTextField = new JTextField();
         centerChartTSLabelTextField.setText("Class Label No.:");
         centerChartTSLabelTextField.setEditable(false);
-        centerChartTSLabelTextField.setBounds(785-400,5,125, 15);
+        centerChartTSLabelTextField.setBounds(785-405,5,125, 15);
         centerChartTSLabelTextField.setBorder(null);
         centerChartTSLabelTextField.setFont(font);
         centerChartTSLabelTextField.setForeground(Color.MAGENTA);
@@ -519,7 +521,7 @@ public class GUIComponents extends GUIComponents_abstract {
         centerChartTSNumTextField = new JTextField();
         centerChartTSNumTextField.setText("Time Series No.:");
         centerChartTSNumTextField.setEditable(false);
-        centerChartTSNumTextField.setBounds(785-400,20,125, 15);
+        centerChartTSNumTextField.setBounds(785-405,20,125, 15);
         centerChartTSNumTextField.setBorder(null);
         centerChartTSNumTextField.setFont(font);
         centerChartTSNumTextField.setForeground(Color.BLUE);
@@ -529,7 +531,7 @@ public class GUIComponents extends GUIComponents_abstract {
         centerChartSPLetNumTextField = new JTextField();
         centerChartSPLetNumTextField.setText("Shapelet No.:");
         centerChartSPLetNumTextField.setEditable(false);
-        centerChartSPLetNumTextField.setBounds(785-400,35,125, 15);
+        centerChartSPLetNumTextField.setBounds(785-405,35,125, 15);
         centerChartSPLetNumTextField.setBorder(null);
         centerChartSPLetNumTextField.setFont(font);
         centerChartSPLetNumTextField.setForeground(Color.GREEN);
@@ -773,7 +775,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_distanceHist = new JLayeredPane();
-        layeredPane_distanceHist.setBounds(171+905-400+20+285, 170-30, 905-540, 350);
+        layeredPane_distanceHist.setBounds(171+905-400+20+300, 170-30, 905-540, 350);
         layeredPane_distanceHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_distanceHist);
@@ -782,7 +784,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_weightHist = new JLayeredPane();
-        layeredPane_weightHist.setBounds(171+905-400+20+285, 170-30+350+10, 905-540, 290);
+        layeredPane_weightHist.setBounds(171+905-400+20+300, 170-30+350+10, 905-540, 290);
         layeredPane_weightHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_weightHist);
@@ -800,18 +802,19 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_multiCharts = new JLayeredPane();
-        layeredPane_multiCharts.setBounds(680+3, 190, (905-400)/2+40, 600);
+        layeredPane_multiCharts.setBounds(680+3, 190+20, (905-400)/2+55, 580);
         layeredPane_multiCharts.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_multiCharts);
 
         /***  -------------------------------- **/
         layeredPane_toptenChartLabel = new JLayeredPane();
-        layeredPane_toptenChartLabel.setBounds(680, 170,300,20);
+        layeredPane_toptenChartLabel.setBounds(677, 170,320,30);
         layeredPane_toptenChartLabel.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_toptenChartLabel);
-        layeredPane_toptenChartLabel.add(lblTopTenCharts, Integer.valueOf(0), SwingConstants.CENTER);
+
+        layeredPane_toptenChartLabel.add(lblTopTenCharts, Integer.valueOf(0));
     }
 
     /*** main --------------------------------------------**/

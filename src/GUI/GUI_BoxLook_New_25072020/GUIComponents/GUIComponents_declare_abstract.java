@@ -17,7 +17,7 @@ public abstract class GUIComponents_declare_abstract{
     public JLabel lblZoomScale, lblHorizontallyMove, lblShapeletsNumSelector, lblMissingRatio,
             lblGapSizeRatio, lblImputation, eigenSeriesInterpolation, lblLabel_TS_List,
             lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblLogo, lblTopTenCharts;
-    public JLabel[] lblMultiChartTSClass, lblMultiChartNum, lblMultiChartSPLetNum, lblMultiChartSPLetClass;
+    public JLabel[] lblMultiChartTSClass, lblMultiChartNum, lblMultiChartSPLetNum, lblMultiChartSPLetClass, lblTopk;
     /*** initializeJSpinner --**/
     public JSpinner spinner;
     /*** initializeJButton --**/
