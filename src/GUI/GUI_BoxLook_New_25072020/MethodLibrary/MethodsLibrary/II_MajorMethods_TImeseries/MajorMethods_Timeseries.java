@@ -20,6 +20,8 @@ import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
 import info.monitorenter.gui.chart.traces.painters.TracePainterDisc;
 import info.monitorenter.gui.chart.traces.painters.TracePainterLine;
+import info.monitorenter.gui.chart.traces.painters.TracePainterPolyline;
+import info.monitorenter.gui.chart.traces.painters.TracePainterVerticalBar;
 import info.monitorenter.util.Range;
 import net.miginfocom.swing.MigLayout;
 
@@ -74,8 +76,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             this.aVariables.dataSetDirectory = chooser.getSelectedFile();
             System.out.println(" Selected dataset directory: " + this.aVariables.dataSetDirectory.getAbsolutePath() );
-        }
-        else {
+        } else {
             System.out.println("No Selection ");
             return;
         }
@@ -130,7 +131,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         // populate the list with the time series trajectory indexes
 
         this.aGUIComponents.noPointsTextField.setVisible(true);
-
     }
 
     /*---------------------------------------------------------------
@@ -450,6 +450,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         //
         JPanel multiJpanelsPanel = new JPanel();
         multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]0[]", "[]10[]"));
+
         this.aVariables.multiCharts = new Chart2D[10];
         for(int i=0; i<10; i++){
             Chart2D aChart = new Chart2D();
@@ -462,10 +463,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         JScrollPane multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
         multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        multiChartsScrollPane.setBounds(680+3, 190, (905-400)/2+40, 600);
-        this.aGUIComponents.multiChartsScrollPane = multiChartsScrollPane;
-        this.aGUIComponents.frmTimeSeriesLayerFirst.add(this.aGUIComponents.multiChartsScrollPane);
-
+        multiChartsScrollPane.setBounds(0, 0, (905-400)/2+40, 600);
+        this.aGUIComponents.layeredPane_multiCharts.add(multiChartsScrollPane);
         //
 
         this.aVariables.centerChartXL = -10;
@@ -483,6 +482,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         /***** Create trace ***/
         this.aVariables.TSTrace = new Trace2DLtd(null);
         this.aVariables.TSTrace.setTracePainter(new TracePainterDisc(4));
+
         this.aVariables.TSTrace.setColor(Color.BLUE);
         this.aVariables.TSTrace.setStroke(new BasicStroke(4));
 

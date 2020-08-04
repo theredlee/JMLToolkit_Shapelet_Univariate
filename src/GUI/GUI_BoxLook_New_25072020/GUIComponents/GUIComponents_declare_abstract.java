@@ -34,10 +34,10 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJList --**/
     public JList labelList, TS_labelList_Horizontal, TS_List, shapeletLabelJList, shapeletJList;
     /*** initializeJScrollPane --**/
-    public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelListScrollPane, bspcoverInfoScrollPane, multiChartsScrollPane;
+    public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelListScrollPane, bspcoverInfoScrollPane;
     /*** initializeJPanel --**/
     public JPanel centerChartPanel, topRightPanel, bottomChartPanel, distanceHistPanel, weightHistPanel;
     /*** initializeLayeredPane --**/
-    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo, layeredPane_toptenChartLabel;
+    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo, layeredPane_multiCharts, layeredPane_toptenChartLabel;
     /*** -------------------------------------------------------**/
 }

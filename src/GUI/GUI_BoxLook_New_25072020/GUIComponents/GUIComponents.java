@@ -735,18 +735,6 @@ public class GUIComponents extends GUIComponents_abstract {
         bspcoverInfoScrollPane = new JScrollPane(bspcoverInfoTextArea);
         bspcoverInfoScrollPane.setBounds(bspcoverInfoTextArea.getBounds());
         frmTimeSeriesLayerFirst.add(bspcoverInfoScrollPane);
-
-
-        /***  -------------------------------- **/
-//        multiChartsScrollPane = new JScrollPane();
-//        multiChartsScrollPane.setBounds(680, 170, (905-400)/2+40, 620);
-//        frmTimeSeriesLayerFirst.add(multiChartsScrollPane);
-
-//        for(int i=0; i<10; i++){
-//            Chart2D aChart = new Chart2D();
-//            aChart.setPreferredSize(new Dimension(200, 100));
-//            multiJpanelsPanel.add(aChart);
-//        }
     }
 
 
@@ -789,7 +777,7 @@ public class GUIComponents extends GUIComponents_abstract {
         layeredPane_distanceHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_distanceHist);
-        layeredPane_distanceHist.add(distanceHistPanel, Integer.valueOf(0));
+//        layeredPane_distanceHist.add(distanceHistPanel, Integer.valueOf(0));
 
 
         /***  -------------------------------- **/
@@ -809,6 +797,13 @@ public class GUIComponents extends GUIComponents_abstract {
         frmTimeSeriesLayerFirst.add(layeredPane_logo);
         layeredPane_logo.add(lblLogo, Integer.valueOf(0));
 
+
+        /***  -------------------------------- **/
+        layeredPane_multiCharts = new JLayeredPane();
+        layeredPane_multiCharts.setBounds(680+3, 190, (905-400)/2+40, 600);
+        layeredPane_multiCharts.setBorder(BorderFactory.createTitledBorder(
+                ""));
+        frmTimeSeriesLayerFirst.add(layeredPane_multiCharts);
 
         /***  -------------------------------- **/
         layeredPane_toptenChartLabel = new JLayeredPane();

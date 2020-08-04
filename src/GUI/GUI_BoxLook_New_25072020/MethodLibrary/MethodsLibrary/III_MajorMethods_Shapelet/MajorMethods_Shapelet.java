@@ -13,6 +13,16 @@ import info.monitorenter.gui.chart.traces.Trace2DLtd;
 import info.monitorenter.gui.chart.traces.painters.TracePainterDisc;
 import info.monitorenter.gui.chart.traces.painters.TracePainterLine;
 import info.monitorenter.util.Range;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.StandardXYBarPainter;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,8 +72,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         //
         shapeletChooser.setAcceptAllFileFilterUsed(false);
         //
-        if (shapeletChooser.showOpenDialog(this.aGUIComponents.frmTimeSeries) == JFileChooser.APPROVE_OPTION)
-        {
+        if (shapeletChooser.showOpenDialog(this.aGUIComponents.frmTimeSeries) == JFileChooser.APPROVE_OPTION) {
             this.aVariables.shapeletDirectory = shapeletChooser.getSelectedFile();
             System.out.println(" Selected shapelet directory:" + this.aVariables.shapeletDirectory.getAbsolutePath() );
         }
@@ -140,6 +149,8 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
         // setShapeletLabelJList() must be behind the Distances computation
         setShapeletLabelJList();
+        //
+        distanceHistogram();
     }
     /*---------------------------------------------------------------
     **                  classfyShapeletLabels()                     **
@@ -374,8 +385,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     **                     changeSelectedShapelet()                   **
     ---------------------------------------------------------------*/
     public void changeSelectedShapelet(){
-        try
-        {
+        try {
             /*** -> **/
             if(latestShapelet()==-1){
                 return;
@@ -407,10 +417,58 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     }
 
     /*** --------------------------------------------- **/
+    public void distanceHistogram(){
+//        ArrayList<ArrayList<double[]>> distanceArr = this.aVariables.SPLet_toAllTS_distances.get(0);
+        ArrayList<double[]> distanceArr = this.aVariables.SPLet_toAllTS_distances.get(0).get(2);
+        ArrayList<double[]> distanceArr_2 = this.aVariables.SPLet_toAllTS_distances.get(0).get(3);
+        double[] vals = new double[distanceArr.size()];
+        double[] vals_2 = new double[distanceArr_2.size()];
+        //
+//        int count = 0;
+//        for(int i=0; i<distanceArr.size(); i++){
+//            for(int k=0; k<distanceArr.get(i).size(); k++){
+//                vals[count] = distanceArr.get(i).get(k)[0];
+//                count++;
+//            }
+//        }
+
+        for(int i=0; i<vals.length; i++){
+            vals[i] = distanceArr.get(i)[0];
+        }
+
+        for(int i=0; i<vals_2.length; i++){
+            vals_2[i] = distanceArr_2.get(i)[0];
+        }
+
+        var dataset = new HistogramDataset();
+        dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+        dataset.addSeries("key", vals, 10);
+        dataset.addSeries("key_2", vals_2, 10);
+
+        PlotOrientation orientation = PlotOrientation.VERTICAL;
+        boolean show = true;
+        boolean toolTips = true;
+        boolean urls = false;
+        JFreeChart histogram = ChartFactory.createHistogram("Distance Histogram",
+                "x values", "y values", dataset, orientation, show, toolTips, urls);
+
+        XYPlot plot = (XYPlot)histogram.getPlot();
+        plot.setBackgroundPaint(Color.white);
+        XYBarRenderer renderer = (XYBarRenderer)plot.getRenderer();
+        renderer.setBarPainter(new StandardXYBarPainter());
+        renderer.setShadowVisible(false);
+        renderer.setSeriesPaint(0, new Color(1, 0, 0, 0.8f));
+        renderer.setSeriesPaint(1, new Color(0, 0, 1, 0.8f));
+        renderer.setSeriesPaint(2, new Color(0, 1, 0, 0.8f));
+
+        ChartPanel aChartPanel = new ChartPanel(histogram);
+        aChartPanel.setBounds(0, 0, 905-540, 350);
+        this.aGUIComponents.layeredPane_distanceHist.add(aChartPanel, Integer.valueOf(0));
+    }
+
+    /*** --------------------------------------------- **/
     public void findTopTenTS(int selectedIndex, int selectedLabel){
         int defaultTopK = 10;
-//        this.aVariables.lastSPLetIndex =
-//        this.aVariables.currentSPLet_ =
         int localIndex = selectedIndex;
         int localLabel = selectedLabel;
 
@@ -428,10 +486,6 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //            System.out.println("aryList: " + aryList);
             this.aMajorMethods_Timeseries.setTSMultiChartsandTraces(i, arr, aryList); //
         }
-
-    }
-
-    public void setSPLetMultiChartsandTraces(int chartIndex, int TSIndex, int TSlabel, ArrayList<Double> aTSAraylist){
     }
 
     /*** --------------------------------------------- **/
@@ -452,7 +506,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     public void drawShapeletTraceCenterChart(ArrayList<Double> aArylist){
         this.aVariables.SPLet_trace_centerChart.removeAllPoints();
         if(this.aVariables.currentSPLet_ != null){
-            System.out.println("Shapelet length: " + this.aVariables.currentSPLet_.size());
+            System.out.println("Shapelet length: " + (this.aVariables.currentSPLet_.size()-1));
             int labelIndex = 0;
             if(this.aVariables.currentSPLet_.get(labelIndex).intValue()==0){ //label 0
                 this.aVariables.SPLet_trace_centerChart.setColor(new Color(255, 51, 153));
