@@ -37,19 +37,19 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
 
     protected void localAddTraceBack_topRightChart(){
         if(getLoadShapeletYesOrNo()){
-            aMajorMethods_Shapelet.addShapeletTrace_TopRightChart();
+            aMajorMethods_Shapelet.addShapeletTraceTopRightChart();
         }
     };
 
     protected void localAddTraceBack__pointsKept_centerChart() {
         /*** 1st. set marks TS - centerChart **/
-        aMajorMethods_Timeseries.createTSMark_centerChart();
+        aMajorMethods_Timeseries.createTSMarkCenterChart();
 
         /*** 2nd. set marks interpolated TS - centerChart **/
-        aMajorMethods_Timeseries.createinterpolatedTSMark_centerChart();
+        aMajorMethods_Timeseries.createinterpolatedTSMarkCenterChart();
 
         /*** 3rd. set marks shapelet - centerChart **/
-        aMajorMethods_Shapelet.createShapletMark_centerChart();
+        aMajorMethods_Shapelet.createShapletMarkCenterChart();
 
         /*** ------------------------------------------------- **/
 
@@ -67,13 +67,13 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
 
     protected void localAddTraceBack__pointsRemoved_centerChart(){
         /*** 1st. set marks TS - centerChart **/
-        aMajorMethods_Timeseries.createTSMark_centerChart();
+        aMajorMethods_Timeseries.createTSMarkCenterChart();
 
         /*** 2nd. set marks interpolated TS - centerChart **/
-        aMajorMethods_Timeseries.createinterpolatedTSMark_centerChart();
+        aMajorMethods_Timeseries.createinterpolatedTSMarkCenterChart();
 
         /*** 3rd. set marks shapelet - centerChart **/
-        aMajorMethods_Shapelet.createShapletMark_centerChart();
+        aMajorMethods_Shapelet.createShapletMarkCenterChart();
 
         /*** ------------------------------------------------- **/
         /*** Trace point remove **/
@@ -95,7 +95,7 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
 
     protected void localAddTraceBack_bottomChart(){
         /*** Add marks TS back - bottomChart **/
-        aMajorMethods_Timeseries.createTSMark_bottomChart();
+        aMajorMethods_Timeseries.createTSMarkBottomChart();
         /*** Since all traces on bottom chart are local temp traces, they cannot retrieve back **/
     }
 

@@ -487,10 +487,10 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        distanceSTTextField_II = new JTextField();
-        distanceSTTextField_II.setEditable(false);
-        distanceSTTextField_II.setBounds(926, 150, 150, 19); /*** 315, 443, 114, 19 -> x + width = 932 + 175 = 1107***/
-        frmTimeSeriesLayerFirst.add(distanceSTTextField_II);
+//        distanceSTTextField_II = new JTextField();
+//        distanceSTTextField_II.setEditable(false);
+//        distanceSTTextField_II.setBounds(926, 150, 150, 19); /*** 315, 443, 114, 19 -> x + width = 932 + 175 = 1107***/
+//        frmTimeSeriesLayerFirst.add(distanceSTTextField_II);
 
 
         /***  -------------------------------- **/

@@ -51,11 +51,11 @@ public abstract class MajorMethods_Timeseries_abstract extends MajorMethods_Time
 
     protected void shapelet_dotANDLine_plot(){
 //        aMajorMethods_Shapelet.shapelet_dotANDLine_plot("normal");
-        aMajorMethods_Shapelet.shapelet_dotANDLine_plot("stack");
+        aMajorMethods_Shapelet.shapeletDotANDLinePlot("stack");
     }
 
     protected int updateTolatest_aShapelet(){
-        return aMajorMethods_Shapelet.latest_aShapelet();
+        return aMajorMethods_Shapelet.latestShapelet();
     }
 
 }

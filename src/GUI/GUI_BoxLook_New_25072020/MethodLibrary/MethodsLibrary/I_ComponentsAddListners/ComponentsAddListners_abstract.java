@@ -76,11 +76,11 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     }
 
     protected void changeTS_label(){
-        aMajorMethods_Timeseries.changeTS_label();
+        aMajorMethods_Timeseries.changeTSLabel();
     }
 
     protected void changeSelectedTS(){
-        aMajorMethods_Timeseries.changeSelected_TS();
+        aMajorMethods_Timeseries.changeSelectedTS();
     }
 
     protected void selectShapeletRange(int aMin, int aMax){
@@ -92,15 +92,15 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     }
 
     protected void selectTop_K_Shapelets(){
-        aMajorMethods_Shapelet.selectTop_K_Shapelets();
+        aMajorMethods_Shapelet.selectTopKShapelets();
     }
 
     protected void changeShapeletLabel(){
-        aMajorMethods_Shapelet.change_shapeletLabel();
+        aMajorMethods_Shapelet.changeShapeletLabel();
     }
 
     protected void changeSelectedShapelet(){
-        aMajorMethods_Shapelet.change_selectedShapelet();
+        aMajorMethods_Shapelet.changeSelectedShapelet();
     }
 
     protected void clearAllTSTraces_AllCharts(){

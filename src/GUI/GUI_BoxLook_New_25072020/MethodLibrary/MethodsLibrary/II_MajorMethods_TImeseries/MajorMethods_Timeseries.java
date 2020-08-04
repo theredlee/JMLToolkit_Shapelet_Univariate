@@ -105,21 +105,21 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             // createTSChartsAndTraces() before assign dataset !
             createTSChartsAndTraces();
             /*** set marks - centerChart **/
-            createTSMark_centerChart();
-            createinterpolatedTSMark_centerChart();
+            createTSMarkCenterChart();
+            createinterpolatedTSMarkCenterChart();
 
             /*** set marks - bottomChart **/
-            createTSMark_bottomChart();
+            createTSMarkBottomChart();
 
             /*** 2. Horizontal-line representation ------------> **/
 
             horizontalLineTransfer(this.aVariables.dataSet);
 
             /*** -> **/
-            classfy_TS_Labels();
+            classfyTSLabels();
 
             /*** -> **/
-            set_TSLabel_JList();
+            setTSLabelJList();
 
         }
         catch(Exception exc)
@@ -138,7 +138,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                 classfyShapeletLabels()                     **
 
      ---------------------------------------------------------------*/
-    public void classfy_TS_Labels(){
+    public void classfyTSLabels(){
         try{
             /*** Load Label ***/
             ArrayList<Integer> TS_labelArryList = new ArrayList<> ();
@@ -168,7 +168,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                    set_TSLabel_JList()                     **
 
      ---------------------------------------------------------------*/
-    public void set_TSLabel_JList(){
+    public void setTSLabelJList(){
         try{
             int size = this.aVariables.TS_labelArryList.size();
 
@@ -197,7 +197,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                         set_TS_JList()                     **
 
      ---------------------------------------------------------------*/
-    public void set_TS_JList(){
+    public void setTSJList(){
         try{
             int startPoint = 0, endPoint = 10000; /*** The Maximum always sets to the size of timeseries data set **/
             if(this.aVariables.initializeTS){ /*** If first time to load the TS and label, the timeSeriesRangeMaxTextField equals to lengh of timeseries list **/
@@ -249,7 +249,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **             set_currentTSJlist_content()                     **
 
      ---------------------------------------------------------------*/
-    public void set_currentTSJlist_content(){
+    public void setCurrentTSJlistContent(){
         try{
             /*** **/
             int selectedTSIndex = 0; /** default value: 0 **/
@@ -539,7 +539,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                  createTSMark_centerChart()                **
 
      ---------------------------------------------------------------*/
-    public void createTSMark_centerChart(){
+    public void createTSMarkCenterChart(){
 
         /***** ***/
 
@@ -555,7 +555,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                 createTSMark_bottomChart()                **
 
      ---------------------------------------------------------------*/
-    public void createTSMark_bottomChart(){
+    public void createTSMarkBottomChart(){
 
         /***** ***/
 
@@ -580,7 +580,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **          createinterpolatedTSMark_centerChart()            **
 
      ---------------------------------------------------------------*/
-    public void createinterpolatedTSMark_centerChart(){
+    public void createinterpolatedTSMarkCenterChart(){
 
         /***** ***/
 
@@ -605,7 +605,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                    changeLabelSelection()                     **
 
      ---------------------------------------------------------------*/
-    public void changeTS_label(){
+    public void changeTSLabel(){
 
         if( this.aGUIComponents.shuffleDataSetCheckBox.isSelected() )
         {
@@ -629,7 +629,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             /*** resetBottomTSTraceCount to 0 **/
             resetBottomTSTraceCount(0);
 
-            set_TS_JList();
+            setTSJList();
         }
         catch( Exception exc )
         {
@@ -650,7 +650,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                    changeSelectedTS()                **
 
      ---------------------------------------------------------------*/
-    public void changeSelected_TS(){
+    public void changeSelectedTS(){
 
         /*** Stop an additonal call from the list by value change **/
         if(this.aVariables.setting_TS_listModal){
@@ -659,7 +659,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
         try
         {
-            set_currentTSJlist_content();
+            setCurrentTSJlistContent();
             setInfomationOnChart();
 
             /*** 1. Draw shapelet first, -> It will clear all the traces on center chart and add TS trace back
@@ -885,7 +885,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **         drawTSTrace_horizontally_CenterChart()              **
 
      ---------------------------------------------------------------*/
-    public void drawTSTrace_horizontally_CenterChart(ArrayList<Double> aTSAraylist){
+    public void drawTSTraceHorizontallyCenterChart(ArrayList<Double> aTSAraylist){
         /*** Draw horizontal lines **/
 
         /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
@@ -945,7 +945,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **         drawTSTrace_horizontally_BottomChart()              **
 
      ---------------------------------------------------------------*/
-    public void drawTSTrace_horizontally_BottomChart(ArrayList<Double> aTSAraylist){
+    public void drawTSTraceHorizontallyBottomChart(ArrayList<Double> aTSAraylist){
         /*** Draw horizontal lines **/
         try{
             setScale_bottomChartSetRange();
@@ -1470,8 +1470,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
     public void TSDotANDLinePlot(){
         increaseBottomTSTraceCount(1);
         ArrayList<Double> aryList = horizontalLineLookTSCenterChart(this.aVariables.TSDataInstance);
-        drawTSTrace_horizontally_CenterChart(aryList); // centerChart
-        drawTSTrace_horizontally_BottomChart(aryList);
+        drawTSTraceHorizontallyCenterChart(aryList); // centerChart
+        drawTSTraceHorizontallyBottomChart(aryList);
         drawTSDotToLineTransfer(aryList, "center chart");
         drawTSDotToLineTransfer(aryList, "bottom chart");
     }
