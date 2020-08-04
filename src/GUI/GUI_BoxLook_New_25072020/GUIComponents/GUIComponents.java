@@ -1,10 +1,5 @@
 package GUI.GUI_BoxLook_New_25072020.GUIComponents;
 
-import info.monitorenter.gui.chart.Chart2D;
-import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
-import info.monitorenter.util.Range;
-import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
@@ -224,11 +219,18 @@ public class GUIComponents extends GUIComponents_abstract {
         lblLogo = new JLabel("Visualet", SwingConstants.CENTER);
         lblLogo.setFont(new Font("SansSerif", Font.PLAIN, myFont.getSize()*2));
         lblLogo.setBounds(0,0,140,15*3); /*** 171,130,83,15 ***/
+
+        /***  -------------------------------- **/
+        lblTopTenCharts = new JLabel("Top 10 shortest distance time series to shapelet: ", SwingConstants.CENTER);
+        lblTopTenCharts.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        lblTopTenCharts.setForeground(Color.red);
+        lblTopTenCharts.setBounds(0, 2,300,15); /*** 171,130,83,15 ***/
+        frmTimeSeriesLayerFirst.add(lblTopTenCharts);
+
     }
 
 
     /*** initializeJSpinner --------------------------------------------**/
-    public JSpinner spinner;
     private void initializeJSpinner(){
         /***  -------------------------------- **/
         spinner = new JSpinner(new SpinnerNumberModel(1.0, 0.5, 2.5, .1));
@@ -498,7 +500,7 @@ public class GUIComponents extends GUIComponents_abstract {
         numOfShapeletsTextField.setVisible(false);
         labelShapeletTextField.setVisible(false);
         distanceSTTextField.setVisible(false);
-        distanceSTTextField_II.setVisible(false);
+//        distanceSTTextField_II.setVisible(false);
         datasetTextField.setVisible(false);
         labelTextField.setVisible(false);
 
@@ -724,9 +726,9 @@ public class GUIComponents extends GUIComponents_abstract {
         frmTimeSeriesLayerFirst.add(shapeLetScrollPane);
 
         /***  -------------------------------- **/
-        labelLabelListScrollPane = new JScrollPane(shapeletLabelJList);
-        labelLabelListScrollPane.setBounds(shapeletLabelJList.getBounds());
-        frmTimeSeriesLayerFirst.add(labelLabelListScrollPane);
+        labelListScrollPane = new JScrollPane(shapeletLabelJList);
+        labelListScrollPane.setBounds(shapeletLabelJList.getBounds());
+        frmTimeSeriesLayerFirst.add(labelListScrollPane);
 
 
         /***  -------------------------------- **/
@@ -806,6 +808,15 @@ public class GUIComponents extends GUIComponents_abstract {
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_logo);
         layeredPane_logo.add(lblLogo, Integer.valueOf(0));
+
+
+        /***  -------------------------------- **/
+        layeredPane_toptenChartLabel = new JLayeredPane();
+        layeredPane_toptenChartLabel.setBounds(680, 170,300,20);
+        layeredPane_toptenChartLabel.setBorder(BorderFactory.createTitledBorder(
+                ""));
+        frmTimeSeriesLayerFirst.add(layeredPane_toptenChartLabel);
+        layeredPane_toptenChartLabel.add(lblTopTenCharts, Integer.valueOf(0), SwingConstants.CENTER);
     }
 
     /*** main --------------------------------------------**/

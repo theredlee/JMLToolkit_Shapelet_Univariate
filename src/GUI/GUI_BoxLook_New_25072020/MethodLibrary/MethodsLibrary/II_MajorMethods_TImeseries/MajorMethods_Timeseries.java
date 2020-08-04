@@ -449,7 +449,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         // Test
         //
         JPanel multiJpanelsPanel = new JPanel();
-        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]1[]", "[]10[]"));
+        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]0[]", "[]10[]"));
         this.aVariables.multiCharts = new Chart2D[10];
         for(int i=0; i<10; i++){
             Chart2D aChart = new Chart2D();
@@ -462,7 +462,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         JScrollPane multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
         multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        multiChartsScrollPane.setBounds(680, 170, (905-400)/2+40, 620);
+        multiChartsScrollPane.setBounds(68+3, 190, (905-400)/2+40, 600);
         this.aGUIComponents.multiChartsScrollPane = multiChartsScrollPane;
         this.aGUIComponents.frmTimeSeriesLayerFirst.add(this.aGUIComponents.multiChartsScrollPane);
 

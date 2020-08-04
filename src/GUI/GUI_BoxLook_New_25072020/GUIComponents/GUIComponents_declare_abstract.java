@@ -16,7 +16,7 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJLabels --**/
     public JLabel lblZoomScale, lblHorizontallyMove, lblShapeletsNumSelector, lblMissingRatio,
             lblGapSizeRatio, lblImputation, eigenSeriesInterpolation, lblLabel_TS_List,
-            lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblLogo;
+            lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblLogo, lblTopTenCharts;
     /*** initializeJSpinner --**/
     public JSpinner spinner;
     /*** initializeJButton --**/
@@ -34,10 +34,10 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJList --**/
     public JList labelList, TS_labelList_Horizontal, TS_List, shapeletLabelJList, shapeletJList;
     /*** initializeJScrollPane --**/
-    public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelLabelListScrollPane, bspcoverInfoScrollPane, multiChartsScrollPane;
+    public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelListScrollPane, bspcoverInfoScrollPane, multiChartsScrollPane;
     /*** initializeJPanel --**/
     public JPanel centerChartPanel, topRightPanel, bottomChartPanel, distanceHistPanel, weightHistPanel;
     /*** initializeLayeredPane --**/
-    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo;
+    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo, layeredPane_toptenChartLabel;
     /*** -------------------------------------------------------**/
 }
