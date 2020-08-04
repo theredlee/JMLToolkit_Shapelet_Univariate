@@ -17,6 +17,7 @@ public abstract class GUIComponents_declare_abstract{
     public JLabel lblZoomScale, lblHorizontallyMove, lblShapeletsNumSelector, lblMissingRatio,
             lblGapSizeRatio, lblImputation, eigenSeriesInterpolation, lblLabel_TS_List,
             lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblLogo, lblTopTenCharts;
+    public JLabel[] lblMultiChartTSClass, lblMultiChartNum, lblMultiChartSPLetNum, lblMultiChartSPLetClass;
     /*** initializeJSpinner --**/
     public JSpinner spinner;
     /*** initializeJButton --**/
@@ -25,7 +26,7 @@ public abstract class GUIComponents_declare_abstract{
     public JRadioButton radiobtnStackModelOn, radiobtnStackModelOff;
     /*** initializeJTextField --**/
     public JTextField iterationTextField, alphabetSizeTextField, timeSeriesRangeMinTextField, timeSeriesRangeMaxTextField, shapeletsRangeMinTextField, shapeletsRangeMaxTextField,
-            chartI_TS_TextField, chartI_Interpolated_TextField, chartI_Shapelet_TextField, chartII_Shapelet_TextField, chartII_ShapeletLabel_TextField,
+            centerChartTSLabelTextField, centerChartTSNumTextField, centerChartSPLetNumTextField, chartII_Shapelet_TextField, chartII_ShapeletLabel_TextField,
             top_K_shapeletsTextField, labelShapeletTextField, datasetTextField, noPointsTextField, numOfShapeletsTextField, distanceSTTextField, distanceSTTextField_II, pcoverTextField, labelTextField;
     /*** initializeJTextArea --**/
     public JTextArea bspcoverInfoTextArea, textAreaInOnChart_I;

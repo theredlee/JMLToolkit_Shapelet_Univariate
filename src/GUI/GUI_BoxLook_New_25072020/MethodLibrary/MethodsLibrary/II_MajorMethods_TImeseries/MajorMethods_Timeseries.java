@@ -20,8 +20,6 @@ import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
 import info.monitorenter.gui.chart.traces.painters.TracePainterDisc;
 import info.monitorenter.gui.chart.traces.painters.TracePainterLine;
-import info.monitorenter.gui.chart.traces.painters.TracePainterPolyline;
-import info.monitorenter.gui.chart.traces.painters.TracePainterVerticalBar;
 import info.monitorenter.util.Range;
 import net.miginfocom.swing.MigLayout;
 
@@ -449,16 +447,74 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         // Test
         //
         JPanel multiJpanelsPanel = new JPanel();
-        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]0[]", "[]10[]"));
+//        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]0[]", "[]5[]"));
+        multiJpanelsPanel.setLayout(new MigLayout());
+        int numOfCharts = 10;
+        this.aVariables.multiCharts = new Chart2D[numOfCharts];
+        this.aGUIComponents.lblMultiChartTSClass = new JLabel[numOfCharts];
+        this.aGUIComponents.lblMultiChartNum = new JLabel[numOfCharts];
+        this.aGUIComponents.lblMultiChartSPLetNum = new JLabel[numOfCharts];
+        this.aGUIComponents.lblMultiChartSPLetClass = new JLabel[numOfCharts];
+        for(int i=0; i<numOfCharts; i++){
+            JPanel aPanel = new JPanel();
+            aPanel.setLayout(new MigLayout());
+            aPanel.setBackground(Color.WHITE);
+            // Labels first
+            Font font = new Font("SansSerif", Font.PLAIN, 8);
+            /***  -------------------------------- **/
+            JLabel lblMultiChartTSClass = new JLabel();
+            lblMultiChartTSClass.setText("Timeseries Label:");
+            lblMultiChartTSClass.setBorder(null);
+            lblMultiChartTSClass.setFont(font);
+            lblMultiChartTSClass.setForeground(Color.BLUE);
 
-        this.aVariables.multiCharts = new Chart2D[10];
-        for(int i=0; i<10; i++){
+            /***  -------------------------------- **/
+            JLabel lblMultiChartNum = new JLabel();
+            lblMultiChartNum.setText("Timeseries No.:");
+            lblMultiChartNum.setBorder(null);
+            lblMultiChartNum.setFont(font);
+            lblMultiChartNum.setForeground(Color.ORANGE);
+
+            /***  -------------------------------- **/
+            JLabel lblMultiChartSPLetClass = new JLabel();
+            lblMultiChartSPLetClass.setText("Shapelet Label.:");
+            lblMultiChartSPLetClass.setBorder(null);
+            lblMultiChartSPLetClass.setFont(font);
+            lblMultiChartSPLetClass.setForeground(Color.RED);
+
+            /***  -------------------------------- **/
+            JLabel lblMultiChartSPLetNum = new JLabel();
+            lblMultiChartSPLetNum.setText("Shapelet No.:");
+            lblMultiChartSPLetNum.setBorder(null);
+            lblMultiChartSPLetNum.setFont(font);
+            lblMultiChartSPLetNum.setForeground(Color.BLACK);
+
+//            multiJpanelsPanel.add(lblMultiChartTSClass);
+//            multiJpanelsPanel.add(lblMultiChartNum, "wrap");
+//            multiJpanelsPanel.add(lblMultiChartSPLetClass);
+//            multiJpanelsPanel.add(lblMultiChartSPLetNum,"wrap");
+
+            aPanel.add(lblMultiChartTSClass);
+            aPanel.add(lblMultiChartNum, "wrap");
+            aPanel.add(lblMultiChartSPLetClass);
+            aPanel.add(lblMultiChartSPLetNum,"wrap");
+
+            this.aGUIComponents.lblMultiChartTSClass[i] = lblMultiChartTSClass;
+            this.aGUIComponents.lblMultiChartNum[i] = lblMultiChartNum;
+            this.aGUIComponents.lblMultiChartSPLetClass[i] = lblMultiChartSPLetClass;
+            this.aGUIComponents.lblMultiChartSPLetNum[i] = lblMultiChartSPLetNum;
+
+            // Charts second
             Chart2D aChart = new Chart2D();
             aChart.setPreferredSize(new Dimension((905-400)/2, (250)/2));
-            multiJpanelsPanel.add(aChart);
             aChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
             aChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
+
+//            multiJpanelsPanel.add(aChart,  "span");
+            aPanel.add(aChart,  "span");
             this.aVariables.multiCharts[i] = aChart;
+
+            multiJpanelsPanel.add(aPanel,  "wrap");
         }
 
         JScrollPane multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
@@ -727,7 +783,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             if( aTSAraylist != null ){
                 // Dot trace --------------------------
 
-                Trace2DLtd dotTrace = new Trace2DLtd("Class: " + (int)arr[1] + ", no.: " + (int)arr[2] + ", distance: " + String.format("%.5g%n", arr[0]));
+                Trace2DLtd dotTrace = new Trace2DLtd("Distance: " + String.format("%.5g%n", arr[0]));
+//                Trace2DLtd dotTrace = new Trace2DLtd(null);
                 dotTrace.setTracePainter(new TracePainterDisc(2));
                 dotTrace.setColor(Color.BLUE);
                 dotTrace.setStroke(new BasicStroke(2));
@@ -765,7 +822,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
      ---------------------------------------------------------------*/
     // redraw the chart of the time series
-    public void drawTSTrace_CenterChart(){
+    public void drawTSTraceCenterChart(){
         /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
         try{
             setScale();
@@ -818,7 +875,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                   drawTSTrace_BottomChart()                  **
 
      ---------------------------------------------------------------*/
-    public void drawTSTrace_BottomChart() { /****** Bug  ***/
+    public void drawTSTraceBottomChart() { /****** Bug  ***/
         try{
             setScale_bottomChartSetRange();
 
@@ -1113,8 +1170,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     DistanceClassification.class.getName());
             // log messages using log(Level level, String msg)
             logger.log(Level.WARNING, "Your chart selection is wrong. Please type it correctly before you invoke it.");
-            IllegalArgumentException illegalArgumentPointer = new IllegalArgumentException();
-            throw illegalArgumentPointer;
+            throw new IllegalArgumentException();
         }
 
     }
@@ -1173,8 +1229,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     DistanceClassification.class.getName());
             // log messages using log(Level level, String msg)
             logger.log(Level.WARNING, "Your chart selection is wrong. Please type it correctly before you invoke it.");
-            IllegalArgumentException illegalArgumentPointer = new IllegalArgumentException();
-            throw illegalArgumentPointer;
+            throw new IllegalArgumentException();
         }
     }
 

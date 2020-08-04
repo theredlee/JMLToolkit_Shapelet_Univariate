@@ -3,6 +3,7 @@ package GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.III_MajorMetho
 import DataStructures.DataInstance;
 import DataStructures.DataSet;
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
+import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.DistanceClassification;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 import Looks.ShapeletLook;
@@ -110,8 +111,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             /*** Transfer - shapelet **/
             shapeletHorizontaSegmentTransfer(this.aVariables.SPLet_double);
         }
-        catch(Exception exc)
-        {
+        catch(Exception exc) {
             exc.printStackTrace();
         }
         // set the no of points text field from any of the trajectories
@@ -149,8 +149,6 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
         // setShapeletLabelJList() must be behind the Distances computation
         setShapeletLabelJList();
-        //
-        distanceHistogram();
     }
     /*---------------------------------------------------------------
     **                  classfyShapeletLabels()                     **
@@ -408,7 +406,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             drawShapeletChartStackModel();
              */
             setInfomationOnChart();
-            findTopTenTS(this.aGUIComponents.shapeletLabelJList.getSelectedIndex() ,this.aGUIComponents.shapeletJList.getSelectedIndex());
+            //
+            findTopTenTS(this.aGUIComponents.shapeletLabelJList.getSelectedIndex(), this.aGUIComponents.shapeletJList.getSelectedIndex());
+            //
+            distanceHistogram(this.aGUIComponents.shapeletLabelJList.getSelectedIndex(), this.aGUIComponents.shapeletJList.getSelectedIndex());
         }
         catch (Exception exc)
         {
@@ -417,33 +418,51 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     }
 
     /*** --------------------------------------------- **/
-    public void distanceHistogram(){
-//        ArrayList<ArrayList<double[]>> distanceArr = this.aVariables.SPLet_toAllTS_distances.get(0);
-        ArrayList<double[]> distanceArr = this.aVariables.SPLet_toAllTS_distances.get(0).get(2);
-        ArrayList<double[]> distanceArr_2 = this.aVariables.SPLet_toAllTS_distances.get(0).get(3);
-        double[] vals = new double[distanceArr.size()];
-        double[] vals_2 = new double[distanceArr_2.size()];
+    public void distanceHistogram(int SPLetLabel, int SPLetIndex){
+        ArrayList<double[]> distanceArr = this.aVariables.SPLet_toAllTS_distances.get(SPLetLabel).get(SPLetIndex);
+        double[][] vals = new double[this.aVariables.SPLet_labelArrayList.size()][]; // Here not to initialize the second level size
+        ArrayList<Double>[] temContainer = new ArrayList[this.aVariables.SPLet_labelArrayList.size()];
+
         //
-//        int count = 0;
-//        for(int i=0; i<distanceArr.size(); i++){
-//            for(int k=0; k<distanceArr.get(i).size(); k++){
-//                vals[count] = distanceArr.get(i).get(k)[0];
-//                count++;
-//            }
-//        }
-
-        for(int i=0; i<vals.length; i++){
-            vals[i] = distanceArr.get(i)[0];
+        for(int i=0; i<temContainer.length; i++){
+            temContainer[i] = new ArrayList<>();
         }
 
-        for(int i=0; i<vals_2.length; i++){
-            vals_2[i] = distanceArr_2.get(i)[0];
+        //
+        for(int i=0; i<distanceArr.size(); i++){
+            double lbl = distanceArr.get(i)[1];
+            //
+            if(lbl==0.0){
+                temContainer[(int)lbl].add(distanceArr.get(i)[0]);
+            }else if(lbl==1.0){
+                temContainer[(int)lbl].add(distanceArr.get(i)[0]);
+            }else{
+                Logger logger
+                        = Logger.getLogger(
+                        DistanceClassification.class.getName());
+                // log messages using log(Level level, String msg)
+                logger.log(Level.WARNING, "Default labels limit is 2 (0 and 1). \nNumber of shapelet labels is out pf the default design range. Please maintain the codes to support your dataset needs.");
+                throw new IllegalArgumentException();
+            }
         }
+
+        // Arraylist to array
+        for(int i=0; i<temContainer.length; i++){
+            int size = temContainer[i].size();
+            vals[i] = new double[size]; // Here initialize the second level size
+            //
+            for(int j=0; j<size; j++){
+                vals[i][j] = temContainer[i].get(j); // distanceArr.get(i)[0] is distance value
+            }
+        }
+
+//        System.out.println("vals[0].length: " + vals[0].length);
+//        System.out.println("vals[1].length: " + vals[1].length);
 
         var dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
-        dataset.addSeries("key", vals, 10);
-        dataset.addSeries("key_2", vals_2, 10);
+        dataset.addSeries("key", vals[0], 25);
+        dataset.addSeries("key_2", vals[1], 25);
 
         PlotOrientation orientation = PlotOrientation.VERTICAL;
         boolean show = true;
@@ -463,6 +482,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
         ChartPanel aChartPanel = new ChartPanel(histogram);
         aChartPanel.setBounds(0, 0, 905-540, 350);
+
+        if(this.aGUIComponents.layeredPane_distanceHist != null ){
+            this.aGUIComponents.layeredPane_distanceHist.removeAll(); // Remove all layers at first
+        }
         this.aGUIComponents.layeredPane_distanceHist.add(aChartPanel, Integer.valueOf(0));
     }
 
@@ -483,6 +506,11 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             DataSet datasetwithCurrentLabel = this.aVariables.dataSet.FilterByLabel(TS_lbl);
             DataInstance aTSDataInstance = datasetwithCurrentLabel.instances.get(TS_Index);
             ArrayList<Double> aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSCenterChart(aTSDataInstance);
+            this.aGUIComponents.lblMultiChartTSClass[i].setText("Class Label: " + TS_lbl);
+            this.aGUIComponents.lblMultiChartNum[i].setText("Time Series No.: " + TS_Index);
+            this.aGUIComponents.lblMultiChartSPLetClass[i].setText("Shapelet Label: " +  selectedIndex);
+            this.aGUIComponents.lblMultiChartSPLetNum[i].setText("Shapelet No.: " +  localLabel);
+
 //            System.out.println("aryList: " + aryList);
             this.aMajorMethods_Timeseries.setTSMultiChartsandTraces(i, arr, aryList); //
         }

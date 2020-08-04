@@ -506,33 +506,33 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        chartI_TS_TextField = new JTextField();
-        chartI_TS_TextField.setText("Class Label No.:");
-        chartI_TS_TextField.setEditable(false);
-        chartI_TS_TextField.setBounds(785-400,5,125, 15);
-        chartI_TS_TextField.setBorder(null);
-        chartI_TS_TextField.setFont(font);
-        chartI_TS_TextField.setForeground(Color.MAGENTA);
+        centerChartTSLabelTextField = new JTextField();
+        centerChartTSLabelTextField.setText("Class Label No.:");
+        centerChartTSLabelTextField.setEditable(false);
+        centerChartTSLabelTextField.setBounds(785-400,5,125, 15);
+        centerChartTSLabelTextField.setBorder(null);
+        centerChartTSLabelTextField.setFont(font);
+        centerChartTSLabelTextField.setForeground(Color.MAGENTA);
 
 
         /***  -------------------------------- **/
-        chartI_Interpolated_TextField = new JTextField();
-        chartI_Interpolated_TextField.setText("Time Series No.:");
-        chartI_Interpolated_TextField.setEditable(false);
-        chartI_Interpolated_TextField.setBounds(785-400,20,125, 15);
-        chartI_Interpolated_TextField.setBorder(null);
-        chartI_Interpolated_TextField.setFont(font);
-        chartI_Interpolated_TextField.setForeground(Color.BLUE);
+        centerChartTSNumTextField = new JTextField();
+        centerChartTSNumTextField.setText("Time Series No.:");
+        centerChartTSNumTextField.setEditable(false);
+        centerChartTSNumTextField.setBounds(785-400,20,125, 15);
+        centerChartTSNumTextField.setBorder(null);
+        centerChartTSNumTextField.setFont(font);
+        centerChartTSNumTextField.setForeground(Color.BLUE);
 
 
         /***  -------------------------------- **/
-        chartI_Shapelet_TextField = new JTextField();
-        chartI_Shapelet_TextField.setText("Shapelet No.:");
-        chartI_Shapelet_TextField.setEditable(false);
-        chartI_Shapelet_TextField.setBounds(785-400,35,125, 15);
-        chartI_Shapelet_TextField.setBorder(null);
-        chartI_Shapelet_TextField.setFont(font);
-        chartI_Shapelet_TextField.setForeground(Color.GREEN);
+        centerChartSPLetNumTextField = new JTextField();
+        centerChartSPLetNumTextField.setText("Shapelet No.:");
+        centerChartSPLetNumTextField.setEditable(false);
+        centerChartSPLetNumTextField.setBounds(785-400,35,125, 15);
+        centerChartSPLetNumTextField.setBorder(null);
+        centerChartSPLetNumTextField.setFont(font);
+        centerChartSPLetNumTextField.setForeground(Color.GREEN);
 
 
         /***  -------------------------------- **/
@@ -747,9 +747,9 @@ public class GUIComponents extends GUIComponents_abstract {
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_CenterChart);
         layeredPane_CenterChart.add(centerChartPanel, Integer.valueOf(0));
-        layeredPane_CenterChart.add(chartI_TS_TextField, Integer.valueOf(1));
-        layeredPane_CenterChart.add(chartI_Interpolated_TextField, Integer.valueOf(1));
-        layeredPane_CenterChart.add(chartI_Shapelet_TextField, Integer.valueOf(1));
+        layeredPane_CenterChart.add(centerChartTSLabelTextField, Integer.valueOf(1));
+        layeredPane_CenterChart.add(centerChartTSNumTextField, Integer.valueOf(1));
+        layeredPane_CenterChart.add(centerChartSPLetNumTextField, Integer.valueOf(1));
 
 
         /***  -------------------------------- **/
