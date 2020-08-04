@@ -54,7 +54,7 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
         /*** ------------------------------------------------- **/
 
         /*** Add back TS trace on center chart **/
-        aMajorMethods_Timeseries.addGlobalTSTraceoncCenterChart();
+        aMajorMethods_Timeseries.addGlobalTSTraceOnCenterChart();
 
         aMajorMethods_Timeseries.addLocalTSTraceonCenterChart();
 
@@ -78,11 +78,11 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
         /*** ------------------------------------------------- **/
         /*** Trace point remove **/
         aVariables.TSTrace.removeAllPoints();
-        aMajorMethods_Timeseries.removeLocalTSTracePoints_centerChart();
+        aMajorMethods_Timeseries.removeLocalTSTracePointsCenterChart();
         /*** ------------------------------------------------- **/
 
         /*** Add back TS trace on center chart **/
-        aMajorMethods_Timeseries.addGlobalTSTraceoncCenterChart();
+        aMajorMethods_Timeseries.addGlobalTSTraceOnCenterChart();
 
         aMajorMethods_Timeseries.addLocalTSTraceonCenterChart();
 

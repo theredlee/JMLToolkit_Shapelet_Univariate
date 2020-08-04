@@ -395,8 +395,8 @@ public class DistanceClassification extends DistanceClassification_abstract {
             }
         }
         /*** After get a distanceMin **/
-//        return distanceMin;
-        return distanceMin/((currentShapelet.size()-1)*1.0);
+//        return distanceMin/((currentShapelet.size()-1)*1.0);
+        return distanceMin*1.0;
     }
 
     public void outputFile(ArrayList<Double>[] anArray) throws FileNotFoundException, UnsupportedEncodingException {

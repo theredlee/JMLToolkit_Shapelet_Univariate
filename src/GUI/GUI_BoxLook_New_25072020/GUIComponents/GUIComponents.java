@@ -736,8 +736,8 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-//        multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
-//        multiChartsScrollPane.setBounds(690, 170, (905-400)/2, 620);
+//        multiChartsScrollPane = new JScrollPane();
+//        multiChartsScrollPane.setBounds(680, 170, (905-400)/2+40, 620);
 //        frmTimeSeriesLayerFirst.add(multiChartsScrollPane);
 
 //        for(int i=0; i<10; i++){

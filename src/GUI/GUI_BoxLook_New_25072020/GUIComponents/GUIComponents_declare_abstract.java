@@ -32,7 +32,7 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJCheckBox --**/
     public JCheckBox enableSupervisionCheckBox, imputeCheckBox, shuffleDataSetCheckBox, enableDTWingCheckBox, imputationTechnique, classListItem;
     /*** initializeJList --**/
-    public JList labelList, TS_labelList_Horizontal, TS_List, shapeletJList, shapeletLabelJList;
+    public JList labelList, TS_labelList_Horizontal, TS_List, shapeletLabelJList, shapeletJList;
     /*** initializeJScrollPane --**/
     public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelLabelListScrollPane, bspcoverInfoScrollPane, multiChartsScrollPane;
     /*** initializeJPanel --**/

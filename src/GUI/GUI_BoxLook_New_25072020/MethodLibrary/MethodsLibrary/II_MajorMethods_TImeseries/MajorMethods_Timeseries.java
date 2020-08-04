@@ -6,6 +6,7 @@ import DataStructures.FeaturePoint;
 import DataStructures.Matrix;
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
 import GUI.GUI_BoxLook_New_25072020.HSLColor.HSLColor;
+import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.DistanceClassification;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 import Looks.TSLook;
 import TimeSeries.Distorsion;
@@ -428,7 +429,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.aTSLook.PAALike_initial();
     }
 
-    public ArrayList<Double> horizontalLineLook_TS_centerChart(DataInstance aTSDataInstance){
+    public ArrayList<Double> horizontalLineLookTSCenterChart(DataInstance aTSDataInstance){
         ArrayList<Double> aTS_Arylist = this.aVariables.aTSLook.revalue(this.aVariables.aTSLook.arrayListTransfer(aTSDataInstance));
         return aTS_Arylist;
     }
@@ -445,20 +446,23 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      ---------------------------------------------------------------*/
     public void createTSChartsAndTraces(){
 
+        // Test
         //
         JPanel multiJpanelsPanel = new JPanel();
-        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]1[]", "[]5[]"));
+        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]1[]", "[]10[]"));
         this.aVariables.multiCharts = new Chart2D[10];
         for(int i=0; i<10; i++){
             Chart2D aChart = new Chart2D();
             aChart.setPreferredSize(new Dimension((905-400)/2, (250)/2));
             multiJpanelsPanel.add(aChart);
+            aChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
+            aChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
             this.aVariables.multiCharts[i] = aChart;
         }
 
         JScrollPane multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
         multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        multiChartsScrollPane.setBounds(685, 170, (905-400)/2+40, 620);
+        multiChartsScrollPane.setBounds(680, 170, (905-400)/2+40, 620);
         this.aGUIComponents.multiChartsScrollPane = multiChartsScrollPane;
         this.aGUIComponents.frmTimeSeriesLayerFirst.add(this.aGUIComponents.multiChartsScrollPane);
 
@@ -490,11 +494,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aLocalLineTrace = new Trace2DLtd(null);;
         this.aVariables.centerChart.addTrace(this.aLocalLineTrace);
 
+        // Test
         /*** **/
-        this.aVariables.multiCharts[0].addTrace(this.aVariables.TSTrace);
-        this.aVariables.multiCharts[0].addTrace(this.aLocalLineTrace);
-        this.aVariables.multiCharts[0].getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
-        this.aVariables.multiCharts[0].getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
+//        this.aVariables.multiCharts[0].addTrace(this.aVariables.TSTrace);
+//        this.aVariables.multiCharts[0].addTrace(this.aLocalLineTrace);
 //        this.aVariables.multiCharts[0].getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-10, this.aVariables.dataset_withCurrentLabel.numFeatures+10)));
 //        System.out.println();
         /*** **/
@@ -568,7 +571,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                         addTSTrace_centerChart()                       **
 
      ---------------------------------------------------------------*/
-    public void addGlobalTSTraceoncCenterChart(){
+    public void addGlobalTSTraceOnCenterChart(){
         this.aVariables.centerChart.addTrace(this.aVariables.TSTrace);
     }
 
@@ -670,7 +673,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             }
             /*** 2. Then, redraw TS trace **/
             /*** Horizontal dot plot **/ /*** Horizontal line plot **/
-            TS_dotANDLine_plot();
+            TSDotANDLinePlot();
         }
         catch( Exception exc )
         {
@@ -713,6 +716,47 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
 
         return aHSLColor.getRGB();
+    }
+
+    /*** --------------------------------------------- **/
+    public void setTSMultiChartsandTraces(int chartIndex, double[] arr, ArrayList<Double> aTSAraylist){
+        try{
+//            setScale();
+            this.aVariables.multiCharts[chartIndex].removeAllTraces();
+
+            if( aTSAraylist != null ){
+                // Dot trace --------------------------
+
+                Trace2DLtd dotTrace = new Trace2DLtd("Class: " + (int)arr[1] + ", no.: " + (int)arr[2] + ", distance: " + String.format("%.5g%n", arr[0]));
+                dotTrace.setTracePainter(new TracePainterDisc(2));
+                dotTrace.setColor(Color.BLUE);
+                dotTrace.setStroke(new BasicStroke(2));
+                //
+                this.aVariables.multiCharts[chartIndex].addTrace(dotTrace);
+                //
+                int numPoints = aTSAraylist.size();
+                double newVal, oldVal=-1;
+                for(int i = 0; i < numPoints; i++)
+                {
+                    newVal = aTSAraylist.get(i);
+                    if(!(i==0) && newVal==oldVal){
+                        continue;
+                    }else{
+                        oldVal=newVal;
+                    }
+                    dotTrace.addPoint(i, newVal);
+                }
+
+                // Line trace --------------------------
+                drawTSDotToLineTransfer(aTSAraylist, "top ten chart", chartIndex); // The second parameter: "top ten chart" (case insensitive)
+            }
+
+        }catch (NullPointerException e){
+            // Create a Logger
+            Logger logger = Logger.getLogger(MajorMethods_Timeseries.class.getName());
+            // log messages using log(Level level, String msg)
+            logger.log(Level.WARNING, e.toString());
+        }
     }
 
     /*---------------------------------------------------------------
@@ -758,66 +802,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     FeaturePoint p = this.aVariables.TSDataInstance.features.get(i);
                     if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE )
                         this.aVariables.TSTrace.addPoint(i, p.value);
-                }
-            }
-
-        }catch (NullPointerException e){
-            // Create a Logger
-            Logger logger = Logger.getLogger(MajorMethods_Timeseries.class.getName());
-            // log messages using log(Level level, String msg)
-            logger.log(Level.WARNING, e.toString());
-        }
-
-    }
-
-    /*---------------------------------------------------------------
-
-     **         drawTSTrace_horizontally_CenterChart()              **
-
-     ---------------------------------------------------------------*/
-    public void drawTSTrace_horizontally_CenterChart(ArrayList<Double> aTSAraylist){
-        /*** Draw horizontal lines **/
-
-        /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
-        try{
-            setScale();
-            this.aVariables.TSTrace.removeAllPoints();
-//            System.out.println("drawTSTrace_horizontally_CenterChart(ArrayList<Double> aTSAraylist) -> dataset_withCurrentLabel.numFeatures+10: " + (dataset_withCurrentLabel.numFeatures+10));
-
-            /*
-            interpolatedTimeSeriesTrace.removeAllPoints();
-            */
-
-            /*** To ensure multiple timeseries can leave on one canvas ***/
-            /*** And at the same time, I create an independent clearAllTSTraces_AllCharts() method at the end to points on canvas ***/
-
-            /*** !!! However, here's a thing, I do not satisfy the non-duplicated timeseries on canvas yet!!! ***/
-
-        /*
-        if( manipulatedTimeSeries != null)
-        {
-            for(int i = 0; i < manipulatedTimeSeries.features.size(); i++)
-            {
-                FeaturePoint p = manipulatedTimeSeries.features.get(i);
-                if( p.status == PointStatus.PRESENT )
-                    interpolatedTimeSeriesTrace.addPoint(i, p.value);
-            }
-        }
-         */
-
-            if( aTSAraylist != null ){
-                int numPoints = aTSAraylist.size();
-                System.out.println("-> aTSAraylist.size():" + numPoints);
-                double newVal, oldVal=-1;
-                for(int i = 0; i < numPoints; i++)
-                {
-                    newVal =  aTSAraylist.get(i);
-                    if(!(i==0) && newVal==oldVal){
-                        continue;
-                    }else{
-                        oldVal=newVal;
-                    }
-                    this.aVariables.TSTrace.addPoint(i, newVal);
                 }
             }
 
@@ -891,6 +875,66 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     = Logger.getLogger(
                     MajorMethods_Timeseries.class.getName());
 
+            // log messages using log(Level level, String msg)
+            logger.log(Level.WARNING, e.toString());
+        }
+    }
+
+    /*---------------------------------------------------------------
+
+     **         drawTSTrace_horizontally_CenterChart()              **
+
+     ---------------------------------------------------------------*/
+    public void drawTSTrace_horizontally_CenterChart(ArrayList<Double> aTSAraylist){
+        /*** Draw horizontal lines **/
+
+        /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
+        try{
+            setScale();
+            this.aVariables.TSTrace.removeAllPoints();
+//            System.out.println("drawTSTrace_horizontally_CenterChart(ArrayList<Double> aTSAraylist) -> dataset_withCurrentLabel.numFeatures+10: " + (dataset_withCurrentLabel.numFeatures+10));
+
+            /*
+            interpolatedTimeSeriesTrace.removeAllPoints();
+            */
+
+            /*** To ensure multiple timeseries can leave on one canvas ***/
+            /*** And at the same time, I create an independent clearAllTSTraces_AllCharts() method at the end to points on canvas ***/
+
+            /*** !!! However, here's a thing, I do not satisfy the non-duplicated timeseries on canvas yet!!! ***/
+            /*** -> Done now :) **/
+
+        /*
+        if( manipulatedTimeSeries != null)
+        {
+            for(int i = 0; i < manipulatedTimeSeries.features.size(); i++)
+            {
+                FeaturePoint p = manipulatedTimeSeries.features.get(i);
+                if( p.status == PointStatus.PRESENT )
+                    interpolatedTimeSeriesTrace.addPoint(i, p.value);
+            }
+        }
+         */
+
+            if( aTSAraylist != null ){
+                int numPoints = aTSAraylist.size();
+                System.out.println("-> aTSAraylist.size():" + numPoints);
+                double newVal, oldVal=-1;
+                for(int i = 0; i < numPoints; i++)
+                {
+                    newVal =  aTSAraylist.get(i);
+                    if(!(i==0) && newVal==oldVal){
+                        continue;
+                    }else{
+                        oldVal=newVal;
+                    }
+                    this.aVariables.TSTrace.addPoint(i, newVal);
+                }
+            }
+
+        }catch (NullPointerException e){
+            // Create a Logger
+            Logger logger = Logger.getLogger(MajorMethods_Timeseries.class.getName());
             // log messages using log(Level level, String msg)
             logger.log(Level.WARNING, e.toString());
         }
@@ -1006,7 +1050,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
     /*** ---------------------------------------------------------------------------------------------------------* */
 
-    public void draw_TS_dotToLineTransfer(ArrayList<Double> anArylist){
+    public void drawTSDotToLineTransfer(ArrayList<Double> anArylist, String chartChoiceStr){
         /*** divider must bo odd number **/
         int divider = 5;
         /*** **/
@@ -1057,68 +1101,84 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             dataArray[myIndex+1] = aData;
         }
 
-        /*** center chart **/
-        horizontalLinePlot_withVerticalLine_centerChart_controller(divider, dataArray);
+        if(chartChoiceStr.equalsIgnoreCase("center chart")){
+            /*** center chart **/
+            horizontalLinePlotWithVerticalLineCenterChartController(divider, dataArray);
+        }else if(chartChoiceStr.equals("bottom chart")){
+            /*** bottom chart **/
+            horizontalLinePlotWithVerticalLineBottomChartController(divider, dataArray);
+        }else{
+            Logger logger
+                    = Logger.getLogger(
+                    DistanceClassification.class.getName());
+            // log messages using log(Level level, String msg)
+            logger.log(Level.WARNING, "Your chart selection is wrong. Please type it correctly before you invoke it.");
+            IllegalArgumentException illegalArgumentPointer = new IllegalArgumentException();
+            throw illegalArgumentPointer;
+        }
 
-        /*** bottom chart **/
-
-        horizontalLinePlot_withVerticalLine_bottomChart_controller(divider, dataArray);
     }
 
-    /*** With vertical connecting line - center chart**/
-    public void horizontalLinePlot_withVerticalLine_centerChart_controller(int divider, Double[] myDataArray){
-
-        /*** Use aLocalLineTrace instead of temp trace **/
-        /*** Clear it at first **/
-        /*** Remember to keep it on the center chart **/
-        removeLocalTSTracePoints_centerChart();
-
-        double head = 0;
-        double val;
-
-        int aSize = myDataArray.length;
-
-        /*** We need to control the position of each point **/
-        ArrayList<Double> anArylist = new ArrayList<>();
+    public void drawTSDotToLineTransfer(ArrayList<Double> anArylist, String chartChoiceStr, int chartIndex){
+        /*** divider must bo odd number **/
+        int divider = 5;
         /*** **/
 
-        /*** An index to record the start position of a set of points, initial value: 0 **/
-        int indexP = 0;
+        /*** This value depends on the divder **/
+        int startStep;
 
-        /*** Version II test **/
-        for(int i = 0; i < aSize; i++){
-            val = myDataArray[i];
-            anArylist.add(val);
+        ArrayList<Double> dataArylist = anArylist;
+
+        int size = dataArylist.size();
+
+        int myIndex;
+
+        double aData;
+
+        /*** |_|_| **/
+        /*** I_|_I_I_|_I_I_|_I **/
+        /*** Draw the scale and measurement in paper **/
+        int expandedSize = size * divider;
+        Double[] dataArray = new Double[expandedSize];
+
+        for(int i = 0; i < size; i++){
+
+            /*** Draw the scale and measurement in paper **/
+            startStep = (divider-1)/2;
+            myIndex = divider*i + startStep;
+
+//            aData = mydata.features.get(i);
+
+            aData = dataArylist.get(i);
+
+            for(int j=0; j<(divider-1)/2; j++){
+                dataArray[myIndex-(1+j)] = aData;
+            }
+
+            dataArray[myIndex] = aData;
+
+            for(int k=0; k<(divider-1)/2; k++){
+                dataArray[myIndex+(1+k)] = aData;
+            }
+
+            dataArray[myIndex+1] = aData;
         }
-        addLocalTrace_centerChart(divider, indexP, anArylist);
+
+        if(chartChoiceStr.equalsIgnoreCase("top ten chart")){
+            /*** center chart **/
+            horizontalLinePlotWithVerticalLineTopTenChartController(divider, dataArray, chartIndex);
+        }else{
+            Logger logger
+                    = Logger.getLogger(
+                    DistanceClassification.class.getName());
+            // log messages using log(Level level, String msg)
+            logger.log(Level.WARNING, "Your chart selection is wrong. Please type it correctly before you invoke it.");
+            IllegalArgumentException illegalArgumentPointer = new IllegalArgumentException();
+            throw illegalArgumentPointer;
+        }
     }
 
-    /*** With vertical connecting line - bottom chart **/
-    public void horizontalLinePlot_withVerticalLine_bottomChart_controller(int divider, Double[] myDataArray){
-
-        /*** No need to clear the line plots **/
-
-        double head = 0;
-        double val;
-
-        int aSize = myDataArray.length;
-
-        /*** We need to control the position of each point **/
-        ArrayList<Double> anArylist = new ArrayList<>();
-        /*** **/
-
-        /*** An index to record the start position of a set of points, initial value: 0 **/
-        int indexP = 0;
-
-        /*** Version II test **/
-        for(int i = 0; i < aSize; i++){
-            val = myDataArray[i];
-            anArylist.add(val);
-        }
-        addLocalTrace_bottomChart(divider, indexP, anArylist);
-    }
-
-    /*** _Without_ vertical connecting line **/
+    // _Without_ vertical connecting line
     public void horizontalLinePlot_withoutVerticalLine_centerChart_controller(int divider, Double[] myDataArray){
 
         /*** Clear the line plots at first **/
@@ -1148,7 +1208,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     System.out.println("---------------------> Loop [i]: " + i);
 
                     /*** If not head differs the precedent value, plot the precedent values in a line at first**/
-                    addLocalTrace_centerChart(divider, indexP, anArylist);
+                    addLocalTraceCenterChart(divider, indexP, anArylist);
                     System.out.println("-------- > anArylist.size(): " + anArylist.size());
                     anArylist.clear();
                     System.out.println("anArylist.size() after clear(): " + anArylist.size());
@@ -1159,7 +1219,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 System.out.println("---------------------> Loop [i]: " + i);
 
                 /*** If not head differs the precedent value, plot the precedent values in a line at first**/
-                addLocalTrace_centerChart(divider, indexP, anArylist);
+                addLocalTraceCenterChart(divider, indexP, anArylist);
                 System.out.println("-------- > anArylist.size(): " + anArylist.size());
                 anArylist.clear();
                 System.out.println("anArylist.size() after clear(): " + anArylist.size());
@@ -1174,9 +1234,127 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
 
     }
-    /*** **/
+    //
 
-    public void addLocalTrace_centerChart(int divider, int startP, ArrayList<Double> singleAry){
+    // With vertical connecting line - top ten charts
+    public void horizontalLinePlotWithVerticalLineTopTenChartController(int divider, Double[] myDataArray, int chartIndex){
+
+        double head = 0;
+        double val;
+
+        int aSize = myDataArray.length;
+
+        /*** We need to control the position of each point **/
+        ArrayList<Double> anArylist = new ArrayList<>();
+        /*** **/
+
+        /*** An index to record the start position of a set of points, initial value: 0 **/
+        int indexP = 0;
+
+        /*** Version II test **/
+        for(int i = 0; i < aSize; i++){
+            val = myDataArray[i];
+            anArylist.add(val);
+        }
+
+        addLocalTraceTopTenMultiCharts(divider, indexP, anArylist, chartIndex);
+    }
+
+    // With vertical connecting line - center chart
+    public void horizontalLinePlotWithVerticalLineCenterChartController(int divider, Double[] myDataArray){
+
+        /*** Use aLocalLineTrace instead of temp trace **/
+        /*** Clear it at first **/
+        /*** Remember to keep it on the center chart **/
+        removeLocalTSTracePointsCenterChart();
+
+        double head = 0;
+        double val;
+
+        int aSize = myDataArray.length;
+
+        /*** We need to control the position of each point **/
+        ArrayList<Double> anArylist = new ArrayList<>();
+        /*** **/
+
+        /*** An index to record the start position of a set of points, initial value: 0 **/
+        int indexP = 0;
+
+        /*** Version II test **/
+        for(int i = 0; i < aSize; i++){
+            val = myDataArray[i];
+            anArylist.add(val);
+        }
+
+        addLocalTraceCenterChart(divider, indexP, anArylist);
+    }
+
+    // With vertical connecting line - bottom chart
+    public void horizontalLinePlotWithVerticalLineBottomChartController(int divider, Double[] myDataArray){
+
+        /*** No need to clear the line plots **/
+
+        double head = 0;
+        double val;
+
+        int aSize = myDataArray.length;
+
+        /*** We need to control the position of each point **/
+        ArrayList<Double> anArylist = new ArrayList<>();
+        /*** **/
+
+        /*** An index to record the start position of a set of points, initial value: 0 **/
+        int indexP = 0;
+
+        /*** Version II test **/
+        for(int i = 0; i < aSize; i++){
+            val = myDataArray[i];
+            anArylist.add(val);
+        }
+        addLocalTraceBottomChart(divider, indexP, anArylist);
+    }
+
+    public void addLocalTraceTopTenMultiCharts(int divider, int startP, ArrayList<Double> singleAry, int chartIndex){
+        try{
+            Trace2DLtd lineTrace = new Trace2DLtd(null);
+            lineTrace.setColor(Color.ORANGE);
+            lineTrace.setStroke(new BasicStroke(2));
+            lineTrace.setTracePainter(new TracePainterLine());
+            //
+            Chart2D aChart = this.aVariables.multiCharts[chartIndex];
+            aChart.addTrace(lineTrace);
+
+            /***** We need to change codes here  ***/
+            /*** A bug here is the same timeseries may be presented by two totally different shapes **/
+            if (singleAry != null) {
+
+                int numPoint = singleAry.size();
+//                System.out.println("-> singleAry.size():" + numPoint);
+                double yP;
+                double xP;
+                int backwardIndex = (divider-1)/2;
+                for(int i = 0; i < numPoint; i++)
+                {
+                    yP = singleAry.get(i);
+
+                    /*** X position scale **/
+                    /*** (i+startP)/3 -> Wrong (Integer discard), (i+startP)/3.0 -> Correct (Float transfer) **/
+                    xP = (i+startP)/((double)divider)  - 1/((double)divider)*backwardIndex;
+
+                    lineTrace.addPoint(xP, yP);
+                }
+            }
+            /*****  ***/
+        }catch (NullPointerException e){
+            // Create a Logger
+            Logger logger = Logger.getLogger(MajorMethods_Timeseries.class.getName());
+
+            // log messages using log(Level level, String msg)
+            logger.log(Level.WARNING, e.toString());
+        }
+    }
+
+    public void addLocalTraceCenterChart(int divider, int startP, ArrayList<Double> singleAry){
         try{
             this.aLocalLineTrace.setColor(Color.ORANGE);
             this.aLocalLineTrace.setStroke(new BasicStroke(3));
@@ -1212,7 +1390,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
     }
 
-    public void addLocalTrace_bottomChart(int divider, int startP, ArrayList<Double> singleAry){
+    public void addLocalTraceBottomChart(int divider, int startP, ArrayList<Double> singleAry){
         try{
             int startPoint = 0; /*** Best match segment's start point **/
 
@@ -1279,7 +1457,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
     }
 
-    public void removeLocalTSTracePoints_centerChart(){
+    public void removeLocalTSTracePointsCenterChart(){
         if(!this.aLocalLineTrace.isEmpty()){
             this.aLocalLineTrace.removeAllPoints();
         }
@@ -1289,12 +1467,13 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.centerChart.addTrace(this.aLocalLineTrace);
     }
 
-    public void TS_dotANDLine_plot(){
+    public void TSDotANDLinePlot(){
         increaseBottomTSTraceCount(1);
-        ArrayList<Double> aryList = horizontalLineLook_TS_centerChart(this.aVariables.TSDataInstance);
+        ArrayList<Double> aryList = horizontalLineLookTSCenterChart(this.aVariables.TSDataInstance);
         drawTSTrace_horizontally_CenterChart(aryList); // centerChart
         drawTSTrace_horizontally_BottomChart(aryList);
-        draw_TS_dotToLineTransfer(aryList);
+        drawTSDotToLineTransfer(aryList, "center chart");
+        drawTSDotToLineTransfer(aryList, "bottom chart");
     }
 
     /*** ---------------------------------------------------------------------------------------------------------* */

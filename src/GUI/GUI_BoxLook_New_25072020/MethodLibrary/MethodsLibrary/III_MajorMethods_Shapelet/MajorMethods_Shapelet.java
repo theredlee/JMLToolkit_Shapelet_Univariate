@@ -1,5 +1,7 @@
 package GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.III_MajorMethods_Shapelet;
 
+import DataStructures.DataInstance;
+import DataStructures.DataSet;
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
@@ -119,9 +121,8 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         // Invoking after createChart_TopRightChart()!
         initializeShapletContainer();
         classfyShapeletLabels();
-        setShapeletLabelJList();
 
-        /*** Classification test **/
+        // Distances computation
         infoClassificaationTest("\nDistance sorting is on process ... ");
         try {
             this.aVariables.SPLet_toAllTS_distances = this.aDistanceClassification.classificationTest_v3();
@@ -137,6 +138,8 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             e.printStackTrace();
         }
 
+        // setShapeletLabelJList() must be behind the Distances computation
+        setShapeletLabelJList();
     }
     /*---------------------------------------------------------------
     **                  classfyShapeletLabels()                     **
@@ -378,7 +381,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                 return;
             }
             this.aGUIComponents.labelShapeletTextField.setVisible(true);
-            this.aGUIComponents.labelShapeletTextField.setText("Shapelet Length: " + this.aVariables.currentSPLet_.size());
+            this.aGUIComponents.labelShapeletTextField.setText("Shapelet Length: " + (this.aVariables.currentSPLet_.size()-1));
             //            drawShapeletTrace_TopRightChart();
 //            drawShapeletTrace_CenterChart();
             /*** Horizontal dot plot **/ /*** Horizontal line plot **/
@@ -395,11 +398,40 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             drawShapeletChartStackModel();
              */
             setInfomationOnChart();
+            findTopTenTS(this.aGUIComponents.shapeletLabelJList.getSelectedIndex() ,this.aGUIComponents.shapeletJList.getSelectedIndex());
         }
         catch (Exception exc)
         {
             exc.printStackTrace();
         }
+    }
+
+    /*** --------------------------------------------- **/
+    public void findTopTenTS(int selectedIndex, int selectedLabel){
+        int defaultTopK = 10;
+//        this.aVariables.lastSPLetIndex =
+//        this.aVariables.currentSPLet_ =
+        int localIndex = selectedIndex;
+        int localLabel = selectedLabel;
+
+        ArrayList<double[]> allDistanceforOneSPLet = this.aVariables.SPLet_toAllTS_distances.get(localIndex).get(localLabel);
+
+        for(int i=0; i<defaultTopK; i++){
+            double[] arr = allDistanceforOneSPLet.get(i);
+            double TS_lbl = arr[1]; // [1] is label. [2] is TS number
+            int TS_Index = (int)arr[2];
+//            System.out.println("TS_lbl: " + TS_lbl + ", TS_Index: " + TS_Index);
+
+            DataSet datasetwithCurrentLabel = this.aVariables.dataSet.FilterByLabel(TS_lbl);
+            DataInstance aTSDataInstance = datasetwithCurrentLabel.instances.get(TS_Index);
+            ArrayList<Double> aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSCenterChart(aTSDataInstance);
+//            System.out.println("aryList: " + aryList);
+            this.aMajorMethods_Timeseries.setTSMultiChartsandTraces(i, arr, aryList); //
+        }
+
+    }
+
+    public void setSPLetMultiChartsandTraces(int chartIndex, int TSIndex, int TSlabel, ArrayList<Double> aTSAraylist){
     }
 
     /*** --------------------------------------------- **/
@@ -430,7 +462,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             double distanceBetweenST = getShortestDistance();
             int startPosition = this.aVariables.globalStartPosition;
             this.aGUIComponents.distanceSTTextField.setVisible(true);
-            this.aGUIComponents.distanceSTTextField.setText("distance TS: " + Math.round(distanceBetweenST * 100.0)/100.0);
+            this.aGUIComponents.distanceSTTextField.setText("distance TS: " + String.format("%.5g%n", distanceBetweenST));
             //System.out.println("startPosition "+startPosition);
             double newVal, oldVal=-1;
             for(int i = 0; i<aArylist.size(); i++){ //The transferred shapelet array list has discarded the label in the first index
@@ -466,7 +498,8 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //        System.out.println("From drawShapeletTrace_centerChart() -> startPoint: " + startPosition);
         this.aVariables.globalStartPosition = startPosition;
 
-        return distanceMin/((this.aVariables.currentSPLet_.size()-1)*1.0);
+//        return distanceMin/((this.aVariables.currentSPLet_.size()-1)*1.0);
+        return distanceMin*1.0;
     }
 
     public void getShortestDistance(ArrayList<Double> currentShapelet){ /*** Every plot after loading shapelet should calculate the distance between shapelet and TS **/
