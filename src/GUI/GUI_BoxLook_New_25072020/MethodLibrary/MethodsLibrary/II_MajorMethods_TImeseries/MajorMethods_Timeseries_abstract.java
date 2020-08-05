@@ -49,13 +49,12 @@ public abstract class MajorMethods_Timeseries_abstract extends MajorMethods_Time
         aSetInfo_Charts.resetInfoTextField_CenterChart();
     };
 
-    protected void shapeletDotHorizontallyTransferredLinePlot(){
-//        aMajorMethods_Shapelet.shapelet_dotANDLine_plot("normal");
-        aMajorMethods_Shapelet.shapeletDotHorizontallyTransferredLinePlot("stack");
+    protected void shapeletDotHorizontallyTransferredLinePlot(String model){
+        aMajorMethods_Shapelet.shapeletDotHorizontallyTransferredLinePlot(model);
     }
 
-    protected void shapeletDotDirectlyConnectLinePlot(){
-        aMajorMethods_Shapelet.shapeletDotDirectlyConnectLinePlot();
+    protected void shapeletDotDirectlyConnectLinePlot(String model){
+        aMajorMethods_Shapelet.shapeletDotDirectlyConnectLinePlot(model);
     }
 
     protected int updateTolatest_aShapelet(){

@@ -455,10 +455,11 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //                System.out.println("I'm here!");
                 /*** Stack model **/
                 if(this.aVariables.stackModelOn){
-                    //
+                    addIntoShapletContainer(this.aGUIComponents.shapeletJList.getSelectedIndex());
+                    shapeletDotDirectlyConnectLinePlot("stack");
                 }else{
                     clearShapletContainer(); // Clear stack model shapelet index storage
-                    shapeletDotDirectlyConnectLinePlot("stack");
+                    shapeletDotDirectlyConnectLinePlot("normal");
                 }
             }else{
 //                System.out.println("I'm there!");
@@ -684,12 +685,32 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     }
 
     /*** --------------------------------------------- **/
-    public void shapeletDotDirectlyConnectLinePlot(){
+    public void shapeletDotDirectlyConnectLinePlot(String model){
+        selectShapletPlotModel_centerChart();
+
+        if(this.aVariables.stackModelOn){
+            /*** **/
+            /*** Plot additional stack trace **/
+            if(model.equalsIgnoreCase("stack")){
+                for(int index: this.aVariables.SPLet_container){
+//                    System.out.println("shapeletDotHorizontallyTransferredLinePlot() -> index: " + index);
+                    if(index==this.aGUIComponents.shapeletJList.getSelectedIndex()){ //Avoid plot duplicate
+                        continue;
+                    }
+                    ArrayList<Double> tempShapelet = this.aVariables.SPLet_withCurrentLabel[index];
+                    getShortestDistance(tempShapelet);
+
+                    shapeletLineDrawStack(tempShapelet); // both center chart and top right chart
+                }
+            }
+        }
+
         drawShapeletTraceCenterChart(); // centerChart
         drawShapeletTraceTopRightChart();
-        shapeletLineDraw("top right chart", this.aVariables.lastSPLetIndex);
-        shapeletLineDraw("center chart", this.aVariables.lastSPLetIndex);
+        shapeletLineDraw("top right chart");
+        shapeletLineDraw("center chart");
     }
+
     /*---------------------------------------------------------------
 
  **                    drawShapeletTrace_CenterChart()                      **
@@ -711,15 +732,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             this.aGUIComponents.distanceSTTextField.setVisible(true);
             this.aGUIComponents.distanceSTTextField.setText("distance TS: " + String.format("%.5g%n", distanceBetweenST));
             //System.out.println("startPosition "+startPosition);
-            double newVal, oldVal=-1;
-            for(int i = 0; i<this.aVariables.currentSPLet.size(); i++){ //The transferred shapelet array list has discarded the label in the first index
-                newVal =  this.aVariables.currentSPLet.get(i);
-                if(!(i==0) && newVal==oldVal){
-                    continue;
-                }else{
-                    oldVal=newVal;
-                }
-                this.aVariables.SPLet_trace_centerChart.addPoint((startPosition+i), newVal);
+            int lblDiscardIndex = 1;
+            for(int i = lblDiscardIndex; i<this.aVariables.currentSPLet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+                // therefore we need to a label index discard at first
+                this.aVariables.SPLet_trace_centerChart.addPoint((startPosition+i), this.aVariables.currentSPLet.get(i));
             }
         }
     }
@@ -741,21 +757,15 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             }
             /*** No need to calculate distance again, the center chart has got it. **/
             int startPosition = this.aVariables.globalStartPosition;
-            //System.out.println("startPosition "+startPosition);
-            double newVal, oldVal=-1;
-            for(int i=0; i<this.aVariables.currentSPLet.size(); i++){ //The transferred shapelet array list has discarded the label in the first index
-                newVal =  this.aVariables.currentSPLet.get(i);
-                if(!(i==0) && newVal==oldVal){
-                    continue;
-                }else{
-                    oldVal=newVal;
-                }
-                this.aVariables.SPLet_trace_topRightChart.addPoint((startPosition+i), newVal);
+            int lblDiscardIndex = 1;
+            for(int i = lblDiscardIndex; i<this.aVariables.currentSPLet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+                // therefore we need to a label index discard at first
+                this.aVariables.SPLet_trace_topRightChart.addPoint((startPosition+i), this.aVariables.currentSPLet.get(i));
             }
         }
     }
 
-    public void shapeletLineDraw(String chartChoiceStr, int shapletIndex){
+    public void shapeletLineDraw(String chartChoiceStr){
         try {
             if (chartChoiceStr.equalsIgnoreCase("center chart")) {
                 if(!aLocalLineShapeletTrace_center.isEmpty()){
@@ -770,17 +780,14 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                 }else{
                     this.aLocalLineShapeletTrace_center.setColor(new Color(255, 51, 153));
                 }
-                /*** **/
 
-                /*** **/
-                /***** We need to change codes here  ***/
-                /*** A bug here is the same timeseries may be presented by two totally different shapes **/
                 if(this.aVariables.currentSPLet != null){
                     /*** No need to calculate distance again, the center chart has got it. **/
                     int startPosition = this.aVariables.globalStartPosition;
-                    //System.out.println("startPosition "+startPosition);
 
-                    for(int i=0; i<this.aVariables.currentSPLet.size(); i++){ //The transferred shapelet array list has discarded the label in the first index
+                    int lblDiscardIndex = 1;
+                    for(int i = lblDiscardIndex; i<this.aVariables.currentSPLet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+                        // therefore we need to a label index discard at first
                         this.aLocalLineShapeletTrace_center.addPoint((startPosition+i), this.aVariables.currentSPLet.get(i));
                     }
                 }
@@ -804,7 +811,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                     int startPosition = this.aVariables.globalStartPosition;
                     //System.out.println("startPosition "+startPosition);
 
-                    for(int i=0; i<this.aVariables.currentSPLet.size(); i++){ //The transferred shapelet array list has discarded the label in the first index
+                    int lblDiscardIndex = 1;
+                    for(int i = lblDiscardIndex; i<this.aVariables.currentSPLet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+                        // therefore we need to a label index discard at first
                         this.aLocalLineShapeletTrace_topRight.addPoint((startPosition+i), this.aVariables.currentSPLet.get(i));
                     }
                 }
@@ -823,6 +832,32 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             // log messages using log(Level level, String msg)
             logger.log(Level.WARNING, e.toString());
         }
+    }
+
+    public void shapeletLineDrawStack(ArrayList<Double> anArylist){
+        Trace2DLtd aTrace = new Trace2DLtd(null);
+        int labelIndex = 0;
+        if(this.aVariables.currentSPLet.get(labelIndex).intValue()==0){ //label 0
+            aTrace.setColor(new Color(51, 153, 255));
+        }else{
+            aTrace.setColor(new Color(255, 51, 153));
+        }
+
+        aTrace.setStroke(new BasicStroke(2));
+        aTrace.setTracePainter(new TracePainterLine());
+        this.aVariables.centerChart.addTrace(aTrace);
+
+        if(anArylist != null){
+            /*** No need to calculate distance again, the center chart has got it. **/
+            int startPosition = this.aVariables.globalStartPosition;
+
+            int lblDiscardIndex = 1;
+            for(int i = lblDiscardIndex; i<this.aVariables.currentSPLet.size(); i++){ //This passedby shapelet array list did not discarded the label in the first index,
+                // therefore we need to a label index discard at first
+                aTrace.addPoint((startPosition+i), anArylist.get(i));
+            }
+        }
+        /*****  ***/
     }
 
     /*** --------------------------------------------- **/
@@ -1050,6 +1085,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             /***** We need to change codes here  ***/
             /*** A bug here is the same timeseries may be presented by two totally different shapes **/
             if (singleAry != null) {
+                int startPosition = this.aVariables.globalStartPosition;
                 int numPoint = singleAry.size();
 //                System.out.println("-> singleAry.size():" + numPoint);
                 double yP;
@@ -1060,7 +1096,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                     /*** X position scale **/
                     /*** (i+startP)/3 -> Wrong (Integer discard), (i+startP)/3.0 -> Correct (Float transfer) **/
                     xP = (i+startP)/((double)divider)  - 1/((double)divider)*backwardIndex;
-                    this.aLocalLineShapeletTrace_center.addPoint(this.aVariables.globalStartPosition+xP, yP);
+                    this.aLocalLineShapeletTrace_center.addPoint(startPosition+xP, yP);
                 }
             }
             /*****  ***/
@@ -1105,18 +1141,18 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             /***** We need to change codes here  ***/
             /*** A bug here is the same timeseries may be presented by two totally different shapes **/
             if (singleAry != null) {
+                int startPosition = this.aVariables.globalStartPosition;
                 int numPoint = singleAry.size();
 //                System.out.println("-> singleAry.size():" + numPoint);
                 double yP;
                 double xP;
                 int backwardIndex = (divider-1)/2;
-                for(int i = 0; i < numPoint; i++)
-                {
+                for(int i = 0; i < numPoint; i++) {
                     yP = singleAry.get(i);
                     /*** X position scale **/
                     /*** (i+startP)/3 -> Wrong (Integer discard), (i+startP)/3.0 -> Correct (Float transfer) **/
                     xP = (i+startP)/((double)divider)  - 1/((double)divider)*backwardIndex;
-                    aTrace.addPoint(this.aVariables.globalStartPosition+xP, yP);
+                    aTrace.addPoint(startPosition+xP, yP);
                 }
             }
             /*****  ***/
@@ -1155,18 +1191,18 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             /***** We need to change codes here  ***/
             /*** A bug here is the same timeseries may be presented by two totally different shapes **/
             if (singleAry != null) {
+                int startPosition = this.aVariables.globalStartPosition;
                 int numPoint = singleAry.size();
                 //                System.out.println("-> singleAry.size():" + numPoint);
                 double yP;
                 double xP;
                 int backwardIndex = (divider-1)/2;
-                for(int i = 0; i < numPoint; i++)
-                {
+                for(int i = 0; i < numPoint; i++) {
                     yP = singleAry.get(i);
                     /*** X position scale **/
                     /*** (i+startP)/3 -> Wrong (Integer discard), (i+startP)/3.0 -> Correct (Float transfer) **/
                     xP = (i+startP)/((double)divider)  - 1/((double)divider)*backwardIndex;
-                    this.aLocalLineShapeletTrace_topRight.addPoint(this.aVariables.globalStartPosition+xP, yP);
+                    this.aLocalLineShapeletTrace_topRight.addPoint(startPosition+xP, yP);
                 }
             }
             /*****  ***/
@@ -1189,7 +1225,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             /*** Plot additional stack trace **/
             if(model.equalsIgnoreCase("stack")){
                 for(int index: this.aVariables.SPLet_container){
-                    System.out.println("shapelet_dotANDLine_plot() -> index: " + index);
+//                    System.out.println("shapeletDotHorizontallyTransferredLinePlot() -> index: " + index);
                     if(index==this.aGUIComponents.shapeletJList.getSelectedIndex()){ //Avoid plot duplicate
                         continue;
                     }

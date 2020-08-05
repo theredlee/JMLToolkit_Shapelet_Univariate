@@ -535,7 +535,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             lblTopK.setText("Top ");
             lblTopK.setBorder(null);
             lblTopK.setFont(new Font("SansSerif", Font.BOLD, 11));
-            lblTopK.setForeground(Color.GRAY);
+            lblTopK.setForeground(Color.MAGENTA);
 
             aPanel.add(lblMultiChartSPLetClass);
             aPanel.add(lblMultiChartSPLetNum, "gapright 70");
@@ -768,12 +768,18 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 /*** Normal model **/
                 /*** Why we call this? Because every time the distance between shapelet and TS is different! **/
                 if(this.aVariables.switchDot){
-                    shapeletDotDirectlyConnectLinePlot();
-
+                    if(this.aVariables.stackModelOn){
+                        shapeletDotDirectlyConnectLinePlot("stack");
+                    }else{
+                        shapeletDotDirectlyConnectLinePlot("normal");
+                    }
                 }else{
-                    shapeletDotHorizontallyTransferredLinePlot();
+                    if(this.aVariables.stackModelOn){
+                        shapeletDotHorizontallyTransferredLinePlot("stack");
+                    }else {
+                        shapeletDotHorizontallyTransferredLinePlot("normal");
+                    }
                 }
-                /*** stackModel **/
             }
             /*** 2. Then, redraw TS trace **/
             /*** Horizontal dot plot **/ /*** Horizontal line plot **/
