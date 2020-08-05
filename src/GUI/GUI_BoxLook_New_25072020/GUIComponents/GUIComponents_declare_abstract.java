@@ -16,14 +16,14 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJLabels --**/
     public JLabel lblZoomScale, lblHorizontallyMove, lblShapeletsNumSelector, lblMissingRatio,
             lblGapSizeRatio, lblImputation, eigenSeriesInterpolation, lblLabel_TS_List,
-            lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblLogo, lblTopTenCharts;
+            lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblDotLineSwitch, lblLogo, lblTopTenCharts;
     public JLabel[] lblMultiChartTSClass, lblMultiChartTSNum, lblMultiChartSPLetNum, lblMultiChartSPLetClass, lblTopk;
     /*** initializeJSpinner --**/
     public JSpinner spinner;
     /*** initializeJButton --**/
     public JButton btnZoomIn, btnZoomOut, btnMoveLeft, btnMoveRight, btnSetTsIdRange, btnSetShptIdRange, btnSortedByLenShptIdASC, btnSortedByLenShptIdDESC, btnClearAllTraces, btnLoadDataset, btnLoadShapelet, btnSelectTop_K_Shapelets, btnRunBspcover, btnInvokeDT;
     /*** initializeJRadioButton --**/
-    public JRadioButton radiobtnStackModelOn, radiobtnStackModelOff;
+    public JRadioButton radiobtnStackModelOn, radiobtnStackModelOff, radiobtnSwitchDot, radiobtnSwitchLine;
     /*** initializeJTextField --**/
     public JTextField iterationTextField, alphabetSizeTextField, timeSeriesRangeMinTextField, timeSeriesRangeMaxTextField, shapeletsRangeMinTextField, shapeletsRangeMaxTextField,
             centerChartTSLabelTextField, centerChartTSNumTextField, centerChartSPLetNumTextField, chartII_Shapelet_TextField, chartII_ShapeletLabel_TextField,

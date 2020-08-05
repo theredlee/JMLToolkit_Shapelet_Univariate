@@ -34,10 +34,6 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
         this.aVariables.centerChartXR = xR;
 
         this.aVariables.oldScale = scale;
-
-//        System.out.println("myWidth: " + myWidth);
-//        System.out.println("centerChartXL: " + this.aVariables.centerChartXL);
-//        System.out.println("centerChartXR: " + this.aVariables.centerChartXR);
     }
 
     /*---------------------------------------------------------------

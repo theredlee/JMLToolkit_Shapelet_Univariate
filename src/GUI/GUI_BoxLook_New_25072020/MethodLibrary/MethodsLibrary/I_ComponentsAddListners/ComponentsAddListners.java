@@ -196,6 +196,18 @@ public class ComponentsAddListners extends ComponentsAddListners_abstract {
                 stackModelChange(e);
             }
         });
+
+        this.aGUIComponents.radiobtnSwitchDot.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dotLineSwitch(e);
+            }
+        });
+
+        this.aGUIComponents.radiobtnSwitchLine.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dotLineSwitch(e);
+            }
+        });
     }
 
     /*---------------------------------------------------------------

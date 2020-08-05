@@ -335,7 +335,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     public void addIntoShapletContainer(int s){
         this.aVariables.SPLet_container.add(s);
     }
-    public void stackModelChange(ActionEvent e){
+    public void SPLetCenterChartStackModelChange(ActionEvent e){
         AbstractButton aButton = (AbstractButton)e.getSource();
         if(aButton.getText().equalsIgnoreCase("ON")){
             this.aVariables.stackModelOn = true;
@@ -672,7 +672,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
             DataSet datasetwithCurrentLabel = this.aVariables.dataSet.FilterByLabel(TS_lbl);
             DataInstance aTSDataInstance = datasetwithCurrentLabel.instances.get(TS_Index);
-            ArrayList<Double> aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSCenterChart(aTSDataInstance);
+            ArrayList<Double> aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSBothCharts(aTSDataInstance);
             this.aGUIComponents.lblMultiChartSPLetClass[i].setText("Shapelet Label: " +  (int)selectedIndex);
             this.aGUIComponents.lblMultiChartTSNum[i].setText("Time Series No.: " + TS_Index);
             this.aGUIComponents.lblMultiChartTSClass[i].setText("Timeseries Label: " + (int)TS_lbl);

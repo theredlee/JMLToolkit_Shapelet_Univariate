@@ -10,7 +10,6 @@ import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassif
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 import Looks.TSLook;
 import TimeSeries.Distorsion;
-import TimeSeries.EfficientLTS;
 import TimeSeries.TransformationFieldsGenerator;
 import Utilities.GlobalValues;
 import Utilities.Logging;
@@ -25,8 +24,8 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -457,15 +456,23 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.aTSLook.PAALike_initial();
     }
 
-    public ArrayList<Double> horizontalLineLookTSCenterChart(DataInstance aTSDataInstance){
+    public ArrayList<Double> horizontalLineLookTSBothCharts(DataInstance aTSDataInstance){
         ArrayList<Double> aTS_Arylist = this.aVariables.aTSLook.revalue(this.aVariables.aTSLook.arrayListTransfer(aTSDataInstance));
         return aTS_Arylist;
     }
-
-    public void createHorizontalLineLook_TS_bottomChart(){
-
-    }
     /*** -----------------------------------------------------> * */
+
+    /*** ----- **/
+    public void dotLineSwitch(ActionEvent e){
+        AbstractButton aButton = (AbstractButton)e.getSource();
+        if(aButton.getText().equalsIgnoreCase("DOT")){
+            this.aVariables.switchDot = true;
+            this.aGUIComponents.btnClearAllTraces.doClick();
+        }else if(aButton.getText().equalsIgnoreCase("LINE")){
+            this.aVariables.switchDot = false;
+            this.aGUIComponents.btnClearAllTraces.doClick();
+        }
+    }
 
     /*---------------------------------------------------------------
 
@@ -761,13 +768,20 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             if(this.aVariables.load_SPLet_YesOrNo){
                 /*** Normal model **/
                 /*** Why we call this? Because every time the distance between shapelet and TS is different! **/
-                shapelet_dotANDLine_plot();
+                if(this.aVariables.switchDot){
+                    shapelet_dotANDLine_plot();
+                }else{
+                    //
+                }
                 /*** stackModel **/
-
             }
             /*** 2. Then, redraw TS trace **/
             /*** Horizontal dot plot **/ /*** Horizontal line plot **/
-            TSDotANDLinePlot();
+            if(this.aVariables.switchDot){
+                TSDotDirectlyConnectLinePlot();
+            }else{
+                TSDotHorizontallyTransferredLinePlot();
+            }
         }
         catch( Exception exc )
         {
@@ -843,7 +857,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 }
 
                 // Line trace --------------------------
-                drawTSDotToLineTransfer(aTSAraylist, "top ten chart", chartIndex); // The second parameter: "top ten chart" (case insensitive)
+                TSDotTransferAndLineDraw(aTSAraylist, "top ten chart", chartIndex); // The second parameter: "top ten chart" (case insensitive)
             }
 
         }catch (NullPointerException e){
@@ -860,40 +874,16 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
      ---------------------------------------------------------------*/
     // redraw the chart of the time series
-    public void drawTSTraceCenterChart(){
+    public void drawTSTraceCenterChart() {
         /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
         try{
             setScale();
-
             this.aVariables.TSTrace.removeAllPoints();
-
-            /*
-            interpolatedTimeSeriesTrace.removeAllPoints();
-            */
-
-            /*** To ensure multiple timeseries can leave on one canvas ***/
-            /*** And at the same time, I create an independent clearAllTSTraces_AllCharts() method at the end to points on canvas ***/
-
-            /*** !!! However, here's a thing, I do not satisfy the non-duplicated timeseries on canvas yet!!! ***/
-
-        /*
-        if( manipulatedTimeSeries != null)
-        {
-            for(int i = 0; i < manipulatedTimeSeries.features.size(); i++)
-            {
-                FeaturePoint p = manipulatedTimeSeries.features.get(i);
-                if( p.status == PointStatus.PRESENT )
-                    interpolatedTimeSeriesTrace.addPoint(i, p.value);
-            }
-        }
-         */
-
+            //
             if( this.aVariables.TSDataInstance != null ){
-                //System.out.println("***ReDrawTimeSeriesChart -> TSDataInstance***");
                 int numPoints = this.aVariables.TSDataInstance.features.size();
                 System.out.println("-> TSDataInstance.features.size():" + numPoints);
-                for(int i = 0; i < numPoints; i++)
-                {
+                for(int i = 0; i < numPoints; i++) {
                     FeaturePoint p = this.aVariables.TSDataInstance.features.get(i);
                     if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE )
                         this.aVariables.TSTrace.addPoint(i, p.value);
@@ -920,12 +910,15 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             int startPoint = 0; /*** Best match piece's start point **/
 
             Trace2DLtd aTSTrace = new Trace2DLtd(null);
-            aTSTrace.setTracePainter(new TracePainterDisc(3));
+            aTSTrace.setTracePainter(new TracePainterDisc(1));
 
             if(this.aVariables.TSDataInstance_bottomChart.target <= 0.0){
-                aTSTrace.setColor(Color.DARK_GRAY);
+//                aTSTrace.setColor(Color.DARK_GRAY);
+                aTSTrace.setColor(colorHSLAdjust("DARK", this.aVariables.bottomTSTraceCount));
             }else{
-                aTSTrace.setColor(Color.RED);
+//                aTSTrace.setColor(Color.RED);
+                aTSTrace.setColor(colorHSLAdjust("RED", this.aVariables.bottomTSTraceCount));
+                /*** When to reset the color scale: after the shapelet changed **/
             }
 
             aTSTrace.setStroke(new BasicStroke(3));
@@ -933,43 +926,146 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             /***** We need to change codes here  ***/
             /*** A bug here is the same timeseries may be presented by two totally different shapes **/
+
             if (this.aVariables.TSDataInstance_bottomChart != null) {
                 int numPoints_III = this.aVariables.TSDataInstance_bottomChart.features.size();
-                System.out.println("-> TSDataInstance_bottomChart.features.size():" + numPoints_III);
-
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
+//                System.out.println("drawTSTrace_horizontally_BottomChart() -> this.aVariables.firstTSDrawing: " + this.aVariables.firstTSDrawing);
                 if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
-                    /*** -> **/
-                    System.out.println("Ever invoked");
+                    /***** Update to the latest shapelet ***/
+//                    System.out.println("Ever invoked");
                     this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
+                    /*** -> **/
 
+                    /*** **/
                     this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
-                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
+//                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
-                    System.out.println("Or only invoked");
                     startPoint = this.aVariables.globalBestMatchSP - this.aVariables.globalStartPosition;
                 }
-                System.out.print("startPoint: " + startPoint);
-                System.out.print(" ,globalStartPosition: " + this.aVariables.globalStartPosition);
-                System.out.print(" ,globalBestMatchSP: " + this.aVariables.globalBestMatchSP);
-                System.out.println(" ,globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
+
                 /*** **/
 
+                double newVal, oldVal=-1;
                 for (int i = 0; i < numPoints_III; i++){ /*** Change the values of i & numPoints **/
-                    FeaturePoint p_III = this.aVariables.TSDataInstance_bottomChart.features.get(i); /*** public List<FeaturePoint> features **/
-                    if (p_III.status == FeaturePoint.PointStatus.PRESENT && p_III.value != GlobalValues.MISSING_VALUE) /*** p_III.status == PointStatus.PRESENT && p_III.value != GlobalValues.MISSING_VALUE***/
-                        aTSTrace.addPoint(i+startPoint, p_III.value); /*** double p_III.value **/
+                    newVal =  this.aVariables.TSDataInstance_bottomChart.features.get(i).value;
+                    if(!(i==0) && newVal==oldVal){
+                        continue;
+                    }else{
+                        oldVal=newVal;
+                    }
+                    aTSTrace.addPoint(i+startPoint, newVal);
                 }
             }
-            /*****  ***/
         }catch (NullPointerException e){
             // Create a Logger
             Logger logger
                     = Logger.getLogger(
                     MajorMethods_Timeseries.class.getName());
 
+            // log messages using log(Level level, String msg)
+            logger.log(Level.WARNING, e.toString());
+        }
+    }
+
+    public void TSDotDirectlyConnectLinePlot(){
+        drawTSTraceCenterChart(); // centerChart
+        drawTSTraceBottomChart();
+        TSLineDraw("center chart");
+        TSLineDraw("bottom chart");
+    }
+
+    public void TSLineDraw(String chartChoiceStr){
+        try{
+            if(chartChoiceStr.equalsIgnoreCase("center chart")){
+                removeLocalTSTracePointsCenterChart();
+//                System.out.println("I am here!");
+                //
+                this.aLocalLineTrace.setColor(Color.ORANGE);
+                this.aLocalLineTrace.setStroke(new BasicStroke(3));
+                this.aLocalLineTrace.setTracePainter(new TracePainterLine());
+
+                /***** We need to change codes here  ***/
+                /*** A bug here is the same timeseries may be presented by two totally different shapes **/
+                if( this.aVariables.TSDataInstance != null ){
+                    int numPoints = this.aVariables.TSDataInstance.features.size();
+                    System.out.println("-> TSDataInstance.features.size():" + numPoints);
+                    for(int i = 0; i < numPoints; i++) {
+                        FeaturePoint p = this.aVariables.TSDataInstance.features.get(i);
+                        if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE )
+                            this.aLocalLineTrace.addPoint(i, p.value);
+                    }
+                }
+                /*****  ***/
+            }else if(chartChoiceStr.equals("bottom chart")){
+                setScale_bottomChartSetRange();
+
+                int startPoint = 0; /*** Best match piece's start point **/
+
+                Trace2DLtd aTSTrace = new Trace2DLtd(null);
+                aTSTrace.setTracePainter(new TracePainterLine());
+
+                if(this.aVariables.TSDataInstance_bottomChart.target <= 0.0){
+//                aTSTrace.setColor(Color.DARK_GRAY);
+                    aTSTrace.setColor(colorHSLAdjust("DARK", this.aVariables.bottomTSTraceCount));
+                }else{
+//                aTSTrace.setColor(Color.RED);
+                    aTSTrace.setColor(colorHSLAdjust("RED", this.aVariables.bottomTSTraceCount));
+                    /*** When to reset the color scale: after the shapelet changed **/
+                }
+
+                aTSTrace.setStroke(new BasicStroke(2));
+                this.aVariables.bottomChart.addTrace(aTSTrace);
+
+                /***** We need to change codes here  ***/
+                /*** A bug here is the same timeseries may be presented by two totally different shapes **/
+
+                if (this.aVariables.TSDataInstance_bottomChart != null) {
+                    int numPoints_III = this.aVariables.TSDataInstance_bottomChart.features.size();
+                    /**** Here needs a block to set the values of i & numPoints.
+                     * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
+//                System.out.println("drawTSTrace_horizontally_BottomChart() -> this.aVariables.firstTSDrawing: " + this.aVariables.firstTSDrawing);
+                    if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
+                        /***** Update to the latest shapelet ***/
+//                    System.out.println("Ever invoked");
+                        this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
+                        /*** -> **/
+
+                        /*** **/
+                        this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
+//                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
+                        this.aVariables.firstTSDrawing = false;
+                    }else{
+                        startPoint = this.aVariables.globalBestMatchSP - this.aVariables.globalStartPosition;
+                    }
+
+                    /*** **/
+
+                    double newVal, oldVal=-1;
+                    for (int i = 0; i < numPoints_III; i++){ /*** Change the values of i & numPoints **/
+                        newVal =  this.aVariables.TSDataInstance_bottomChart.features.get(i).value;
+                        if(!(i==0) && newVal==oldVal){
+                            continue;
+                        }else{
+                            oldVal=newVal;
+                        }
+                        aTSTrace.addPoint(i+startPoint, newVal);
+                    }
+                }
+                /*****  ***/
+            }else{
+                Logger logger
+                        = Logger.getLogger(
+                        DistanceClassification.class.getName());
+                // log messages using log(Level level, String msg)
+                logger.log(Level.WARNING, "Your chart selection is wrong. Please type it correctly before you invoke it.");
+                throw new IllegalArgumentException();
+            }
+        }catch (NullPointerException e){
+            // Create a Logger
+            Logger logger = Logger.getLogger(MajorMethods_Timeseries.class.getName());
             // log messages using log(Level level, String msg)
             logger.log(Level.WARNING, e.toString());
         }
@@ -982,7 +1078,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      ---------------------------------------------------------------*/
     public void drawTSTraceHorizontallyCenterChart(ArrayList<Double> aTSAraylist){
         /*** Draw horizontal lines **/
-
         /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
         try{
             setScale();
@@ -1013,7 +1108,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             if( aTSAraylist != null ){
                 int numPoints = aTSAraylist.size();
-                System.out.println("-> aTSAraylist.size():" + numPoints);
+//                System.out.println("-> aTSAraylist.size():" + numPoints);
                 double newVal, oldVal=-1;
                 for(int i = 0; i < numPoints; i++)
                 {
@@ -1072,13 +1167,13 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 //                System.out.println("drawTSTrace_horizontally_BottomChart() -> this.aVariables.firstTSDrawing: " + this.aVariables.firstTSDrawing);
                 if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
                     /***** Update to the latest shapelet ***/
-                    System.out.println("Ever invoked");
+//                    System.out.println("Ever invoked");
                     this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
                     /*** -> **/
 
                     /*** **/
                     this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
-                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
+//                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
                     startPoint = this.aVariables.globalBestMatchSP - this.aVariables.globalStartPosition;
@@ -1145,7 +1240,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
     /*** ---------------------------------------------------------------------------------------------------------* */
 
-    public void drawTSDotToLineTransfer(ArrayList<Double> anArylist, String chartChoiceStr){
+    public void TSDotTransferAndLineDraw(ArrayList<Double> anArylist, String chartChoiceStr){
         /*** divider must bo odd number **/
         int divider = 5;
         /*** **/
@@ -1213,7 +1308,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
     }
 
-    public void drawTSDotToLineTransfer(ArrayList<Double> anArylist, String chartChoiceStr, int chartIndex){
+    public void TSDotTransferAndLineDraw(ArrayList<Double> anArylist, String chartChoiceStr, int chartIndex){
         /*** divider must bo odd number **/
         int divider = 5;
         /*** **/
@@ -1508,7 +1603,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             /*** Solution: set a if statement at the caller **/
             if (singleAry != null) {
                 int numPoint = singleAry.size();
-                System.out.println("-> singleAry.size():" + numPoint);
+//                System.out.println("-> singleAry.size():" + numPoint);
 
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
@@ -1560,13 +1655,13 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.centerChart.addTrace(this.aLocalLineTrace);
     }
 
-    public void TSDotANDLinePlot(){
+    public void TSDotHorizontallyTransferredLinePlot(){
         increaseBottomTSTraceCount(1);
-        ArrayList<Double> aryList = horizontalLineLookTSCenterChart(this.aVariables.TSDataInstance);
+        ArrayList<Double> aryList = horizontalLineLookTSBothCharts(this.aVariables.TSDataInstance);
         drawTSTraceHorizontallyCenterChart(aryList); // centerChart
         drawTSTraceHorizontallyBottomChart(aryList);
-        drawTSDotToLineTransfer(aryList, "center chart");
-        drawTSDotToLineTransfer(aryList, "bottom chart");
+        TSDotTransferAndLineDraw(aryList, "center chart");
+        TSDotTransferAndLineDraw(aryList, "bottom chart");
     }
 
     /*** ---------------------------------------------------------------------------------------------------------* */

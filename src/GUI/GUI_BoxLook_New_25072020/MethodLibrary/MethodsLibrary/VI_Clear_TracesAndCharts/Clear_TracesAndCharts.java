@@ -123,7 +123,7 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
 
      ******************************************************************/
     public void aadTraceBack__pointsRemoved_centerChart() {
-        localAddTraceBack__pointsRemoved_centerChart();
+        localAddTraceBack_pointsRemoved_centerChart();
     }
 
     /*---------------------------------------------------------------

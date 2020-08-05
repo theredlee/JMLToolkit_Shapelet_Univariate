@@ -216,6 +216,12 @@ public class GUIComponents extends GUIComponents_abstract {
         frmTimeSeriesLayerFirst.add(lblStackmodel);
 
         /***  -------------------------------- **/
+        lblDotLineSwitch = new JLabel("Line/Dot Trace:");
+        lblDotLineSwitch.setFont(myFont);
+        lblDotLineSwitch.setBounds(171,150,113,15); /*** 171,130,83,15 ***/
+        frmTimeSeriesLayerFirst.add(lblDotLineSwitch);
+
+        /***  -------------------------------- **/
         lblLogo = new JLabel("Visualet", SwingConstants.CENTER);
         lblLogo.setFont(new Font("SansSerif", Font.PLAIN, myFont.getSize()*2));
         lblLogo.setBounds(0,0,140,15*3); /*** 171,130,83,15 ***/
@@ -370,10 +376,28 @@ public class GUIComponents extends GUIComponents_abstract {
 
         radiobtnStackModelOff.setSelected(true);
 
-        ButtonGroup G = new ButtonGroup();
-        G.add(radiobtnStackModelOn);
-        G.add(radiobtnStackModelOff);
+        ButtonGroup GStackMode = new ButtonGroup();
+        GStackMode.add(radiobtnStackModelOn);
+        GStackMode.add(radiobtnStackModelOff);
 
+        /***  -------------------------------- **/
+        radiobtnSwitchDot = new JRadioButton("Dot");
+        radiobtnSwitchDot.setFont(myFont);
+        radiobtnSwitchDot.setBounds(283, 150, buttonWidth/2 - 5, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+
+        frmTimeSeriesLayerFirst.add(radiobtnSwitchDot);
+
+        /***  -------------------------------- **/
+        radiobtnSwitchLine = new JRadioButton("Line");
+        radiobtnSwitchLine.setFont(myFont);
+        radiobtnSwitchLine.setBounds(353, 150,  buttonWidth/2 - 2, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+        frmTimeSeriesLayerFirst.add(radiobtnSwitchLine);
+
+        radiobtnSwitchLine.setSelected(true);
+
+        ButtonGroup GDotLineSwitch = new ButtonGroup();
+        GDotLineSwitch.add(radiobtnSwitchDot);
+        GDotLineSwitch.add(radiobtnSwitchLine);
     }
 
 
@@ -779,7 +803,7 @@ public class GUIComponents extends GUIComponents_abstract {
         layeredPane_distanceHist.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_distanceHist);
-//        layeredPane_distanceHist.add(distanceHistPanel, Integer.valueOf(0));
+        layeredPane_distanceHist.add(distanceHistPanel, Integer.valueOf(0));
 
 
         /***  -------------------------------- **/

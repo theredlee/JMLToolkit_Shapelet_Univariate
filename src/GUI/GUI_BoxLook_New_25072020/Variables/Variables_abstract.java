@@ -37,6 +37,7 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.firstTSDrawing = aVariables.firstTSDrawing;
         this.firstTSDrawing_linePlot = aVariables.firstTSDrawing_linePlot;
         this.stackModelOn = aVariables.stackModelOn;
+        this.switchDot = aVariables.switchDot;
         this.centerChartXL = aVariables.centerChartXL;
         this.centerChartXR = aVariables.centerChartXR;
         this.centerChartYU = aVariables.centerChartYU;

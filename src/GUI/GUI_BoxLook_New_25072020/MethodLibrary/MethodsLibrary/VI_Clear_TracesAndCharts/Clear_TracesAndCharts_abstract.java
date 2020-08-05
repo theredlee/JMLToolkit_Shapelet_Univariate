@@ -65,7 +65,7 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
         /*** ------------------------------------------------- **/
     }
 
-    protected void localAddTraceBack__pointsRemoved_centerChart(){
+    protected void localAddTraceBack_pointsRemoved_centerChart(){
         /*** 1st. set marks TS - centerChart **/
         aMajorMethods_Timeseries.createTSMarkCenterChart();
 

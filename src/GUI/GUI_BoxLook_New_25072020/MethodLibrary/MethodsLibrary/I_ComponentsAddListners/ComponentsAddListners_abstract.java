@@ -72,9 +72,12 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     }
 
     protected void stackModelChange(ActionEvent e){
-        aMajorMethods_Shapelet.stackModelChange(e);
+        aMajorMethods_Shapelet.SPLetCenterChartStackModelChange(e);
     }
 
+    protected void dotLineSwitch(ActionEvent e){
+        aMajorMethods_Timeseries.dotLineSwitch(e);
+    }
     protected void changeTS_label(){
         aMajorMethods_Timeseries.changeTSLabel();
     }

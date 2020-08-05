@@ -38,6 +38,7 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.lblTimeseries = aGUIComponents.lblTimeseries;
         this.lblShapelet = aGUIComponents.lblShapelet;
         this.lblStackmodel = aGUIComponents.lblStackmodel;
+        this.lblDotLineSwitch = aGUIComponents.lblDotLineSwitch;
         this.lblLogo = aGUIComponents.lblLogo;
         this.lblTopTenCharts = aGUIComponents.lblTopTenCharts;
         /*** initializeJSpinner --**/
@@ -60,6 +61,8 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         /*** initializeJRadioButton --**/
         this.radiobtnStackModelOn = aGUIComponents.radiobtnStackModelOn;
         this.radiobtnStackModelOff = aGUIComponents.radiobtnStackModelOff;
+        this.radiobtnSwitchDot = aGUIComponents.radiobtnSwitchDot;
+        this.radiobtnSwitchLine = aGUIComponents.radiobtnSwitchLine;
         /*** initializeJTextField --**/
         this.iterationTextField = aGUIComponents.iterationTextField;
         this.alphabetSizeTextField = aGUIComponents.alphabetSizeTextField;

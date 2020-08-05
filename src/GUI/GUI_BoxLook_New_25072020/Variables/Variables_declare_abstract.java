@@ -43,7 +43,7 @@ public abstract class Variables_declare_abstract {
     public boolean initialize_TS_list, setting_TS_listModal;
     public boolean firstTSDrawing; /*** A sign for the first TS when a new shapelet is occurring **/
     public boolean firstTSDrawing_linePlot;
-    public boolean stackModelOn;
+    public boolean stackModelOn, switchDot;
     // public shapelets
     public double centerChartXL, centerChartXR, centerChartYU, centerChartYD;
     public double oldScale, NewScale;
