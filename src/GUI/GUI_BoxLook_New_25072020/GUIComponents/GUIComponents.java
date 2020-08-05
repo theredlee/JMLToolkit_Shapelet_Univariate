@@ -218,7 +218,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         lblDotLineSwitch = new JLabel("Line/Dot Trace:");
         lblDotLineSwitch.setFont(myFont);
-        lblDotLineSwitch.setBounds(171,150,113,15); /*** 171,130,83,15 ***/
+        lblDotLineSwitch.setBounds(353 + buttonWidth/2,130,113,15); /*** 171,130,83,15 ***/
         frmTimeSeriesLayerFirst.add(lblDotLineSwitch);
 
         /***  -------------------------------- **/
@@ -364,14 +364,14 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         radiobtnStackModelOn = new JRadioButton("On");
         radiobtnStackModelOn.setFont(myFont);
-        radiobtnStackModelOn.setBounds(283, 130, buttonWidth/2 - 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+        radiobtnStackModelOn.setBounds(263, 130, buttonWidth/2 - 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
 
         frmTimeSeriesLayerFirst.add(radiobtnStackModelOn);
 
         /***  -------------------------------- **/
         radiobtnStackModelOff = new JRadioButton("Off");
         radiobtnStackModelOff.setFont(myFont);
-        radiobtnStackModelOff.setBounds(353, 130,  buttonWidth/2 - 8, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+        radiobtnStackModelOff.setBounds(325, 130,  buttonWidth/2 - 8, buttonHeight - 10);    /** 460, 485, 50, 20 **/
         frmTimeSeriesLayerFirst.add(radiobtnStackModelOff);
 
         radiobtnStackModelOff.setSelected(true);
@@ -383,14 +383,14 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         radiobtnSwitchDot = new JRadioButton("Dot");
         radiobtnSwitchDot.setFont(myFont);
-        radiobtnSwitchDot.setBounds(283, 150, buttonWidth/2 - 5, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+        radiobtnSwitchDot.setBounds(353 + buttonWidth/2 + 113, 130, buttonWidth/2 - 5, buttonHeight - 10);    /** 460, 485, 50, 20 **/
 
         frmTimeSeriesLayerFirst.add(radiobtnSwitchDot);
 
         /***  -------------------------------- **/
         radiobtnSwitchLine = new JRadioButton("Line");
         radiobtnSwitchLine.setFont(myFont);
-        radiobtnSwitchLine.setBounds(353, 150,  buttonWidth/2 - 2, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+        radiobtnSwitchLine.setBounds(353 + buttonWidth/2 + 113 + (345-275), 130,  buttonWidth/2 - 2, buttonHeight - 10);    /** 460, 485, 50, 20 **/
         frmTimeSeriesLayerFirst.add(radiobtnSwitchLine);
 
         radiobtnSwitchLine.setSelected(true);
