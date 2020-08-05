@@ -23,7 +23,7 @@ public abstract class Variables_declare_abstract {
     // SP: shapelet, TS: time series
     public ArrayList<Double>[] SPLet_double, SPLet_withCurrentLabel, SPLet_weight;
     public ArrayList<ArrayList<ArrayList<double[]>>> SPLet_toAllTS_distances;
-    public ArrayList<Double> currentSPLet_;
+    public ArrayList<Double> currentSPLet;
     public ArrayList<Integer> SPLet_labelArrayList, SPLet_labelCountArrayList;
     public ArrayList<Integer> TS_labelArryList;
     /*** Charts **/

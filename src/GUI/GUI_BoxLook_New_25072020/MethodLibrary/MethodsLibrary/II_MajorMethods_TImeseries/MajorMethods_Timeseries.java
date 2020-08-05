@@ -758,8 +758,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             this.aVariables.setting_TS_listModal = false;
             return;
         }
-        try
-        {
+        try {
             setCurrentTSJlistContent();
             setInfomationOnChart();
 
@@ -769,9 +768,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 /*** Normal model **/
                 /*** Why we call this? Because every time the distance between shapelet and TS is different! **/
                 if(this.aVariables.switchDot){
-                    shapelet_dotANDLine_plot();
+                    shapeletDotDirectlyConnectLinePlot();
+
                 }else{
-                    //
+                    shapeletDotHorizontallyTransferredLinePlot();
                 }
                 /*** stackModel **/
             }
@@ -783,8 +783,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 TSDotHorizontallyTransferredLinePlot();
             }
         }
-        catch( Exception exc )
-        {
+        catch( Exception exc ) {
             exc.printStackTrace();
         }
     }
@@ -868,6 +867,13 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
     }
 
+    /*** --------------------------------------------- **/
+    public void TSDotDirectlyConnectLinePlot(){
+        drawTSTraceCenterChart(); // centerChart
+        drawTSTraceBottomChart();
+        TSLineDraw("center chart");
+        TSLineDraw("bottom chart");
+    }
     /*---------------------------------------------------------------
 
      **                    drawTSTrace_CenterChart()                    **
@@ -897,7 +903,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             logger.log(Level.WARNING, e.toString());
         }
     }
-
     /*---------------------------------------------------------------
 
      **                   drawTSTrace_BottomChart()                  **
@@ -939,7 +944,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     /*** -> **/
 
                     /*** **/
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
@@ -968,13 +973,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             // log messages using log(Level level, String msg)
             logger.log(Level.WARNING, e.toString());
         }
-    }
-
-    public void TSDotDirectlyConnectLinePlot(){
-        drawTSTraceCenterChart(); // centerChart
-        drawTSTraceBottomChart();
-        TSLineDraw("center chart");
-        TSLineDraw("bottom chart");
     }
 
     public void TSLineDraw(String chartChoiceStr){
@@ -1034,7 +1032,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                         /*** -> **/
 
                         /*** **/
-                        this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
+                        this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                         this.aVariables.firstTSDrawing = false;
                     }else{
@@ -1071,6 +1069,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
     }
 
+    /*** --------------------------------------------- **/
     /*---------------------------------------------------------------
 
      **         drawTSTrace_horizontally_CenterChart()              **
@@ -1172,7 +1171,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     /*** -> **/
 
                     /*** **/
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet_.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
@@ -1219,8 +1218,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
      ---------------------------------------------------------------*/
     public void selectTSRange(int min, int max){
-
-
         if (max >= 0) {
             DefaultListModel newnewListModel = new DefaultListModel(); /*** newnewListModel: New time series list for scoping action **/
             for(int i = 0; i < this.aVariables.dataset_withCurrentLabel.instances.size(); i++)

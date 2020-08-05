@@ -41,7 +41,8 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
         }
     };
 
-    protected void localAddTraceBack__pointsKept_centerChart() {
+    protected void localAddTraceBack__pointsKept_centerChart() { // Do not merge this function with localAddTraceBack_pointsRemoved_centerChart(),
+        // they have different purpose, even though it got one function different
         /*** 1st. set marks TS - centerChart **/
         aMajorMethods_Timeseries.createTSMarkCenterChart();
 
@@ -77,7 +78,7 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
 
         /*** ------------------------------------------------- **/
         /*** Trace point remove **/
-        aVariables.TSTrace.removeAllPoints();
+        // Global TS trace has been removed
         aMajorMethods_Timeseries.removeLocalTSTracePointsCenterChart();
         /*** ------------------------------------------------- **/
 
@@ -97,6 +98,14 @@ public abstract class Clear_TracesAndCharts_abstract extends Clear_TracesAndChar
         /*** Add marks TS back - bottomChart **/
         aMajorMethods_Timeseries.createTSMarkBottomChart();
         /*** Since all traces on bottom chart are local temp traces, they cannot retrieve back **/
+    }
+
+    protected void removePointsTopRightChart(){
+        this.aMajorMethods_Shapelet.removePointsTopRightChart();
+    }
+
+    protected void removePointsCenterChart(){
+        this.aMajorMethods_Shapelet.removePointsCenterChart();
     }
 
     protected void setScale(){

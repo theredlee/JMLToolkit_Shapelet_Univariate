@@ -14,7 +14,7 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.SPLet_double = aVariables.SPLet_double;
         this.SPLet_withCurrentLabel = aVariables.SPLet_withCurrentLabel;
         this.SPLet_weight = aVariables.SPLet_weight;
-        this.currentSPLet_ = aVariables.currentSPLet_;
+        this.currentSPLet = aVariables.currentSPLet;
         this.SPLet_labelArrayList = aVariables.SPLet_labelArrayList;
         this.SPLet_labelCountArrayList = aVariables.SPLet_labelCountArrayList;
         this.TS_labelArryList = aVariables.TS_labelArryList;

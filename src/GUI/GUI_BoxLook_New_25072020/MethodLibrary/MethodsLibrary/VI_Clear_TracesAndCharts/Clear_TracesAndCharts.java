@@ -24,7 +24,7 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
      **             removeAllTracePoints_centerChart()               **
 
      ******************************************************************/
-    public void removeAllTracePoints_centerChart(){
+    public void removeAllPoints_centerChart(){
         /*** set back to default scale **/
         setScale();
 
@@ -33,13 +33,9 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
         interpolatedTSMark_centerChart.removeAllPoints();
         */
         if(getLoadShapeletYesOrNo()){
-            this.aVariables.SPLet_trace_centerChart.removeAllPoints();
+            removePointsCenterChart(); // Clear local trace point locally
+            removePointsTopRightChart(); // Clear local trace point locally
         }
-
-        /*** No need to clear the points on shapeletTrace_topRightChart **/
-        /*
-        shapeletTrace_topRightChart.removeAllPoints();
-         */
     }
 
     /*---------------------------------------------------------------
@@ -84,7 +80,7 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
         setScale();
         /*** Clear stack model shapelet index storage **/
         /*** **/
-        removeAllTracePoints_centerChart();
+        removeAllPoints_centerChart();
         removeAllTraces_centerChart();
         /*** **/
         removeAllTraces_BottomChart();
