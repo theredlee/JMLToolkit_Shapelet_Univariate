@@ -51,6 +51,6 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.lastTSIndex = aVariables.lastTSIndex;
         this.lastSPLetIndex = aVariables.lastSPLetIndex;
         this.root = aVariables.root;
-
+        this.shapeletSubroot = aVariables.shapeletSubroot;
     }
 }

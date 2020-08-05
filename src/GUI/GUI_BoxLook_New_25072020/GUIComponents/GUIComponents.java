@@ -397,7 +397,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         alphabetSizeTextField = new JTextField();
-        alphabetSizeTextField.setText("4");
+        alphabetSizeTextField.setText("DefaultValue");
         alphabetSizeTextField.setColumns(10);
         alphabetSizeTextField.setBounds(303, 70, 114, 19);  /***328, 43, 114, 19 ***/
         frmTimeSeriesLayerFirst.add(alphabetSizeTextField);
@@ -405,7 +405,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         pcoverTextField = new JTextField();
-        pcoverTextField.setText("1");
+        pcoverTextField.setText("DefaultValue");
         pcoverTextField.setColumns(10);
         pcoverTextField.setBounds(303, 100, 114, 25);
         frmTimeSeriesLayerFirst.add(pcoverTextField);

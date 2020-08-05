@@ -8,7 +8,7 @@ import GUI.GUI_BoxLook_New_25072020.MethodLibrary.OldestVersion.GUIComponents_.G
 import Looks.ShapeletLook;
 import Looks.TSLook;
 import TimeSeries.Distorsion;
-import TimeSeries.EfficientLTS_PAASAX;
+import TimeSeries.EfficientLTS;
 import TimeSeries.TransformationFieldsGenerator;
 import Utilities.GlobalValues;
 import Utilities.Logging;
@@ -534,9 +534,11 @@ public class MethodsLibrary_ extends MethodsLibrary_abstract {
 
      ---------------------------------------------------------------*/
     public void runBspcover() throws IOException {
-        String subroot_I = "/datasets/Grace_dataset/v_2/Grace_MEAN";
-        String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
-        String shapeletGenerationPath = root + subroot_I;
+//        String subroot_I = "/datasets/Grace_dataset/v_2/Grace_MEAN";
+//        String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
+        String myroot = "/";
+        String mysubroot = "/";
+        String shapeletGenerationPath = root + mysubroot;
 
         /*---------------------------------------------------------------**
          ******   The shapelets output path is in EfficientLTS.java!   ******
@@ -605,7 +607,7 @@ public class MethodsLibrary_ extends MethodsLibrary_abstract {
             O.LoadDatasetLabels(trainSet, false);
             O.LoadDatasetLabels(testSet, true);
 
-            EfficientLTS_PAASAX eLTS = new EfficientLTS_PAASAX();
+            EfficientLTS eLTS = new EfficientLTS(myroot, mysubroot);
             // initialize the sizes of data structures
             eLTS.ITrain = trainSet.GetNumInstances();
             eLTS.ITest = testSet.GetNumInstances();

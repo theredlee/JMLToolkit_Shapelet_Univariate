@@ -10,7 +10,7 @@ import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassif
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 import Looks.TSLook;
 import TimeSeries.Distorsion;
-import TimeSeries.EfficientLTS_PAASAX;
+import TimeSeries.EfficientLTS;
 import TimeSeries.TransformationFieldsGenerator;
 import Utilities.GlobalValues;
 import Utilities.Logging;
@@ -290,135 +290,164 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
      ---------------------------------------------------------------*/
     public void runBspcover(){
-        try{
+            this.aVariables.shapeletSubroot = "/datasets/Grace_dataset/v_3/shapelet/shapelet&weight";
 
-            String subroot_I = "/datasets/Grace_dataset/v_2/Grace_MEAN";
-            String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
-            String shapeletGenerationPath = this.aVariables.root + subroot_I;
-
-        /*---------------------------------------------------------------**
-         ******   The shapelets output path is in EfficientLTS.java!   ******
-         ---------------------------------------------------------------*/
-
+            /*---------------------------------------------------------------**
+             ******   The shapelets output path is in EfficientLTS.java!   ******
+             ---------------------------------------------------------------*/
 
             // show the running info
             this.aGUIComponents.bspcoverInfoTextArea.setText("BSPCOVER Console: ");
             this.aGUIComponents.bspcoverInfoTextArea.paintImmediately(this.aGUIComponents.bspcoverInfoTextArea.getBounds());
 
+            //Default parameter
+            // 88+% 1000, 5, 0.5, 0.5, 2 (Grace_MI)
+            int maxEpochs = 1000;
+            int alphabetSize = 5;
+            double stepRatio = 0.5; /*** (int) (stepRatio * Tp.getDimColumns()); **/
+            double paaRatio = 0.5;
+            int pcover = 2; /*** amount - shapelets **/
+
+            if(!this.aGUIComponents.iterationTextField.getText().equalsIgnoreCase("default")){
+                try {
+                    Double num = Double.parseDouble(this.aGUIComponents.iterationTextField.getText());
+                    maxEpochs =  num.intValue();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!this.aGUIComponents.alphabetSizeTextField.getText().equalsIgnoreCase("DefaultValue")){
+
+                try {
+                    Double num = Double.parseDouble(this.aGUIComponents.alphabetSizeTextField.getText());
+                    alphabetSize = num.intValue();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!this.aGUIComponents.pcoverTextField.getText().equalsIgnoreCase("DefaultValue")){
+
+                try {
+                    Double num = Double.parseDouble(this.aGUIComponents.pcoverTextField.getText());
+                    pcover = num.intValue();
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
             //test path
             //String filedir = "experiment/Italy/";
-            String filedir = this.aVariables.dataSetDirectory.getParentFile().getPath();
-            File file = new File(filedir);
-            File[] files = file.listFiles();
-            String ds;
-            String sp = File.separator;
+            String filedir = this.aVariables.dataSetDirectory.getParentFile().getPath() + "/";
 
-            //Default parameter
-            int maxEpochs = 1000;
-            int alphabetSize = 4;
-            double stepRatio = 0.5; /*** (int) (stepRatio * Tp.getDimColumns()); **/
-            double paaRatio = 0.2;
-            int pcover = 1; /*** amount - shapelets **/
-
-            maxEpochs =  Integer.parseInt(this.aGUIComponents.iterationTextField.getText());
-            alphabetSize = Integer.parseInt(this.aGUIComponents.alphabetSizeTextField.getText());
-            pcover = Integer.parseInt(this.aGUIComponents.pcoverTextField.getText());
-
-            for (int j = 0; j < files.length; j++) {
-                ds = files[j].getName();
-
-                // values of hyperparameters
-                double eta = 0.1, lambdaW = 0.01, alpha = -25, L = 0.2, K = -1;
-                double falsePositiveProbability = 0.0001;
-                int expectedNumberOfElements = 60000;
-                String trainSetPath = filedir  + sp + ds + sp + ds + "_TRAIN", testSetPath = filedir + sp + ds + sp +  ds + "_TEST";
-                //String trainSetPath = filedir + ds, testSetPath = filedir + ds;
-
-                Logging.println("dataset: " + files[j].getName() + " stepRatio: " + stepRatio + " alphabetSize: "
-                        + alphabetSize, Logging.LogLevel.DEBUGGING_LOG);
-                this.aGUIComponents.bspcoverInfoTextArea.append("Dataset: " + files[j].getName());
-                //bspcoverInfoTextArea.append("\n"+"Parameters file: experiment/parameter.txt");
-                this.aGUIComponents.bspcoverInfoTextArea.append("\n"+"Iteration: "+ maxEpochs + ", pCover: "+ pcover + ", alphabetSize: " + alphabetSize);
-                this.aGUIComponents.bspcoverInfoTextArea.append("\n"+"BSPCOVER Running ...");
-                this.aGUIComponents.bspcoverInfoTextArea.paintImmediately(this.aGUIComponents.bspcoverInfoTextArea.getBounds());
-
-                long startTime = System.currentTimeMillis();
-
-                // load dataset
-                DataSet trainSet = new DataSet();
-                trainSet.LoadDataSetFile(new File(trainSetPath));
-                DataSet testSet = new DataSet();
-                testSet.LoadDataSetFile(new File(testSetPath));
-
-                // normalize the data instance
-                trainSet.NormalizeDatasetInstances();
-                testSet.NormalizeDatasetInstances();
-
-                // predictor variables T
-                Matrix T = new Matrix();
-                T.LoadDatasetFeatures(trainSet, false);
-                T.LoadDatasetFeatures(testSet, true);
-                // outcome variable O
-                Matrix O = new Matrix();
-                O.LoadDatasetLabels(trainSet, false);
-                O.LoadDatasetLabels(testSet, true);
-
-                EfficientLTS_PAASAX eLTS = new EfficientLTS_PAASAX();
-                // initialize the sizes of data structures
-                eLTS.ITrain = trainSet.GetNumInstances();
-                eLTS.ITest = testSet.GetNumInstances();
-                eLTS.Q = T.getDimColumns();
-                //Logging.println(eLTS.ITrain+" "+eLTS.ITest+" "+eLTS.Q);
-                // set the time series and labels
-                eLTS.T = T;
-                eLTS.Y = O;
-
-                eLTS.alphabetSize = alphabetSize;
-                eLTS.stepRatio = stepRatio;
-                eLTS.paaRatio = paaRatio;
-                eLTS.pcover = pcover;
-
-                eLTS.falsePositiveProbability = falsePositiveProbability;
-                eLTS.expectedNumberOfElements = expectedNumberOfElements;
-
-                // set the learn rate and the number of iterations
-                eLTS.maxIter = maxEpochs;
-
-                eLTS.slidingWindow_miniunit = (int) (L * T.getDimColumns());
-                //eLTS.R = R;
-                // set the regularization parameter
-                eLTS.lambdaW = lambdaW;
-                eLTS.eta = eta;
-                eLTS.alpha = alpha;
-                trainSet.ReadNominalTargets();
-                eLTS.nominalLabels = new ArrayList<Double>(trainSet.nominalLabels);
-
-                long before_learn = System.currentTimeMillis();
-
-                eLTS.Learn(trainSet);
-                long endTime = System.currentTimeMillis();
-
-                Logging.println(
-                        String.valueOf(eLTS.ReduceGetMCRTestSet()) + " " + String.valueOf(eLTS.GetMCRTrainSet()) + " "
-                                + String.valueOf(eLTS.AccuracyLossTrainSet()) + " "
-                                + "learn time=" + (endTime - before_learn) + " "
-                                + "before_learn time=" + (before_learn - startTime), Logging.LogLevel.DEBUGGING_LOG
-                );
-                this.aGUIComponents.bspcoverInfoTextArea.append("\n" + "BSPCOVER Done !");
-                this.aGUIComponents.bspcoverInfoTextArea.append("\n" + "Test Error rate: "+ String.valueOf(eLTS.ReduceGetMCRTestSet())
-                        + ", Train Error rate: " + String.valueOf(eLTS.GetMCRTrainSet())
-                        + ", Test Loss: " + String.valueOf(eLTS.AccuracyLossTrainSet()));
-                this.aGUIComponents.bspcoverInfoTextArea.append(("\n" + "learn time: " + (endTime - before_learn) + "ms" + ", initial time: " + (before_learn - startTime) + "ms"));
-                this.aGUIComponents.bspcoverInfoTextArea.paintImmediately(this.aGUIComponents.bspcoverInfoTextArea.getBounds());
-                this.aGUIComponents.bspcoverInfoTextArea.append("\n" + "Shapelete Generated path: ");
-                this.aGUIComponents.bspcoverInfoTextArea.append("\n"+ shapeletGenerationPath);
-                this.aGUIComponents.bspcoverInfoTextArea.append("\n"+ "Generate shapelets successfully !");
-                this.aGUIComponents.bspcoverInfoTextArea.paintImmediately(this.aGUIComponents.bspcoverInfoTextArea.getBounds());
-
+            try{
+                EfficientLTSrun(filedir, this.aVariables.root, this.aVariables.shapeletSubroot, maxEpochs, alphabetSize, stepRatio, paaRatio, pcover);
+            }catch (Exception e){
+                e.printStackTrace();
             }
+    }
 
-        }catch (IOException e){
-            e.printStackTrace();
+    public void EfficientLTSrun(String filedir_, String root, String subroot, int maxEpochs_, int alphabetSize_, double stepRatio_, double paaRatio_, int pcover_) throws Exception {
+        String filedir = filedir_;
+        File file = new File(filedir);
+        File[] files = file.listFiles();
+        String ds;
+        String sp = File.separator;
+
+        //Default parameter
+        int maxEpochs = maxEpochs_;
+        int alphabetSize = alphabetSize_;
+        double stepRatio = stepRatio_;
+        double paaRatio = paaRatio_;
+        int pcover = pcover_;
+
+        for (int j = 0; j < files.length; j++) {
+            ds = files[j].getName();
+
+            // values of hyperparameters
+            double eta = 0.1, lambdaW = 0.01, alpha = -25, L = 0.2, K = -1;
+
+            double falsePositiveProbability = 0.0001;
+            int expectedNumberOfElements = 60000;
+            String trainSetPath = filedir + ds + sp + ds + "_TRAIN", testSetPath = filedir + ds + sp + ds + "_TEST";
+            //String trainSetPath = filedir + ds, testSetPath = filedir + ds;
+
+            Logging.println("dataset: " + files[j].getName() + " stepRatio: " + stepRatio + " alphabetSize: "
+                    + alphabetSize, Logging.LogLevel.DEBUGGING_LOG);
+
+            long startTime = System.currentTimeMillis();
+
+            // load dataset
+            DataSet trainSet = new DataSet();
+            trainSet.LoadDataSetFile(new File(trainSetPath));
+            DataSet testSet = new DataSet();
+            testSet.LoadDataSetFile(new File(testSetPath));
+
+            // normalize the data instance
+            trainSet.NormalizeDatasetInstances();
+            testSet.NormalizeDatasetInstances();
+
+//                    // output normalized dataset
+//                    System.out.println("trainSet:");
+//                    System.out.println(trainSet.GetNumInstances());
+//                    System.out.println(trainSet.numFeatures);
+//                    System.out.println(trainSet.instances.get(0).features.size());
+//                    System.exit(0);
+//                    for(int i=0;i<trainSet.GetNumInstances(); i++){
+//                        for(int l=0; j< trainSet.numFeatures; l++){
+//                            System.out.println(trainSet.GetNumInstances());
+//                        }
+//                    }
+
+            // predictor variables T
+            Matrix T = new Matrix();
+            T.LoadDatasetFeatures(trainSet, false);
+            T.LoadDatasetFeatures(testSet, true);
+            // outcome variable O
+            Matrix O = new Matrix();
+            O.LoadDatasetLabels(trainSet, false);
+            O.LoadDatasetLabels(testSet, true);
+
+            TimeSeries.EfficientLTS eLTS = new TimeSeries.EfficientLTS(root, subroot);
+            // initialize the sizes of data structures
+            eLTS.ITrain = trainSet.GetNumInstances();
+            eLTS.ITest = testSet.GetNumInstances();
+            eLTS.Q = T.getDimColumns();
+            //Logging.println(eLTS.ITrain+" "+eLTS.ITest+" "+eLTS.Q);
+            // set the time series and labels
+            eLTS.T = T;
+            eLTS.Y = O;
+
+            eLTS.alphabetSize = alphabetSize;
+            eLTS.stepRatio = stepRatio;
+            eLTS.paaRatio = paaRatio;
+            eLTS.pcover = pcover;
+
+            eLTS.falsePositiveProbability = falsePositiveProbability;
+            eLTS.expectedNumberOfElements = expectedNumberOfElements;
+
+            // set the learn rate and the number of iterations
+            eLTS.maxIter = maxEpochs;
+
+            eLTS.slidingWindow_miniunit = (int) (L * T.getDimColumns());
+            //eLTS.R = R;
+            // set the regularization parameter
+            eLTS.lambdaW = lambdaW;
+            eLTS.eta = eta;
+            eLTS.alpha = alpha;
+            trainSet.ReadNominalTargets();
+            eLTS.nominalLabels = new ArrayList<Double>(trainSet.nominalLabels);
+
+            long before_learn = System.currentTimeMillis();
+
+            eLTS.Learn(trainSet);
+            long endTime = System.currentTimeMillis();
+
+            Logging.println(
+                    String.valueOf(eLTS.ReduceGetMCRTestSet()) + " " + String.valueOf(eLTS.GetMCRTrainSet()) + " "
+                            + String.valueOf(eLTS.AccuracyLossTrainSet()) + " "
+                            + "learn time=" + (endTime - before_learn) + " "
+                            + "before_learn time=" + (before_learn - startTime), Logging.LogLevel.DEBUGGING_LOG
+            );
+
         }
     }
 

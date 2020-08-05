@@ -54,5 +54,5 @@ public abstract class Variables_declare_abstract {
     public int lastTSIndex; // Default value = 0
     public int lastSPLetIndex; // Default value = 0
     public int bottomTSTraceCount;
-    public String root;
+    public String root, shapeletSubroot;
 }

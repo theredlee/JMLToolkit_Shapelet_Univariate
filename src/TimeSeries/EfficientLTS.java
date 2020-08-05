@@ -1,8 +1,6 @@
 package TimeSeries;
 
-import DataStructures.BloomFilter;
-import DataStructures.DataSet;
-import DataStructures.Matrix;
+import DataStructures.*;
 import Utilities.Logging;
 import Utilities.Sigmoid;
 import org.happy.commons.concurrent.loops.ForEachTask_1x0;
@@ -11,7 +9,7 @@ import org.happy.commons.concurrent.loops.Parallel_1x0;
 import java.io.*;
 import java.util.*;
 
-public class EfficientLTS_PAASAX {
+public class EfficientLTS {
     // number of training and testing instances
     public int ITrain, ITest;
     // length of a time-series
@@ -68,7 +66,6 @@ public class EfficientLTS_PAASAX {
     List<Integer> rIdxs;
 
     // time series data and the label
-    /*** Tp = sax.generatePAAToMatrix(dataSet, paaRatio); **/
     public Matrix T,Tp,Ts;
     public Matrix Y, Y_b;
 
@@ -93,9 +90,18 @@ public class EfficientLTS_PAASAX {
     public int slidingWindow;
     //public int slidingWindow_miniunit;
     public int numSubsequence;
+    //
+    public static String root, subroot;
+
+    public EfficientLTS(String root, String subroot)
+    {
+        this.root = root;
+        this.subroot = subroot;
+    }
 
     // initialize the data structures
-    public void Initialize(DataSet dataSet) {
+    public void Initialize(DataSet dataSet)
+    {
 
         // set the labels to be binary 0 and 1, needed for the logistic loss
         CreateOneVsAllTargets();
@@ -191,8 +197,10 @@ public class EfficientLTS_PAASAX {
         Logging.println("Initializations Completed!", Logging.LogLevel.DEBUGGING_LOG);
     }
 
+
     // create one-cs-all targets
-    public void CreateOneVsAllTargets() {
+    public void CreateOneVsAllTargets()
+    {
         C = nominalLabels.size();
 
         Y_b = new Matrix(ITrain+ITest, C);
@@ -212,7 +220,8 @@ public class EfficientLTS_PAASAX {
     }
 
     // predict the label value vartheta_i
-    public double Predict(int i, int c) {
+    public double Predict(int i, int c)
+    {
         double Y_hat_ic = biasW[c];
 
         //for(int r = 0; r < R; r++)
@@ -223,7 +232,8 @@ public class EfficientLTS_PAASAX {
     }
 
     // precompute terms
-    public void PreCompute(int i) {
+    public void PreCompute(int i)
+    {
         // precompute terms
         for(int c=0; c<C; c++){
             for(int k=0; k<Tp.hatOmegaLable[c].size(); k++){
@@ -262,7 +272,8 @@ public class EfficientLTS_PAASAX {
     }
 
     // compute the MCR on the test set
-    public double GetMCRTrainSet() {
+    public double GetMCRTrainSet()
+    {
         int numErrors = 0;
 
         for(int i = 0; i < ITrain; i++)
@@ -290,8 +301,10 @@ public class EfficientLTS_PAASAX {
         return (double)numErrors/(double)ITrain;
     }
 
+
     // compute the MCR on the test set
-    public double ReduceGetMCRTestSet() {
+    public double ReduceGetMCRTestSet()
+    {
         int numErrors = 0;
 
         for(int i = ITrain; i < ITrain+ITest; i++)
@@ -321,7 +334,8 @@ public class EfficientLTS_PAASAX {
 
     // compute the accuracy loss of instance i according to the
     // smooth hinge loss
-    public double AccuracyLoss(int i, int c) {
+    public double AccuracyLoss(int i, int c)
+    {
         double Y_hat_ic = Predict(i, c);
         double sig_y_ic = Sigmoid.Calculate(Y_hat_ic);
 
@@ -329,7 +343,8 @@ public class EfficientLTS_PAASAX {
     }
 
     // compute the accuracy loss of the train set
-    public double AccuracyLossTrainSet() {
+    public double AccuracyLossTrainSet()
+    {
         double accuracyLoss = 0;
 
         for(int i = 0; i < ITrain; i++)
@@ -343,8 +358,8 @@ public class EfficientLTS_PAASAX {
         return accuracyLoss;
     }
     // compute the accuracy loss of the train set
-
-    public double AccuracyLossTestSet() {
+    public double AccuracyLossTestSet()
+    {
         double accuracyLoss = 0;
 
         for(int i = ITrain; i < ITrain+ITest; i++)
@@ -357,7 +372,8 @@ public class EfficientLTS_PAASAX {
         return accuracyLoss;
     }
 
-    public int HammingDistance(String One, String Two) {
+    public int HammingDistance(String One, String Two)
+    {
         if (One.length() != Two.length())
             return -1;
 
@@ -380,7 +396,8 @@ public class EfficientLTS_PAASAX {
         return counter;
     }
 
-    public int DTW(String One, String Two) {
+    public int DTW(String One, String Two)
+    {
         int numCut = One.length()/slidingWindow_miniunit;
         String tempOne, tempTwo;
         for(int i=1; i<=numCut; i++){
@@ -405,274 +422,6 @@ public class EfficientLTS_PAASAX {
             }
         }
         return false;
-    }
-
-    public void TransferPAASAX(DataSet dataSet) {
-        //determine the paaRatio
-//        if(Tp.getDimColumns()>500){
-//            paaRatio = 0.2;
-//        }else if(Tp.getDimColumns()<100){
-//            paaRatio = 1.0;
-//        }
-//        else {
-//            paaRatio = 1.0/(Tp.getDimColumns()/100);
-//        }
-
-        // determine the stepRatio
-//        stepRatio =  5.0 / Tp.getDimColumns() * paaRatio;
-
-        // apply the PAA
-        SAXRepresentation sax = new SAXRepresentation();
-        //SAXRepresentation rawsax = new SAXRepresentation();
-        Tp = sax.generatePAAToMatrix(dataSet, paaRatio);
-
-        minData = Tp.getMinValue();
-        maxData = Tp.getMaxValue();
-        midData = (minData + maxData)/2.0;
-        spaceData = (maxData - minData)/2.0;
-        Logging.println(minData+ "  "+ maxData+  "  "+spaceData, Logging.LogLevel.DEBUGGING_LOG);
-
-        //Transfer PAA to SAX
-        Tp.SAX  = new String[ITrain];
-        for(int i=0; i < ITrain; i++){
-//            Logging  .println(i +" " + Tp.getRow(i), Logging.LogLevel.DEBUGGING_LOG);
-            Tp.SAX[i] = sax.ConvertToSAX(Tp.getRow(i),alphabetSize, midData, spaceData);
-        }
-
-        //Construct the Bloom Filters
-        {
-            int originalLength = Tp.getDimColumns();
-            int tmpSlide = (int) (stepRatio * Tp.getDimColumns());
-            for(int i=1; i <= originalLength/tmpSlide; i++){
-                numSubsequence = numSubsequence + (originalLength + 1 - tmpSlide * i);
-            }
-        }
-
-        slidingWindow_miniunit = (int) (stepRatio * Tp.getDimColumns());
-        C = nominalLabels.size();
-        BF = new BloomFilter[C];
-        Tp.OmegaLable = new TreeSet[C];
-        Tp.starOmegaLable = new TreeSet[C];
-        Tp.hatOmegaLable = new ArrayList[C];
-        Tp.starOmegaArrayList = new ArrayList[C];
-        Tp.starOmegaLinkedList = new LinkedList[C];
-        Tp.labelNum = new int[C];
-        Tp.subSAX = new String[C][][];
-
-        // unify the label
-        TreeSet<Integer> originalLabelSet = new TreeSet<Integer>();
-        for(int i=0;i<ITrain;i++){
-            if (originalLabelSet.size()<C) {
-                originalLabelSet.add((int)(Y.get(i,0)));
-            }else {
-                break;
-            }
-        }
-        List<Integer> originalLabelList = new ArrayList<Integer>(originalLabelSet);
-
-        //the number of instance for each class
-        int C_new;
-        for(int i=0;i<ITrain;i++){
-//            int C_new;
-//            if( (int)(Y.get(i,0)) == -1 ){
-//                C_new = 0;
-//            }else{
-//                C_new = (int)(Y.get(i,0));
-//            }
-            //C_new = (int)(Y.get(i,0)-1);
-            C_new = originalLabelList.indexOf((int)(Y.get(i,0)));
-            //int C_new = (int)(Y.get(i,0));
-            ++Tp.labelNum[C_new];
-        }
-
-        for(int c=0; c<C;c++){
-            BF[c] = new BloomFilter(falsePositiveProbability,expectedNumberOfElements);
-            Tp.OmegaLable[c] = new TreeSet<String>();
-            Tp.starOmegaLable[c] = new TreeSet<String>();
-            Tp.hatOmegaLable[c] = new ArrayList<String>();
-            Tp.starOmegaArrayList[c] = new ArrayList<String>();
-            Tp.starOmegaLinkedList[c] = new LinkedList<String>();
-            Tp.subSAX[c] = new String[Tp.labelNum[c]][numSubsequence];
-        }
-        int [] classNumTemp;
-        classNumTemp = new int[C];
-        for(int i=0; i< ITrain; i++){
-//            int C_new;
-//            if( (int)(Y.get(i,0)) == -1 ){
-//                C_new = 0;
-//            }else{
-//                C_new = (int)(Y.get(i,0));
-//            }
-            //C_new = (int)(Y.get(i,0)-1);
-            C_new = originalLabelList.indexOf((int)(Y.get(i,0)));
-            //int C_new = (int)(Y.get(i,0));
-            int slideStep = 1;
-            int subScript = numSubsequence-1;
-            for(slidingWindow = slidingWindow_miniunit; slidingWindow <= Tp.getDimColumns(); slidingWindow=slidingWindow_miniunit * slideStep){
-                for(int v = 0; Tp.getDimColumns() - v >= slidingWindow ; v++){
-                    Tp.subSAX[C_new][classNumTemp[C_new]][subScript] = Tp.SAX[i].substring(v,v+slidingWindow);
-                    Tp.OmegaLable[C_new].add(Tp.subSAX[C_new][classNumTemp[C_new]][subScript]);
-                    BF[C_new].add(Tp.subSAX[C_new][classNumTemp[C_new]][subScript]);
-                    subScript--;
-                }
-                ++slideStep;
-            }
-            ++classNumTemp[C_new];
-        }
-
-        //excluding the subsequences in opposite side  with C classes
-        LinkedList<Integer> [] BfExLinked = new LinkedList [C];
-        for(int c=0; c<C; c++){
-            BfExLinked[c] = new LinkedList<>();
-            for(int i=0; i<C; i++){
-                BfExLinked[c].add(i);
-            }
-        }
-        for(int c=0; c<C; c++){
-            if(BfExLinked[c].contains(c)){
-                BfExLinked[c].remove(c);
-            }
-            int q=0;
-            for(String s: Tp.OmegaLable[c]){
-                for(int j=0; j<BfExLinked[c].size(); j++){
-                    if(!BF[BfExLinked[c].get(j)].contains(s)){
-                        //if(BF[BfExLinked[c].get(j)].contains(s)){
-                        if(j == (BfExLinked[c].size()-1) ){
-                            Tp.starOmegaLable[c].add(s);
-                            Tp.starOmegaArrayList[c].add(s);
-                            Tp.starOmegaLinkedList[c].add(s);
-                        }
-                        else{
-                            continue;
-                        }
-                    }
-                    else{
-                        break;
-                    }
-                }
-            }
-        }
-
-        /*** Csonstructing the bitmap **/
-        int match=0;
-        Tp.BitMap = new BitSet[C][];
-        Tp.weightBitmap = new int[C][];
-        for(int c=0; c<C; c++){
-            Tp.BitMap[c] = new BitSet[Tp.starOmegaArrayList[c].size()];
-            Tp.weightBitmap[c] = new int[Tp.starOmegaArrayList[c].size()];
-            String s;
-            for(int i=0; i< Tp.starOmegaArrayList[c].size();i++) {
-                Tp.BitMap[c][i] = new BitSet(Tp.labelNum[c]);
-                Tp.weightBitmap[c][i] = 0;
-                s = Tp.starOmegaArrayList[c].get(i);
-                int startPoint = 0;
-                if( Tp.getDimColumns() == s.length() ){
-                    startPoint = 0;
-                }else {
-                    for(int q=(Tp.getDimColumns()/slidingWindow_miniunit); q>s.length()/slidingWindow_miniunit; --q){
-                        startPoint +=  (Tp.getDimColumns()-slidingWindow_miniunit *q + 1);
-                    }
-                }
-                int candidateNum = Tp.getDimColumns()-s.length()+1;
-                int endPoint = startPoint + candidateNum;
-                for(int j=0; j<Tp.labelNum[c]; j++){
-                    for(int l= startPoint; l< endPoint; l++){
-                        if(s.equals(Tp.subSAX[c][j][l])){
-                            Tp.BitMap[c][i].set(j);
-                            ++match;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        /*** Before processing similar subsequences **/
-        for(int c=0; c<C; c++){
-            String s1, s2;
-            int numSim = 0;
-            int excludeNum = 0;
-            for(int i=0; i<Tp.starOmegaArrayList[c].size(); i++){
-                s1 = Tp.starOmegaArrayList[c].get(i);
-                Tp.weightBitmap[c][i]++;
-                for(int j=i+1; j<Tp.starOmegaArrayList[c].size(); j++){
-                    s2 = Tp.starOmegaArrayList[c].get(j);
-                    if ( HammingDistance(s1, s2) == s1.length()/slidingWindow_miniunit ){
-                        Tp.weightBitmap[c][i]++;
-                        Tp.weightBitmap[c][j]++;
-                        numSim++;
-                    }
-                }
-            }
-        }
-
-        /*** Excluding similar sax words from other classes **/
-        LinkedList<Integer> [] BfSimExLinked = new LinkedList [C];
-        for(int c=0; c<C; c++){
-            BfSimExLinked[c] = new LinkedList<>();
-            for(int i=0; i<C; i++){
-                BfSimExLinked[c].add(i);
-            }
-        }
-        for(int c=0; c<C-1; c++){
-            String s1, s2;
-            int account = 0;
-            if(BfSimExLinked[c].contains(c)){
-                BfSimExLinked[c].remove(c);
-            }
-            for(int i=0; i<Tp.starOmegaArrayList[c].size(); i++){
-                if(Tp.BitMap[c][i].cardinality() != 0){
-                    s1 = Tp.starOmegaArrayList[c].get(i);
-                    for(int j=0; j<BfSimExLinked[c].size(); j++) {
-                        for(int k = 0; k < Tp.starOmegaArrayList[BfSimExLinked[c].get(j)].size(); k++) {
-                            if( Tp.BitMap[BfSimExLinked[c].get(j)][k].cardinality() != 0 ) {
-                                s2 = Tp.starOmegaArrayList[BfSimExLinked[c].get(j)].get(k);
-                                if(s1.length() == s2.length()){
-                                    if (HammingDistance(s1, s2) == s1.length() / slidingWindow_miniunit) {
-                                        Tp.BitMap[c][i].clear();
-                                        Tp.weightBitmap[c][i] = 0;
-                                        Tp.BitMap[BfSimExLinked[c].get(j)][k].clear();
-                                        Tp.weightBitmap[BfSimExLinked[c].get(j)][k] = 0;
-                                        account++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        //sort sax for each class
-        for(int c=0; c<C; c++){
-            sortSAX(Tp.starOmegaArrayList[c],Tp.BitMap[c],Tp.weightBitmap[c]);
-        }
-
-        /*** Select final SAX for LTS **/
-        for(int p=0; p<pcover; p++){
-            for(int c=0; c<C; c++){
-                finalSAX(Tp.starOmegaArrayList[c],Tp.hatOmegaLable[c],Tp.BitMap[c],Tp.labelNum[c], Tp.weightBitmap[c]);
-                modifyWeight(Tp.hatOmegaLable[c], Tp.starOmegaArrayList[c], Tp.BitMap[c], Tp.weightBitmap[c]);
-            }
-        }
-
-        /*** transfer SAX  bcak to raw data **/
-        // initialize the gradient history of shapelets
-        Shapelets = new double[C][][];
-        GradHistShapelets = new double[C][][];
-        for(int c=0; c<C; c++){
-            Shapelets[c] = new double[Tp.hatOmegaLable[c].size()][];
-            GradHistShapelets[c] =new double[Tp.hatOmegaLable[c].size()][];
-            for(int i=0; i<Tp.hatOmegaLable[c].size(); i++){
-                Shapelets[c][i] = new double[Tp.hatOmegaLable[c].get(i).length()]; //size
-                GradHistShapelets[c][i] = new double[Tp.hatOmegaLable[c].get(i).length()]; //size
-                Shapelets[c][i] = sax.RestoreSeriesFromSax(Tp.hatOmegaLable[c].get(i),
-                        Tp.hatOmegaLable[c].get(i).length(), alphabetSize, midData, spaceData);
-                for(int j=0; j<Tp.hatOmegaLable[c].get(i).length(); j++){
-                    GradHistShapelets[c][i][j] = 0.0;
-                }
-            }
-        }
     }
 
     public void sortSAX(ArrayList al, BitSet [] bs, int [] wb){
@@ -749,7 +498,280 @@ public class EfficientLTS_PAASAX {
         }
     }
 
-    public void LearnF() {
+
+    public void TransferPAASAX(DataSet dataSet)
+    {
+        //determine the paaRatio
+//        if(Tp.getDimColumns()>500){
+//            paaRatio = 0.2;
+//        }else if(Tp.getDimColumns()<100){
+//            paaRatio = 1.0;
+//        }
+//        else {
+//            paaRatio = 1.0/(Tp.getDimColumns()/100);
+//        }
+
+        // determine the stepRatio
+//        stepRatio =  5.0 / Tp.getDimColumns() * paaRatio;
+
+        // apply the PAA
+        SAXRepresentation sax = new SAXRepresentation();
+        //SAXRepresentation rawsax = new SAXRepresentation();
+        Tp = sax.generatePAAToMatrix(dataSet, paaRatio);
+
+        minData = Tp.getMinValue();
+        maxData = Tp.getMaxValue();
+        midData = (minData + maxData)/2.0;
+        spaceData = (maxData - minData);
+        Logging.println(minData+ "  "+ maxData+  "  "+spaceData, Logging.LogLevel.DEBUGGING_LOG);
+
+        //Transfer PAA to SAX
+        Tp.SAX  = new String[ITrain];
+        for(int i=0; i < ITrain; i++){
+            //Logging.println(i+" "+Tp.getRow(i), Logging.LogLevel.DEBUGGING_LOG);
+            Tp.SAX[i] = sax.ConvertToSAX(Tp.getRow(i),alphabetSize, midData, spaceData);
+        }
+
+        //Construct the Bloom Filters
+        {
+            int originalLength = Tp.getDimColumns();
+            int tmpSlide = (int) (stepRatio * Tp.getDimColumns());
+            for(int i=1; i <= originalLength/tmpSlide; i++){
+                numSubsequence = numSubsequence + (originalLength + 1 - tmpSlide * i);
+            }
+        }
+
+        slidingWindow_miniunit = (int) (stepRatio * Tp.getDimColumns());
+        C = nominalLabels.size();
+        BF = new BloomFilter[C];
+        Tp.OmegaLable = new TreeSet[C];
+        Tp.starOmegaLable = new TreeSet[C];
+        Tp.hatOmegaLable = new ArrayList[C];
+        Tp.starOmegaArrayList = new ArrayList[C];
+        Tp.starOmegaLinkedList = new LinkedList[C];
+        Tp.labelNum = new int[C];
+        Tp.subSAX = new String[C][][];
+
+        //unify the label
+        TreeSet<Integer> originalLabelSet = new TreeSet<Integer>();
+        for(int i=0; i<ITrain; i++){
+            if(originalLabelSet.size()<C){
+                originalLabelSet.add((int)(Y.get(i,0)));
+            }else{
+                break;
+            }
+        }
+        List<Integer> originalLabelList = new ArrayList<Integer>(originalLabelSet);
+
+        //the number of instance for each class
+        int C_new;
+        for(int i=0;i<ITrain;i++){
+//            int C_new;
+//            if( (int)(Y.get(i,0)) == -1 ){
+//                C_new = 0;
+//            }else{
+//                C_new = (int)(Y.get(i,0));
+//            }
+            //int C_new = (int)(Y.get(i,0)-1);
+            C_new = originalLabelList.indexOf((int)(Y.get(i,0)));
+            //int C_new = (int)(Y.get(i,0));
+            ++Tp.labelNum[C_new];
+        }
+
+        for(int c=0; c<C;c++){
+            BF[c] = new BloomFilter(falsePositiveProbability,expectedNumberOfElements);
+            Tp.OmegaLable[c] = new TreeSet<String>();
+            Tp.starOmegaLable[c] = new TreeSet<String>();
+            Tp.hatOmegaLable[c] = new ArrayList<String>();
+            Tp.starOmegaArrayList[c] = new ArrayList<String>();
+            Tp.starOmegaLinkedList[c] = new LinkedList<String>();
+            Tp.subSAX[c] = new String[Tp.labelNum[c]][numSubsequence];
+        }
+        int [] classNumTemp;
+        classNumTemp = new int[C];
+        for(int i=0; i< ITrain; i++){
+//            int C_new;
+//            if( (int)(Y.get(i,0)) == -1 ){
+//                C_new = 0;
+//            }else{
+//                C_new = (int)(Y.get(i,0));
+//            }
+            //int C_new = (int)(Y.get(i,0)-1);
+            C_new = originalLabelList.indexOf((int)(Y.get(i,0)));
+            //int C_new = (int)(Y.get(i,0));
+            int slideStep = 1;
+            int subScript = numSubsequence-1;
+            for(slidingWindow = slidingWindow_miniunit; slidingWindow <= Tp.getDimColumns(); slidingWindow=slidingWindow_miniunit * slideStep){
+                for(int v = 0; Tp.getDimColumns() - v >= slidingWindow ; v++){
+                    Tp.subSAX[C_new][classNumTemp[C_new]][subScript] = Tp.SAX[i].substring(v,v+slidingWindow);
+                    Tp.OmegaLable[C_new].add(Tp.subSAX[C_new][classNumTemp[C_new]][subScript]);
+                    BF[C_new].add(Tp.subSAX[C_new][classNumTemp[C_new]][subScript]);
+                    subScript--;
+                }
+                ++slideStep;
+            }
+            ++classNumTemp[C_new];
+        }
+
+        //excluding the subsequences in opposite side  with C classes
+        LinkedList<Integer> [] BfExLinked = new LinkedList [C];
+        for(int c=0; c<C; c++){
+            BfExLinked[c] = new LinkedList<>();
+            for(int i=0; i<C; i++){
+                BfExLinked[c].add(i);
+            }
+        }
+        for(int c=0; c<C; c++){
+            if(BfExLinked[c].contains(c)){
+                BfExLinked[c].remove(c);
+            }
+            int q=0;
+            for(String s: Tp.OmegaLable[c]){
+                for(int j=0; j<BfExLinked[c].size(); j++){
+                    if(!BF[BfExLinked[c].get(j)].contains(s)){
+                        //if(BF[BfExLinked[c].get(j)].contains(s)){
+                        if(j == (BfExLinked[c].size()-1) ){
+                            Tp.starOmegaLable[c].add(s);
+                            Tp.starOmegaArrayList[c].add(s);
+                            Tp.starOmegaLinkedList[c].add(s);
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                    else{
+                        break;
+                    }
+                }
+            }
+        }
+
+        //constructing the bitmap
+        int match=0;
+        Tp.BitMap = new BitSet[C][];
+        Tp.weightBitmap = new int[C][];
+        for(int c=0; c<C; c++){
+            Tp.BitMap[c] = new BitSet[Tp.starOmegaArrayList[c].size()];
+            Tp.weightBitmap[c] = new int[Tp.starOmegaArrayList[c].size()];
+            String s;
+            for(int i=0; i< Tp.starOmegaArrayList[c].size();i++) {
+                Tp.BitMap[c][i] = new BitSet(Tp.labelNum[c]);
+                Tp.weightBitmap[c][i] = 0;
+                s = Tp.starOmegaArrayList[c].get(i);
+                int startPoint = 0;
+                if( Tp.getDimColumns() == s.length() ){
+                    startPoint = 0;
+                }else {
+                    for(int q=(Tp.getDimColumns()/slidingWindow_miniunit); q>s.length()/slidingWindow_miniunit; --q){
+                        startPoint +=  (Tp.getDimColumns()-slidingWindow_miniunit *q + 1);
+                    }
+                }
+                int candidateNum = Tp.getDimColumns()-s.length()+1;
+                int endPoint = startPoint + candidateNum;
+                for(int j=0; j<Tp.labelNum[c]; j++){
+                    for(int l= startPoint; l< endPoint; l++){
+                        if(s.equals(Tp.subSAX[c][j][l])){
+                            Tp.BitMap[c][i].set(j);
+                            ++match;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //before processing similar subsequences
+        for(int c=0; c<C; c++){
+            String s1, s2;
+            int numSim = 0;
+            int excludeNum = 0;
+            for(int i=0; i<Tp.starOmegaArrayList[c].size(); i++){
+                s1 = Tp.starOmegaArrayList[c].get(i);
+                Tp.weightBitmap[c][i]++;
+                for(int j=i+1; j<Tp.starOmegaArrayList[c].size(); j++){
+                    s2 = Tp.starOmegaArrayList[c].get(j);
+                    if ( HammingDistance(s1, s2) == s1.length()/slidingWindow_miniunit ){
+                        Tp.weightBitmap[c][i]++;
+                        Tp.weightBitmap[c][j]++;
+                        numSim++;
+                    }
+                }
+            }
+        }
+
+
+        //excluding similar sax words for other class
+        LinkedList<Integer> [] BfSimExLinked = new LinkedList [C];
+        for(int c=0; c<C; c++){
+            BfSimExLinked[c] = new LinkedList<>();
+            for(int i=0; i<C; i++){
+                BfSimExLinked[c].add(i);
+            }
+        }
+        for(int c=0; c<C-1; c++){
+            String s1, s2;
+            int account = 0;
+            if(BfSimExLinked[c].contains(c)){
+                BfSimExLinked[c].remove(c);
+            }
+            for(int i=0; i<Tp.starOmegaArrayList[c].size(); i++){
+                if(Tp.BitMap[c][i].cardinality() != 0){
+                    s1 = Tp.starOmegaArrayList[c].get(i);
+                    for(int j=0; j<BfSimExLinked[c].size(); j++) {
+                        for(int k = 0; k < Tp.starOmegaArrayList[BfSimExLinked[c].get(j)].size(); k++) {
+                            if( Tp.BitMap[BfSimExLinked[c].get(j)][k].cardinality() != 0 ) {
+                                s2 = Tp.starOmegaArrayList[BfSimExLinked[c].get(j)].get(k);
+                                if(s1.length() == s2.length()){
+                                    if (HammingDistance(s1, s2) == s1.length() / slidingWindow_miniunit) {
+                                        Tp.BitMap[c][i].clear();
+                                        Tp.weightBitmap[c][i] = 0;
+                                        Tp.BitMap[BfSimExLinked[c].get(j)][k].clear();
+                                        Tp.weightBitmap[BfSimExLinked[c].get(j)][k] = 0;
+                                        account++;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //sort sax for each class
+        for(int c=0; c<C; c++){
+            sortSAX(Tp.starOmegaArrayList[c],Tp.BitMap[c],Tp.weightBitmap[c]);
+        }
+
+        //select final SAX for LTS
+        for(int p=0; p<pcover; p++){
+            for(int c=0; c<C; c++){
+                finalSAX(Tp.starOmegaArrayList[c],Tp.hatOmegaLable[c],Tp.BitMap[c],Tp.labelNum[c], Tp.weightBitmap[c]);
+                modifyWeight(Tp.hatOmegaLable[c], Tp.starOmegaArrayList[c], Tp.BitMap[c], Tp.weightBitmap[c]);
+            }
+        }
+
+        //transfer SAX  bcak to raw data
+        // initialize the gradient history of shapelets
+        Shapelets = new double[C][][];
+        GradHistShapelets = new double[C][][];
+        for(int c=0; c<C; c++){
+            Shapelets[c] = new double[Tp.hatOmegaLable[c].size()][];
+            GradHistShapelets[c] =new double[Tp.hatOmegaLable[c].size()][];
+            for(int i=0; i<Tp.hatOmegaLable[c].size(); i++){
+                Shapelets[c][i] = new double[Tp.hatOmegaLable[c].get(i).length()];
+                GradHistShapelets[c][i] = new double[Tp.hatOmegaLable[c].get(i).length()];
+                Shapelets[c][i] = sax.RestoreSeriesFromSax(Tp.hatOmegaLable[c].get(i),
+                        Tp.hatOmegaLable[c].get(i).length(), alphabetSize, midData, spaceData);
+                for(int j=0; j<Tp.hatOmegaLable[c].get(i).length(); j++){
+                    GradHistShapelets[c][i][j] = 0.0;
+                }
+            }
+        }
+    }
+
+
+    public void LearnF()
+    {
         // parallel implementation of the learning, one thread per instance
         // up to as much threads as JVM allows
         //long startTime = System.currentTimeMillis();
@@ -861,20 +883,9 @@ public class EfficientLTS_PAASAX {
             }
         }
 
+        String path_I = this.root + this.subroot + "/shapelet-original.txt";
         //output shapelet
-
-        /*** ----------------------------------------------------------- ***/
-        /**********************************************************
-         ****** The shapelets output path is here! ******
-         *********************************************************/
-
-        String subroot_I = "/datasets/Grace_dataset/v_2/shapelet-original.txt";
-        String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet-original.txt";
-
-        String root = System.getProperty("user.dir");
-        String path = root + subroot_I;
-        //PrintWriter writer = new PrintWriter("experiment/shapelet/shapelet-original.txt", "UTF-8");
-        PrintWriter writer = new PrintWriter(path, "UTF-8");
+        PrintWriter writer = new PrintWriter(path_I, "UTF-8");
         for(int c=0; c<C; c++){
             //System.out.println("Class: "+c);
             for(int k=0; k<K[c] ;k++){
@@ -893,137 +904,172 @@ public class EfficientLTS_PAASAX {
         }
         writer.close();
 
+        String path_II = this.root + this.subroot + "/shapelet-weight.txt";
+        // output weight of shapelet
+        PrintWriter writerWeight = new PrintWriter(path_II, "UTF-8");
         for(int c=0; c<C; c++){
-            System.out.println("Class: "+c+" number of shapelets: "+K[c]);
+            //System.out.println("Class: "+c);
+            writerWeight.append(c +",");
+            for(int k=0; k<K[c] ;k++){
+                //System.out.println("shapelet: "+k);
+                writerWeight.append(String.valueOf(GradHistW[c][k])+",");
+                Logging.println("Shapelets weight ["+c+"]["+k+"]" + GradHistW[c][k], Logging.LogLevel.DEBUGGING_LOG);
+            }
+            //writerWeight.append(String.valueOf(GradHistBiasW[c]));
+            Logging.println("GradHistBiasW "+GradHistBiasW[c], Logging.LogLevel.DEBUGGING_LOG);
+            writerWeight.println();
+        }
+        writerWeight.close();
+
+        for(int c=0; c<C; c++){
+            Logging.println("Class: "+c+" number of shapelets: "+K[c], Logging.LogLevel.DEBUGGING_LOG);
+//            for(int i=0; i<Tp.starOmegaArrayList[c].size(); i++){
+//                Logging.println("class: "+ c +", i: "+ i +", number of bitset: "+Tp.BitMap[c][i].cardinality(), Logging.LogLevel.DEBUGGING_LOG);
+//            }
+//            for(int k=0; k<K[c] ;k++){
+//                Logging.println("number of bitset: "+Tp.BitMap[c][k].cardinality(), Logging.LogLevel.DEBUGGING_LOG);
+//                Logging.println("Class: "+c+", number of shapelets: "+ k +", the weight: "+ Tp.weightBitmap[c][k], Logging.LogLevel.DEBUGGING_LOG);
+//            }
         }
 
         return ReduceGetMCRTestSet();
     }
 
-//    public static void main(String []args) throws Exception {
-////        String filedir = "/home/comp/csgzli/experiment/";
-////        String filedir = "D:\\RA\\Task4-ML\\experiment\\";
-//
-//        //test path
-//        String filedir = "experimentI/shapetes";
-//        File file = new File(filedir);
-//        File[] files = file.listFiles();
-//        String ds;
-//        String sp = File.separator;
-//
-//        //Default parameter
-//        int maxEpochs=1000;
-//        int alphabetSize=4;
-//        double stepRatio = 0.5;
-//        double paaRatio = 0.5;
-//        int pcover =1;
-//
-//        //read parameter file
-//        //String parameter = "experiment\\parameter.txt";
-//        BufferedReader br = new BufferedReader(new FileReader("experimentI/parameter.txt"));
-//        String parameter;
-//        while((parameter = br.readLine()) != null) {
-//            String[] tokens = parameter.split(",");
-//
-//            maxEpochs = Integer.parseInt(tokens[0].trim());
-//            alphabetSize = Integer.parseInt(tokens[1].trim());
-//            stepRatio = Double.parseDouble(tokens[2].trim());
-//            paaRatio = Double.parseDouble(tokens[3].trim());
-//            pcover = Integer.parseInt(tokens[4].trim());
-//        }
-//                for (int j = 0; j < files.length; j++) {
-//                    ds = files[j].getName();
-//
-////            try {
-////                PrintStream print = new PrintStream("/home/comp/csgzli/experiment/ResultsTXT/experimentResult\\" + files[j].getName() + ".txt");
-////                System.setOut(print);
-////            } catch (FileNotFoundException e) {
-////                e.printStackTrace();
-////            }
-//
-//                    // values of hyperparameters
-//                    double eta = 0.1, lambdaW = 0.01, alpha = -25, L = 0.2, K = -1;
-////                    double eta = 0.1, alpha = -25, L = 0.2;
-////            int maxEpochs = 1000, R = 4;
-//                    //int maxEpochs = 1000;
-//                    //int R = 4;
-//                    //int alphabetSize = 4;
-//                    //double stepRatio = 0.5;
-//                    //double paaRatio = 0.5;
-//                    //int pcover = 1;
-//                    double falsePositiveProbability = 0.0001;
-//                    int expectedNumberOfElements = 60000;
-//                    String trainSetPath = filedir + ds + sp + ds + "_TRAIN", testSetPath = filedir + ds + sp + ds + "_TEST";
-//                    //String trainSetPath = filedir + ds, testSetPath = filedir + ds;
-//
-//                    Logging.println("dataset: " + files[j].getName() + " stepRatio: " + stepRatio + " alphabetSize: "
-//                            + alphabetSize, Logging.LogLevel.DEBUGGING_LOG);
-//
-//                    long startTime = System.currentTimeMillis();
-//
-//                    // load dataset
-//                    DataSet trainSet = new DataSet();
-//                    trainSet.LoadDataSetFile(new File(trainSetPath));
-//                    DataSet testSet = new DataSet();
-//                    testSet.LoadDataSetFile(new File(testSetPath));
-//
-//                    // normalize the data instance
-//                    trainSet.NormalizeDatasetInstances();
-//                    testSet.NormalizeDatasetInstances();
-//
-//                    // predictor variables T
-//                    Matrix T = new Matrix();
-//                    T.LoadDatasetFeatures(trainSet, false);
-//                    T.LoadDatasetFeatures(testSet, true);
-//                    // outcome variable O
-//                    Matrix O = new Matrix();
-//                    O.LoadDatasetLabels(trainSet, false);
-//                    O.LoadDatasetLabels(testSet, true);
-//
-//                    EfficientLTS eLTS = new EfficientLTS();
-//                    // initialize the sizes of data structures
-//                    eLTS.ITrain = trainSet.GetNumInstances();
-//                    eLTS.ITest = testSet.GetNumInstances();
-//                    eLTS.Q = T.getDimColumns();
-//                    //Logging.println(eLTS.ITrain+" "+eLTS.ITest+" "+eLTS.Q);
-//                    // set the time series and labels
-//                    eLTS.T = T;
-//                    eLTS.Y = O;
-//
-//                    eLTS.alphabetSize = alphabetSize;
-//                    eLTS.stepRatio = stepRatio;
-//                    eLTS.paaRatio = paaRatio;
-//                    eLTS.pcover = pcover;
-//
-//                    eLTS.falsePositiveProbability = falsePositiveProbability;
-//                    eLTS.expectedNumberOfElements = expectedNumberOfElements;
-//
-//                    // set the learn rate and the number of iterations
-//                    eLTS.maxIter = maxEpochs;
-//
-//                    eLTS.slidingWindow_miniunit = (int) (L * T.getDimColumns());
-//                    //eLTS.R = R;
-//                    // set the regularization parameter
-//                    eLTS.lambdaW = lambdaW;
-//                    eLTS.eta = eta;
-//                    eLTS.alpha = alpha;
-//                    trainSet.ReadNominalTargets();
-//                    eLTS.nominalLabels = new ArrayList<Double>(trainSet.nominalLabels);
-//
-//                    long before_learn = System.currentTimeMillis();
-//
-//                    eLTS.Learn(trainSet);
-//                    long endTime = System.currentTimeMillis();
-//
-//                    Logging.println(
-//                            String.valueOf(eLTS.ReduceGetMCRTestSet()) + " " + String.valueOf(eLTS.GetMCRTrainSet()) + " "
-//                                    + String.valueOf(eLTS.AccuracyLossTrainSet()) + " "
-//                                    + "learn time=" + (endTime - before_learn) + " "
-//                                    + "before_learn time=" + (before_learn - startTime), Logging.LogLevel.DEBUGGING_LOG
-//                    );
-//
-//                }
+    public static void main(String []args) throws Exception {
+//        String filedir = "/home/comp/csgzli/experiment/";
+//        String filedir = "D:\\RA\\Task4-ML\\experiment\\";
+
+        //test path
+        String myroot = System.getProperty("user.dir");
+        String filedir = "experiment\\Grace\\";
+        File file = new File(filedir);
+        File[] files = file.listFiles();
+        String ds;
+        String sp = File.separator;
+
+        //Default parameter
+        int maxEpochs=1000;
+        int alphabetSize=4;
+        double stepRatio = 0.5;
+        double paaRatio = 0.5;
+        int pcover =1;
+
+        BufferedReader br = new BufferedReader(new FileReader("experiment\\parameter.txt"));
+        String parameter;
+        while((parameter = br.readLine()) != null) {
+            String[] tokens = parameter.split(",");
+
+            maxEpochs = Integer.parseInt(tokens[0].trim());
+            alphabetSize = Integer.parseInt(tokens[1].trim());
+            stepRatio = Double.parseDouble(tokens[2].trim());
+            paaRatio = Double.parseDouble(tokens[3].trim());
+            pcover = Integer.parseInt(tokens[4].trim());
+        }
+        for (int j = 0; j < files.length; j++) {
+            ds = files[j].getName();
+
+//            try {
+//                PrintStream print = new PrintStream("/home/comp/csgzli/experiment/ResultsTXT/experimentResult\\" + files[j].getName() + ".txt");
+//                System.setOut(print);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
 //            }
+
+            // values of hyperparameters
+            double eta = 0.1, lambdaW = 0.01, alpha = -25, L = 0.2, K = -1;
+//                    double eta = 0.1, alpha = -25, L = 0.2;
+//            int maxEpochs = 1000, R = 4;
+            //int maxEpochs = 1000;
+            //int R = 4;
+            //int alphabetSize = 4;
+            //double stepRatio = 0.5;
+            //double paaRatio = 0.5;
+            //int pcover = 1;
+            double falsePositiveProbability = 0.0001;
+            int expectedNumberOfElements = 60000;
+            String trainSetPath = filedir + ds + sp + ds + "_TRAIN", testSetPath = filedir + ds + sp + ds + "_TEST";
+            //String trainSetPath = filedir + ds, testSetPath = filedir + ds;
+
+            Logging.println("dataset: " + files[j].getName() + " stepRatio: " + stepRatio + " alphabetSize: "
+                    + alphabetSize, Logging.LogLevel.DEBUGGING_LOG);
+
+            long startTime = System.currentTimeMillis();
+
+            // load dataset
+            DataSet trainSet = new DataSet();
+            trainSet.LoadDataSetFile(new File(trainSetPath));
+            DataSet testSet = new DataSet();
+            testSet.LoadDataSetFile(new File(testSetPath));
+
+            // normalize the data instance
+            trainSet.NormalizeDatasetInstances();
+            testSet.NormalizeDatasetInstances();
+
+//                    // output normalized dataset
+//                    System.out.println("trainSet:");
+//                    System.out.println(trainSet.GetNumInstances());
+//                    System.out.println(trainSet.numFeatures);
+//                    System.out.println(trainSet.instances.get(0).features.size());
+//                    System.exit(0);
+//                    for(int i=0;i<trainSet.GetNumInstances(); i++){
+//                        for(int l=0; j< trainSet.numFeatures; l++){
+//                            System.out.println(trainSet.GetNumInstances());
+//                        }
+//                    }
+
+            // predictor variables T
+            Matrix T = new Matrix();
+            T.LoadDatasetFeatures(trainSet, false);
+            T.LoadDatasetFeatures(testSet, true);
+            // outcome variable O
+            Matrix O = new Matrix();
+            O.LoadDatasetLabels(trainSet, false);
+            O.LoadDatasetLabels(testSet, true);
+
+            EfficientLTS eLTS = new EfficientLTS(myroot, filedir);
+            // initialize the sizes of data structures
+            eLTS.ITrain = trainSet.GetNumInstances();
+            eLTS.ITest = testSet.GetNumInstances();
+            eLTS.Q = T.getDimColumns();
+            //Logging.println(eLTS.ITrain+" "+eLTS.ITest+" "+eLTS.Q);
+            // set the time series and labels
+            eLTS.T = T;
+            eLTS.Y = O;
+
+            eLTS.alphabetSize = alphabetSize;
+            eLTS.stepRatio = stepRatio;
+            eLTS.paaRatio = paaRatio;
+            eLTS.pcover = pcover;
+
+            eLTS.falsePositiveProbability = falsePositiveProbability;
+            eLTS.expectedNumberOfElements = expectedNumberOfElements;
+
+            // set the learn rate and the number of iterations
+            eLTS.maxIter = maxEpochs;
+
+            eLTS.slidingWindow_miniunit = (int) (L * T.getDimColumns());
+            //eLTS.R = R;
+            // set the regularization parameter
+            eLTS.lambdaW = lambdaW;
+            eLTS.eta = eta;
+            eLTS.alpha = alpha;
+            trainSet.ReadNominalTargets();
+            eLTS.nominalLabels = new ArrayList<Double>(trainSet.nominalLabels);
+
+            long before_learn = System.currentTimeMillis();
+
+            eLTS.Learn(trainSet);
+            long endTime = System.currentTimeMillis();
+
+            Logging.println(
+                    String.valueOf(eLTS.ReduceGetMCRTestSet()) + " " + String.valueOf(eLTS.GetMCRTrainSet()) + " "
+                            + String.valueOf(eLTS.AccuracyLossTrainSet()) + " "
+                            + "learn time=" + (endTime - before_learn) + " "
+                            + "before_learn time=" + (before_learn - startTime), Logging.LogLevel.DEBUGGING_LOG
+            );
+
+        }
+    }
 //        }catch (Exception e){
 //            Logging.println("Exception thrown: " + e);
 //        }
