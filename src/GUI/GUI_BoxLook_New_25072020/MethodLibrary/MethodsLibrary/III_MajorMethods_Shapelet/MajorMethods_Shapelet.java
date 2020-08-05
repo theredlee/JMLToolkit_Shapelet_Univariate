@@ -674,7 +674,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             DataInstance aTSDataInstance = datasetwithCurrentLabel.instances.get(TS_Index);
             ArrayList<Double> aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSCenterChart(aTSDataInstance);
             this.aGUIComponents.lblMultiChartSPLetClass[i].setText("Shapelet Label: " +  (int)selectedIndex);
-            this.aGUIComponents.lblMultiChartNum[i].setText("Time Series No.: " + TS_Index);
+            this.aGUIComponents.lblMultiChartTSNum[i].setText("Time Series No.: " + TS_Index);
             this.aGUIComponents.lblMultiChartTSClass[i].setText("Timeseries Label: " + (int)TS_lbl);
             this.aGUIComponents.lblMultiChartSPLetNum[i].setText("Shapelet No.: " +  localLabel);
             this.aGUIComponents.lblTopk[i].setText(""+ (i+1));

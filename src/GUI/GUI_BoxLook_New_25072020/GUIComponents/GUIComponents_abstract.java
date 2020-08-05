@@ -82,7 +82,7 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.pcoverTextField = aGUIComponents.pcoverTextField;
         this.labelTextField = aGUIComponents.labelTextField;
         this.lblMultiChartTSClass = aGUIComponents.lblMultiChartTSClass;
-        this.lblMultiChartNum = aGUIComponents.lblMultiChartNum;
+        this.lblMultiChartTSNum = aGUIComponents.lblMultiChartTSNum;
         this.lblMultiChartSPLetNum = aGUIComponents.lblMultiChartSPLetNum;
         this.lblMultiChartSPLetClass = aGUIComponents.lblMultiChartSPLetClass;
         this.lblTopk = aGUIComponents.lblTopk;

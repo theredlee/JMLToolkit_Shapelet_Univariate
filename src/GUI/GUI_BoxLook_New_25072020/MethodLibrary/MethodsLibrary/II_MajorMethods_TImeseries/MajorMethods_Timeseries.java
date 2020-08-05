@@ -453,29 +453,32 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         int numOfCharts = 10;
         this.aVariables.multiCharts = new Chart2D[numOfCharts];
         this.aGUIComponents.lblMultiChartTSClass = new JLabel[numOfCharts];
-        this.aGUIComponents.lblMultiChartNum = new JLabel[numOfCharts];
+        this.aGUIComponents.lblMultiChartTSNum = new JLabel[numOfCharts];
         this.aGUIComponents.lblMultiChartSPLetNum = new JLabel[numOfCharts];
         this.aGUIComponents.lblMultiChartSPLetClass = new JLabel[numOfCharts];
         this.aGUIComponents.lblTopk = new JLabel[numOfCharts];
         Font font = new Font("SansSerif", Font.PLAIN, 8);
         for(int i=0; i<numOfCharts; i++){
             JPanel aPanel = new JPanel();
-            aPanel.setLayout(new MigLayout());
+            aPanel.setLayout(new MigLayout()
+            );
             aPanel.setBackground(Color.WHITE);
             // Labels first
             /***  -------------------------------- **/
             JLabel lblMultiChartTSClass = new JLabel();
             lblMultiChartTSClass.setText("Timeseries Label:");
             lblMultiChartTSClass.setBorder(null);
-            lblMultiChartTSClass.setFont(font);
+//            lblMultiChartTSClass.setFont(font);
+            lblMultiChartTSClass.setFont(new Font("SansSerif", Font.BOLD, 10));
             lblMultiChartTSClass.setForeground(Color.BLACK);
 
             /***  -------------------------------- **/
-            JLabel lblMultiChartNum = new JLabel();
-            lblMultiChartNum.setText("Timeseries No.:");
-            lblMultiChartNum.setBorder(null);
-            lblMultiChartNum.setFont(font);
-            lblMultiChartNum.setForeground(Color.BLUE);
+            JLabel lblMultiChartTSNum = new JLabel();
+            lblMultiChartTSNum.setText("Timeseries No.:");
+            lblMultiChartTSNum.setBorder(null);
+//            lblMultiChartTSClass.setFont(font);
+            lblMultiChartTSNum.setFont(new Font("SansSerif", Font.BOLD, 10));
+            lblMultiChartTSNum.setForeground(Color.BLUE);
 
             /***  -------------------------------- **/
             JLabel lblMultiChartSPLetClass = new JLabel();
@@ -502,10 +505,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             aPanel.add(lblMultiChartSPLetNum, "gapright 70");
             aPanel.add(lblTopK, "wrap");
             aPanel.add(lblMultiChartTSClass);
-            aPanel.add(lblMultiChartNum,"wrap");
+            aPanel.add(lblMultiChartTSNum,"wrap");
 
             this.aGUIComponents.lblMultiChartTSClass[i] = lblMultiChartTSClass;
-            this.aGUIComponents.lblMultiChartNum[i] = lblMultiChartNum;
+            this.aGUIComponents.lblMultiChartTSNum[i] = lblMultiChartTSNum;
             this.aGUIComponents.lblMultiChartSPLetClass[i] = lblMultiChartSPLetClass;
             this.aGUIComponents.lblMultiChartSPLetNum[i] = lblMultiChartSPLetNum;
             this.aGUIComponents.lblTopk[i] = lblTopK;
