@@ -4,6 +4,7 @@ import DataStructures.DataInstance;
 import DataStructures.DataSet;
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.DistanceClassification;
+import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.QuickSort;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 import Looks.ShapeletLook;
@@ -21,6 +22,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
 
@@ -29,6 +31,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -60,9 +63,17 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
      **                     loadShapelet()                             **
      ---------------------------------------------------------------*/
     public void loadShapelet(){
+        //
+        // THe shaplet data will be loaded into Arraylist<Double>[]. The first element represents the class label (From inputted file structure).
+        // [0] -> Class label.
+        // Please be very careful when handling the Arraylist<Double>[].
+        //
+
         String subroot_I = "/datasets/Grace_dataset/v_2/shapelet";
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet";
-        String shapletGenerationPath = this.aVariables.root + subroot_I;
+        String subroot_III = "/datasets/Grace_dataset/v_3/shapelet";
+
+        String shapletGenerationPath = this.aVariables.root + subroot_III;
         JFileChooser shapeletChooser = new JFileChooser();
 //        shapeletChooser.setCurrentDirectory(new java.io.File("/Users/leone/Documents/BSPCOVER/GitHub/tsc/JMLToolkit/experimentI"));
         shapeletChooser.setCurrentDirectory(new java.io.File(shapletGenerationPath));
@@ -73,47 +84,103 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         //
         shapeletChooser.setAcceptAllFileFilterUsed(false);
         //
-        if (shapeletChooser.showOpenDialog(this.aGUIComponents.frmTimeSeries) == JFileChooser.APPROVE_OPTION) {
+        if (shapeletChooser.showOpenDialog(this.aGUIComponents.frmTimeSeries) == JFileChooser.APPROVE_OPTION){
             this.aVariables.shapeletDirectory = shapeletChooser.getSelectedFile();
-            System.out.println(" Selected shapelet directory:" + this.aVariables.shapeletDirectory.getAbsolutePath() );
+            System.out.println("-> Selected shapelet directory:" + this.aVariables.shapeletDirectory.getAbsolutePath() );
+
+            File dataSetFolder = this.aVariables.shapeletDirectory;
+            ShapeletFileNameFilter filter = new ShapeletFileNameFilter();
+
+            File[] shapeletFilesList = null;
+
+            if (dataSetFolder != null) {
+                shapeletFilesList = dataSetFolder.listFiles(filter);
+
+                for( File shapeletFile : shapeletFilesList ) {
+                    // then load the data by the cm manager
+                    try{
+                        StringBuilder sb = new StringBuilder();
+                        String [] shapeletWeightString;
+
+                        //
+                        if(shapeletFile.getPath().toLowerCase().contains("shapelet-original")){
+                            // get the line number, namely, the number of shapelet
+                            BufferedReader brNum = Files.newBufferedReader(Paths.get(shapeletFile.getAbsolutePath()));
+                            String line;
+                            int lineNum=0;
+                            while ((line = brNum.readLine()) != null) {
+                                lineNum++;
+                            }
+                            this.aVariables.SPLet_double = new ArrayList [lineNum];
+                            try (BufferedReader br = Files.newBufferedReader(Paths.get(shapeletFile.getAbsolutePath()))) {
+                                // read line by line
+                                int i=0;
+                                while ((line = br.readLine()) != null) {
+                                    shapeletWeightString = line.split(",");
+                                    this.aVariables.SPLet_double[i] = new ArrayList<Double>();
+                                    for(int k=0; k<shapeletWeightString.length; k++){
+                                        this.aVariables.SPLet_double[i].add(Double.parseDouble(shapeletWeightString[k]));
+                                    }
+                                    i++;
+                                }
+                            } catch (IOException e) {
+                                System.err.format("IOException: %s%n", e);
+                            }
+
+                        }else if(shapeletFile.getPath().toLowerCase().contains("shapelet-weight")){
+                            // get the line number, namely, the number of shapelet
+                            BufferedReader brNum = Files.newBufferedReader(Paths.get(shapeletFile.getAbsolutePath()));
+                            String line;
+                            int lineNum=0;
+                            while ((line = brNum.readLine()) != null) {
+                                lineNum++;
+                            }
+                            this.aVariables.SPLet_weight = new ArrayList [lineNum];
+                            try (BufferedReader br = Files.newBufferedReader(Paths.get(shapeletFile.getAbsolutePath()))) {
+                                // read line by line
+                                int i=0;
+                                while ((line = br.readLine()) != null) {
+                                    shapeletWeightString = line.split(",");
+                                    this.aVariables.SPLet_weight[i] = new ArrayList<Double>();
+                                    for(int k=0; k<shapeletWeightString.length; k++){
+                                        this.aVariables.SPLet_weight[i].add(Double.parseDouble(shapeletWeightString[k]));
+                                    }
+                                    i++;
+                                }
+
+                                // test
+//                                for(ArrayList arrlist: this.aVariables.SPLet_weight){
+//                                    System.out.println("arrlist: " + arrlist);
+//                                }
+                            } catch (IOException e) {
+                                System.err.format("IOException: %s%n", e);
+                            }
+                        }else{
+                            Logger logger
+                                    = Logger.getLogger(
+                                    DistanceClassification.class.getName());
+                            // log messages using log(Level level, String msg)
+                            logger.log(Level.WARNING, "Shapelet data file or shapelet weight data file name format is incorrect. Please rename the file name.");
+                            throw new IllegalArgumentException();
+                        }
+                    }
+                    catch(Exception exc) {
+                        exc.printStackTrace();
+                    }
+                }
+                /*** Transfer - shapelet **/
+                shapeletHorizontaSegmentTransfer(this.aVariables.SPLet_double);
+            }
+            else {
+                System.err.println("Cannot open data directory!");
+                System.exit(-1);
+            }
         }
-        else
-        {
+        else {
             System.out.println("No Selection ");
             return;
         }
-        // then load the data by the cm manager
-        try{
-            StringBuilder sb = new StringBuilder();
-            String [] shapeletString;
-            // get the line number, namely, the number of shapelet
-            BufferedReader brNum = Files.newBufferedReader(Paths.get(this.aVariables.shapeletDirectory.getAbsolutePath()));
-            String line;
-            int lineNum=0;
-            while ((line = brNum.readLine()) != null) {
-                lineNum++;
-            }
-            this.aVariables.SPLet_double = new ArrayList [lineNum];
-            try (BufferedReader br = Files.newBufferedReader(Paths.get(this.aVariables.shapeletDirectory.getAbsolutePath()))) {
-                // read line by line
-                int i=0;
-                while ((line = br.readLine()) != null) {
-                    shapeletString = line.split(",");
-                    this.aVariables.SPLet_double[i] = new ArrayList<Double>();
-                    for(int k=0; k<shapeletString.length; k++){
-                        this.aVariables.SPLet_double[i].add(Double.parseDouble(shapeletString[k]));
-                    }
-                    i++;
-                }
-            } catch (IOException e) {
-                System.err.format("IOException: %s%n", e);
-            }
-            /*** Transfer - shapelet **/
-            shapeletHorizontaSegmentTransfer(this.aVariables.SPLet_double);
-        }
-        catch(Exception exc) {
-            exc.printStackTrace();
-        }
+
         // set the no of points text field from any of the trajectories
         this.aGUIComponents.numOfShapeletsTextField.setVisible(true);
         this.aGUIComponents.numOfShapeletsTextField.setText("Num of shapelets: " + this.aVariables.SPLet_double.length );
@@ -149,6 +216,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
         // setShapeletLabelJList() must be behind the Distances computation
         setShapeletLabelJList();
+
+        //
+        weightHistogram();
     }
     /*---------------------------------------------------------------
     **                  classfyShapeletLabels()                     **
@@ -418,14 +488,108 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     }
 
     /*** --------------------------------------------- **/
+    public void weightHistogram(){
+        double[][] vals = new double[this.aVariables.SPLet_weight.length][]; // Here not to initialize the second level size
+        ArrayList<Double>[] tempContainer = this.aVariables.SPLet_weight;
+
+//         test
+        for(ArrayList arrlist: this.aVariables.SPLet_weight){
+            System.out.println("arrlist: " + arrlist);
+        }
+
+        // Arraylist to array
+
+        int startIndex = 1; // the 0 index is label
+        for(int i=0; i<tempContainer.length; i++){
+            int size = tempContainer[i].size() - startIndex;
+            vals[i] = new double[size]; // Here initialize the second level size
+            //
+            for(int j=0; j<size; j++){
+                vals[i][j] = tempContainer[i].get(j+startIndex); // distanceArr.get(i)[0] is weight value
+            }
+        }
+
+//        System.out.println("vals.length: " + vals.length);
+//        System.out.println("vals[0].length: " + vals[0].length);
+//        System.out.println("vals[1].length: " + vals[1].length);
+
+        // Create a unsort array
+        int totalCount = 0;
+        for(int k=0; k<vals.length; k++){
+            totalCount += vals[k].length;
+        }
+//        System.out.println("totalCount: " + totalCount);
+
+        double[][] unsortedArr = new double[totalCount][3]; // [][0]: weight value, [][1]: label, [][2]: No.
+        totalCount = 0;
+        for(int j=0; j<vals.length; j++){
+            for(int l=0; l<vals[j].length; l++){
+//                System.out.println("j: " + j);
+//                System.out.println("l: " + l);
+//                System.out.println("totalCount: " + totalCount);
+//                System.out.println("-----");
+                unsortedArr[totalCount][0] = vals[j][l]; // [][0]: must ensure that the [][0] (the second dimension) is the unsorted value. It secure that the sort method
+                // tracks the correct value
+                unsortedArr[totalCount][1] = j; // Play a tricky representation, let value of j be the class label.
+                // It is because each first dimension [*][] in the 2d array vals[][] represents one class of wight (The second dimension contains its weight values).
+                // And now we are going to sort all weights together and reserve their labels. Therefore, swap all the wight values into the first dimension.
+                unsortedArr[totalCount][2] = l; // !To do this, all the shapelet data loaded from file to Array<Double>[] (goloba; variable to store shapelet data)
+                // should not change its order and values. [Consistency regulation]
+                totalCount++;
+            }
+        }
+        // Quick sort
+        QuickSort aQuickSort = new QuickSort();
+        aQuickSort.sort(unsortedArr, 0, unsortedArr.length- 1);
+//        aQuickSort.printArray(unsortedArr);
+        // Now the unsortedArr has been a sorted array
+        var dataset = new DefaultCategoryDataset();
+        //
+        int topTen =10;
+        for(int i=unsortedArr.length-1; i>unsortedArr.length-topTen; i--){
+            String key = "Class label-" + (int)unsortedArr[i][1]; // In unsortedArr, the second dimension [][*] withholds the label.
+            String columnKey = "No. " + (int)unsortedArr[i][2];
+            double wight = unsortedArr[i][0];
+            dataset.setValue(wight, key, columnKey);
+        }
+
+//        var dataset = new DefaultCategoryDataset();
+//        dataset.setValue(46, "Gold medals", "USA");
+//        dataset.setValue(38, "Gold medals", "China");
+//        dataset.setValue(29, "Gold medals", "UK");
+//        dataset.setValue(22, "Gold medals", "Russia");
+//        dataset.setValue(13, "Gold medals", "South Korea");
+//        dataset.setValue(11, "Gold medals", "Germany");
+
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "Shapelet - Top 10 weights",
+                "",
+                "Weight value",
+                dataset,
+                PlotOrientation.HORIZONTAL,
+                true, true, false);
+
+        barChart.setBackgroundPaint(Color.white);
+
+        ChartPanel aChartPanel = new ChartPanel(barChart);
+        aChartPanel.setBounds(0, 0, this.aGUIComponents.layeredPane_weightHist.getBounds().width, this.aGUIComponents.layeredPane_weightHist.getBounds().height);
+
+        if(this.aGUIComponents.layeredPane_weightHist != null ){
+            this.aGUIComponents.layeredPane_weightHist.removeAll(); // Remove all layers at first
+        }
+        this.aGUIComponents.layeredPane_weightHist.add(aChartPanel, Integer.valueOf(0));
+
+    }
+
+    /*** --------------------------------------------- **/
     public void distanceHistogram(int SPLetLabel, int SPLetIndex){
         ArrayList<double[]> distanceArr = this.aVariables.SPLet_toAllTS_distances.get(SPLetLabel).get(SPLetIndex);
         double[][] vals = new double[this.aVariables.SPLet_labelArrayList.size()][]; // Here not to initialize the second level size
-        ArrayList<Double>[] temContainer = new ArrayList[this.aVariables.SPLet_labelArrayList.size()];
+        ArrayList<Double>[] tempContainer = new ArrayList[this.aVariables.SPLet_labelArrayList.size()];
 
         //
-        for(int i=0; i<temContainer.length; i++){
-            temContainer[i] = new ArrayList<>();
+        for(int i=0; i<tempContainer.length; i++){
+            tempContainer[i] = new ArrayList<>();
         }
 
         //
@@ -433,9 +597,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             double lbl = distanceArr.get(i)[1];
             //
             if(lbl==0.0){
-                temContainer[(int)lbl].add(distanceArr.get(i)[0]);
+                tempContainer[(int)lbl].add(distanceArr.get(i)[0]);
             }else if(lbl==1.0){
-                temContainer[(int)lbl].add(distanceArr.get(i)[0]);
+                tempContainer[(int)lbl].add(distanceArr.get(i)[0]);
             }else{
                 Logger logger
                         = Logger.getLogger(
@@ -447,12 +611,12 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         }
 
         // Arraylist to array
-        for(int i=0; i<temContainer.length; i++){
-            int size = temContainer[i].size();
+        for(int i=0; i<tempContainer.length; i++){
+            int size = tempContainer[i].size();
             vals[i] = new double[size]; // Here initialize the second level size
             //
             for(int j=0; j<size; j++){
-                vals[i][j] = temContainer[i].get(j); // distanceArr.get(i)[0] is distance value
+                vals[i][j] = tempContainer[i].get(j); // distanceArr.get(i)[0] is distance value
             }
         }
 
@@ -461,15 +625,18 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
         var dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
-        dataset.addSeries("key", vals[0], 25);
-        dataset.addSeries("key_2", vals[1], 25);
+        //
+        for(int k=0; k<vals.length; k++){
+            String key = "Class label: " + k; // Each first level [*][] stands for one class of distance. Therefore, play a tricky representation.
+            dataset.addSeries(key, vals[k], 25);
+        }
 
         PlotOrientation orientation = PlotOrientation.VERTICAL;
         boolean show = true;
         boolean toolTips = true;
         boolean urls = false;
-        JFreeChart histogram = ChartFactory.createHistogram("Distance Histogram",
-                "x values", "y values", dataset, orientation, show, toolTips, urls);
+        JFreeChart histogram = ChartFactory.createHistogram("Distance - shapelet to time sries class",
+                "distance", "frequency", dataset, orientation, show, toolTips, urls);
 
         XYPlot plot = (XYPlot)histogram.getPlot();
         plot.setBackgroundPaint(Color.white);
@@ -506,9 +673,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             DataSet datasetwithCurrentLabel = this.aVariables.dataSet.FilterByLabel(TS_lbl);
             DataInstance aTSDataInstance = datasetwithCurrentLabel.instances.get(TS_Index);
             ArrayList<Double> aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSCenterChart(aTSDataInstance);
-            this.aGUIComponents.lblMultiChartTSClass[i].setText("Timeseries Label: " + TS_lbl);
+            this.aGUIComponents.lblMultiChartSPLetClass[i].setText("Shapelet Label: " +  (int)selectedIndex);
             this.aGUIComponents.lblMultiChartNum[i].setText("Time Series No.: " + TS_Index);
-            this.aGUIComponents.lblMultiChartSPLetClass[i].setText("Shapelet Label: " +  selectedIndex);
+            this.aGUIComponents.lblMultiChartTSClass[i].setText("Timeseries Label: " + (int)TS_lbl);
             this.aGUIComponents.lblMultiChartSPLetNum[i].setText("Shapelet No.: " +  localLabel);
             this.aGUIComponents.lblTopk[i].setText(""+ (i+1));
 

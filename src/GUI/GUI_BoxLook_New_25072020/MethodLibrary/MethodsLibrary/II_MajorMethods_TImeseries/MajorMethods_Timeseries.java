@@ -57,8 +57,9 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
     public void loadDataSet(){
         String subroot_I = "/datasets/Grace_dataset/v_2/Grace_MEAN";
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
+        String subroot_III = "/datasets/Grace_dataset/v_3/Grace_MI";
 
-        String TSGenerationPath = this.aVariables.root + subroot_I;
+        String TSGenerationPath = this.aVariables.root + subroot_III;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
@@ -528,8 +529,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aGUIComponents.layeredPane_multiCharts.add(multiChartsScrollPane);
         //
 
-        this.aVariables.centerChartXL = -10;
-        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+10;
+        this.aVariables.centerChartXL = -5;
+        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+5;
         System.out.println("centerChartXR: " + this.aVariables.centerChartXR);
 
         this.aVariables.oldScale = 1.0;

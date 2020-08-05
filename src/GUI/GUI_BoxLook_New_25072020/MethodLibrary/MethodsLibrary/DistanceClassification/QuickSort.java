@@ -16,10 +16,9 @@ public class QuickSort
         for (int j=low; j<high; j++)
         {
             // If current element is smaller than the pivot
-            if (arr[j][0] < pivot)
+            if (arr[j][0] < pivot) // arr[j][0]: must ensure that the [][0] (the second dimension) is the unsorted value before use it
             {
                 i++;
-
                 // swap arr[i] and arr[j]
 //                int temp = arr[i];
                 double[] temp = arr[i];
@@ -42,8 +41,7 @@ public class QuickSort
       arr[] --> Array to be sorted,
       low  --> Starting index,
       high  --> Ending index */
-    void sort(double arr[][], int low, int high)
-    {
+    public void sort(double arr[][], int low, int high) {
         if (low < high)
         {
             /* pi is partitioning index, arr[pi] is
@@ -58,7 +56,7 @@ public class QuickSort
     }
 
     /* A utility function to print array of size n */
-    static void printArray(double arr[][])
+    public static void printArray(double arr[][])
     {
         int n = arr.length;
         for (int i=0; i<n; ++i)
