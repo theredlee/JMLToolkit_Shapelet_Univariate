@@ -2,6 +2,7 @@ package GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.III_MajorMetho
 
 import DataStructures.DataInstance;
 import DataStructures.DataSet;
+import DataStructures.FeaturePoint;
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.DistanceClassification;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.DistanceClassification.QuickSort;
@@ -9,6 +10,7 @@ import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.II_MajorMethods
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 import Looks.ShapeletLook;
+import Utilities.GlobalValues;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.IAxis;
 import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
@@ -658,6 +660,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
     /*** --------------------------------------------- **/
     public void findTopTenTS(int selectedIndex, int selectedLabel){
+        boolean switchDot = this.aVariables.switchDot;
         int defaultTopK = 10;
         int localIndex = selectedIndex;
         int localLabel = selectedLabel;
@@ -672,7 +675,20 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
             DataSet datasetwithCurrentLabel = this.aVariables.dataSet.FilterByLabel(TS_lbl);
             DataInstance aTSDataInstance = datasetwithCurrentLabel.instances.get(TS_Index);
-            ArrayList<Double> aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSBothCharts(aTSDataInstance);
+            ArrayList<Double> aryList = new ArrayList<>();
+            if( aTSDataInstance!= null ) {
+                if( switchDot ) {
+                    for(FeaturePoint p: aTSDataInstance.features) {
+                        aryList.add(p.value);
+//                        System.out.println("aryList: " + aryList);
+                    }
+                }else{
+                    if( aTSDataInstance!= null ) {
+                        aryList = this.aMajorMethods_Timeseries.horizontalLineLookTSBothCharts(aTSDataInstance);
+                    }
+                }
+            }
+
             this.aGUIComponents.lblMultiChartSPLetClass[i].setText("Shapelet Label: " +  (int)selectedIndex);
             this.aGUIComponents.lblMultiChartTSNum[i].setText("Time Series No.: " + TS_Index);
             this.aGUIComponents.lblMultiChartTSClass[i].setText("Timeseries Label: " + (int)TS_lbl);

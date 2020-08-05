@@ -49,6 +49,18 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
 
     /*---------------------------------------------------------------
 
+     **                 removeMultiTraces()            **
+
+     ******************************************************************/
+    public void removeMultiTraces(){
+        int defaultTopK = 10;
+        for(int i=0; i<defaultTopK; i++){
+            this.aVariables.multiCharts[i].removeAllTraces();
+        }
+    }
+
+    /*---------------------------------------------------------------
+
      **                removeAllTraces_centerChart()                 **
 
      ******************************************************************/
@@ -88,6 +100,8 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
         if(getLoadShapeletYesOrNo()){
             removeAllTraces_topRightChart();
         }
+        /*** **/
+        removeMultiTraces();
         /*** **/
         /*** **/
         System.out.println("-> Cleared AllTimeSeries!");

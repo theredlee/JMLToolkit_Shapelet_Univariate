@@ -849,20 +849,16 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 this.aVariables.multiCharts[chartIndex].addTrace(dotTrace);
                 //
                 int numPoints = aTSAraylist.size();
-                double newVal, oldVal=-1;
-                for(int i = 0; i < numPoints; i++)
-                {
-                    newVal = aTSAraylist.get(i);
-                    if(!(i==0) && newVal==oldVal){
-                        continue;
-                    }else{
-                        oldVal=newVal;
-                    }
-                    dotTrace.addPoint(i, newVal);
+                for(int i = 0; i < numPoints; i++) {
+                    dotTrace.addPoint(i, aTSAraylist.get(i));
                 }
 
                 // Line trace --------------------------
-                TSDotTransferAndLineDraw(aTSAraylist, "top ten chart", chartIndex); // The second parameter: "top ten chart" (case insensitive)
+                if(this.aVariables.switchDot){
+                    TSDotDirectlyConnectLineTopTenMultiCharts(aTSAraylist, chartIndex);
+                }else{
+                    TSDotTransferAndLineDraw(aTSAraylist, "top ten chart", chartIndex); // The second parameter: "top ten chart" (case insensitive)
+                }
             }
 
         }catch (NullPointerException e){
@@ -870,6 +866,21 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             Logger logger = Logger.getLogger(MajorMethods_Timeseries.class.getName());
             // log messages using log(Level level, String msg)
             logger.log(Level.WARNING, e.toString());
+        }
+    }
+
+    public void TSDotDirectlyConnectLineTopTenMultiCharts(ArrayList<Double> singleAry, int chartIndex){
+        Trace2DLtd lineTrace = new Trace2DLtd(null);
+        lineTrace.setColor(Color.ORANGE);
+        lineTrace.setStroke(new BasicStroke(2));
+        lineTrace.setTracePainter(new TracePainterLine());
+        //
+        Chart2D aChart = this.aVariables.multiCharts[chartIndex];
+        aChart.addTrace(lineTrace);
+        //
+        int numPoints = singleAry.size();
+        for(int i = 0; i < numPoints; i++) {
+            lineTrace.addPoint(i, singleAry.get(i));
         }
     }
 
@@ -956,7 +967,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 }else{
                     startPoint = this.aVariables.globalBestMatchSP - this.aVariables.globalStartPosition;
                 }
-
                 /*** **/
 
                 double newVal, oldVal=-1;
