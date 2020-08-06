@@ -235,6 +235,11 @@ public class GUIComponents extends GUIComponents_abstract {
         lblTopTenCharts.setBounds(0, 0,320,30); /*** 171,130,83,15 ***/
         frmTimeSeriesLayerFirst.add(lblTopTenCharts);
 
+        /***  -------------------------------- **/
+        lblDOMInfo = new JLabel("<html>HKBU <br>Computer Science</html>", SwingConstants.CENTER);
+        lblDOMInfo.setForeground(new Color(15, 114, 99));
+        lblDOMInfo.setFont(new Font("SansSerif", Font.PLAIN, myFont.getSize()*2));
+        lblDOMInfo.setBounds(0,20,140,15*3); /*** 171,130,83,15 ***/
     }
 
 
@@ -687,7 +692,6 @@ public class GUIComponents extends GUIComponents_abstract {
 
     }
 
-
     /*** initializeJPanel --------------------------------------------**/
     private void initializeJPanel(){
         /***  -------------------------------- **/
@@ -729,6 +733,13 @@ public class GUIComponents extends GUIComponents_abstract {
                 "Weight histogram", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
         weightHistPanel.setBounds(0, 0, 905-540, 350); /*** 171, 119, 905, 211 ***/
+
+        /***  -------------------------------- **/
+        DOMInfoPanel = new JPanel();
+        DOMInfoPanel.setBackground(new Color(46, 46, 39));
+        DOMInfoPanel.setBounds(1080, 7, 275, 131); /*** 171, 119, 905, 211 ***/
+        DOMInfoPanel.add(lblDOMInfo, SwingConstants.CENTER);
+        frmTimeSeriesLayerFirst.add(DOMInfoPanel);
     }
 
 

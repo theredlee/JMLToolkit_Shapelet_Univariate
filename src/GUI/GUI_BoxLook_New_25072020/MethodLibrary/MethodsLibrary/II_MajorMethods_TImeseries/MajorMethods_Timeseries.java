@@ -486,6 +486,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         JPanel multiJpanelsPanel = new JPanel();
 //        multiJpanelsPanel.setLayout(new MigLayout("wrap 1", "[]0[]", "[]5[]"));
         multiJpanelsPanel.setLayout(new MigLayout());
+        multiJpanelsPanel.setBackground(Color.DARK_GRAY);
         int numOfCharts = 10;
         this.aVariables.multiCharts = new Chart2D[numOfCharts];
         this.aGUIComponents.lblMultiChartTSClass = new JLabel[numOfCharts];

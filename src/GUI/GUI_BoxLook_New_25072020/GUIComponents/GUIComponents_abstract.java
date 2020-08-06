@@ -41,6 +41,7 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.lblDotLineSwitch = aGUIComponents.lblDotLineSwitch;
         this.lblLogo = aGUIComponents.lblLogo;
         this.lblTopTenCharts = aGUIComponents.lblTopTenCharts;
+        this.lblDOMInfo = aGUIComponents.lblDOMInfo;
         /*** initializeJSpinner --**/
         this.spinner = aGUIComponents.spinner;
         /*** initializeJButton --**/
@@ -118,6 +119,7 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.bottomChartPanel = aGUIComponents.bottomChartPanel;
         this.distanceHistPanel = aGUIComponents.distanceHistPanel;
         this.weightHistPanel = aGUIComponents.weightHistPanel;
+        this.DOMInfoPanel = aGUIComponents.DOMInfoPanel;
         /*** initializeLayeredPane --**/
         this.layeredPane_CenterChart = aGUIComponents.layeredPane_CenterChart;
         this.layeredPane_TopRightChart = aGUIComponents.layeredPane_TopRightChart;
