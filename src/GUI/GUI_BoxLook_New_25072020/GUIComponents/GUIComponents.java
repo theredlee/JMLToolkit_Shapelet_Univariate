@@ -1,10 +1,14 @@
 package GUI.GUI_BoxLook_New_25072020.GUIComponents;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class GUIComponents extends GUIComponents_abstract {
@@ -227,8 +231,8 @@ public class GUIComponents extends GUIComponents_abstract {
         lblLogo.setBounds(0,0,140,15*3); /*** 171,130,83,15 ***/
 
         /***  -------------------------------- **/
-        lblTopTenCharts = new JLabel("Top 10 shortest distances from time series to shapelets", SwingConstants.CENTER);
-        lblTopTenCharts.setFont(new Font("SansSerif", Font.CENTER_BASELINE, 11));
+        lblTopTenCharts = new JLabel("10 minimum distances (10 time series to one shapelet)", SwingConstants.CENTER);
+        lblTopTenCharts.setFont(new Font("SansSerif", Font.CENTER_BASELINE, 10));
         lblTopTenCharts.setOpaque(true);
         lblTopTenCharts.setBackground(Color.WHITE);
         lblTopTenCharts.setForeground(Color.RED);
@@ -236,10 +240,31 @@ public class GUIComponents extends GUIComponents_abstract {
         frmTimeSeriesLayerFirst.add(lblTopTenCharts);
 
         /***  -------------------------------- **/
-        lblDOMInfo = new JLabel("<html>HKBU <br>Computer Science</html>", SwingConstants.CENTER);
-        lblDOMInfo.setForeground(new Color(15, 114, 99));
-        lblDOMInfo.setFont(new Font("SansSerif", Font.PLAIN, myFont.getSize()*2));
-        lblDOMInfo.setBounds(0,20,140,15*3); /*** 171,130,83,15 ***/
+
+
+        try{
+            int width = 170;
+            BufferedImage myPicture = ImageIO.read(new File(System.getProperty("user.dir") + "/src/DB logo/group-logo copy.jpg"));
+            Image img = getScaledImage(myPicture, width, (int)(width/2.4));
+
+            lblDOMInfo = new JLabel();
+            lblDOMInfo.setIcon(new ImageIcon(img));
+            lblDOMInfo.setBounds(0, 0 ,width,(int)(width/2.4)); /*** 171,130,83,15 ***/
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private Image getScaledImage(Image srcImg, int w, int h){
+        BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = resizedImg.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.drawImage(srcImg, 0, 0, w, h, null);
+        g2.dispose();
+
+        return resizedImg;
     }
 
 
@@ -398,7 +423,7 @@ public class GUIComponents extends GUIComponents_abstract {
         radiobtnSwitchLine.setBounds(353 + buttonWidth/2 + 113 + (345-275), 130,  buttonWidth/2 - 2, buttonHeight - 10);    /** 460, 485, 50, 20 **/
         frmTimeSeriesLayerFirst.add(radiobtnSwitchLine);
 
-        radiobtnSwitchLine.setSelected(true);
+        radiobtnSwitchDot.setSelected(true);
 
         ButtonGroup GDotLineSwitch = new ButtonGroup();
         GDotLineSwitch.add(radiobtnSwitchDot);
@@ -736,9 +761,9 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         DOMInfoPanel = new JPanel();
-        DOMInfoPanel.setBackground(new Color(46, 46, 39));
-        DOMInfoPanel.setBounds(1080, 7, 275, 131); /*** 171, 119, 905, 211 ***/
-        DOMInfoPanel.add(lblDOMInfo, SwingConstants.CENTER);
+        DOMInfoPanel.setBackground(new Color(254, 255, 249));
+        DOMInfoPanel.setBounds(60, 25, lblDOMInfo.getWidth(), lblDOMInfo.getHeight()); /*** 171, 119, 905, 211 ***/
+        DOMInfoPanel.add(lblDOMInfo);
         frmTimeSeriesLayerFirst.add(DOMInfoPanel);
     }
 
@@ -850,6 +875,18 @@ public class GUIComponents extends GUIComponents_abstract {
         frmTimeSeriesLayerFirst.add(layeredPane_toptenChartLabel);
 
         layeredPane_toptenChartLabel.add(lblTopTenCharts, Integer.valueOf(0));
+
+        /***  -------------------------------- **/
+        layeredPane_DOMInfo = new JLayeredPane();
+        layeredPane_DOMInfo.setOpaque(true);
+        layeredPane_DOMInfo.setBackground(new Color(254, 255, 249));
+        layeredPane_DOMInfo.setBounds(1080, 7, 275, 131);
+        layeredPane_DOMInfo.setBorder(BorderFactory.createTitledBorder(
+                ""));
+        frmTimeSeriesLayerFirst.add(layeredPane_DOMInfo);
+
+        layeredPane_DOMInfo.add(DOMInfoPanel, Integer.valueOf(0));
+
     }
 
     /*** main --------------------------------------------**/

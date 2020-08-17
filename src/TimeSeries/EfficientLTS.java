@@ -6,6 +6,7 @@ import Utilities.Sigmoid;
 import org.happy.commons.concurrent.loops.ForEachTask_1x0;
 import org.happy.commons.concurrent.loops.Parallel_1x0;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -92,11 +93,19 @@ public class EfficientLTS {
     public int numSubsequence;
     //
     public static String root, subroot;
+    public JTextArea infoTextArea;
 
     public EfficientLTS(String root, String subroot)
     {
         this.root = root;
         this.subroot = subroot;
+    }
+
+    public EfficientLTS(String root, String subroot, JTextArea infoTextArea)
+    {
+        this.root = root;
+        this.subroot = subroot;
+        this.infoTextArea = infoTextArea;
     }
 
     // initialize the data structures
@@ -116,9 +125,9 @@ public class EfficientLTS {
         TransferPAASAX(dataSet);
         long discover_endTime = System.currentTimeMillis();
         Logging.println("Discover Time = " + (discover_endTime-discover_startTime), Logging.LogLevel.DEBUGGING_LOG);
+        this.infoTextArea.append("\n" + "Discover Time = " + (discover_endTime-discover_startTime));
 
         K = new int[C];
-
         // initialize the terms for pre-computation
         D = new double[ITrain+ITest][C][][];
         E = new double[ITrain+ITest][C][][];
@@ -195,6 +204,7 @@ public class EfficientLTS {
         // shuffle the order for a better convergence
         Collections.shuffle(instanceIdxs, rand);
         Logging.println("Initializations Completed!", Logging.LogLevel.DEBUGGING_LOG);
+        this.infoTextArea.append("\n" + "Initializations Completed!");
     }
 
 
@@ -524,6 +534,8 @@ public class EfficientLTS {
         midData = (minData + maxData)/2.0;
         spaceData = (maxData - minData);
         Logging.println(minData+ "  "+ maxData+  "  "+spaceData, Logging.LogLevel.DEBUGGING_LOG);
+        this.infoTextArea.append("\n" + minData+ "  "+ maxData+  "  "+spaceData);
+        //
 
         //Transfer PAA to SAX
         Tp.SAX  = new String[ITrain];
@@ -861,6 +873,10 @@ public class EfficientLTS {
                 Logging.println("It=" + iter + ", alpha= "+alpha+", lossTrain="+ lossTrain + ", lossTest="+
                         lossTest  + ", MCRTrain=" +mcrTrain + ", MCRTest=" +mcrTest + ", LearnF time="+
                         (LearnF_endTime-LearnF_startTime), Logging.LogLevel.DEBUGGING_LOG);
+                this.infoTextArea.append("\n" + "It=" + iter + ", alpha= "+alpha+", lossTrain="+ lossTrain + ", lossTest="+
+                        lossTest  + ", MCRTrain=" +mcrTrain + ", MCRTest=" +mcrTest + ", LearnF time="+
+                        (LearnF_endTime-LearnF_startTime));
+                //
 
                 // if divergence is detected start from the beggining
                 // at a lower learning rate
@@ -914,15 +930,18 @@ public class EfficientLTS {
                 //System.out.println("shapelet: "+k);
                 writerWeight.append(String.valueOf(GradHistW[c][k])+",");
                 Logging.println("Shapelets weight ["+c+"]["+k+"]" + GradHistW[c][k], Logging.LogLevel.DEBUGGING_LOG);
+                this.infoTextArea.append("\n" + "Shapelets weight ["+c+"]["+k+"]" + GradHistW[c][k]);
             }
             //writerWeight.append(String.valueOf(GradHistBiasW[c]));
             Logging.println("GradHistBiasW "+GradHistBiasW[c], Logging.LogLevel.DEBUGGING_LOG);
+            this.infoTextArea.append("\n" + "GradHistBiasW "+GradHistBiasW[c]);
             writerWeight.println();
         }
         writerWeight.close();
 
         for(int c=0; c<C; c++){
             Logging.println("Class: "+c+" number of shapelets: "+K[c], Logging.LogLevel.DEBUGGING_LOG);
+            this.infoTextArea.append("\n" + "Class: "+c+" number of shapelets: "+K[c]);
 //            for(int i=0; i<Tp.starOmegaArrayList[c].size(); i++){
 //                Logging.println("class: "+ c +", i: "+ i +", number of bitset: "+Tp.BitMap[c][i].cardinality(), Logging.LogLevel.DEBUGGING_LOG);
 //            }

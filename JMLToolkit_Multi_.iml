@@ -14,5 +14,15 @@
     <orderEntry type="library" name="miglayout-4.0-swing" level="project" />
     <orderEntry type="library" name="jfreechart-1.5.0-javadoc" level="project" />
     <orderEntry type="library" name="jfreechart-1.5.0" level="project" />
+    <orderEntry type="library" name="EfficientLTS-jarABC" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/external_libraries/EfficientLTS.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

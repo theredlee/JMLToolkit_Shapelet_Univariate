@@ -17,7 +17,7 @@ public class Variables extends Variables_abstract {
         this.firstTSDrawing = true;
         this.firstTSDrawing_linePlot = false;
         this.stackModelOn = false;
-        this.switchDot = false;
+        this.switchDot = true;
 
         this.globalStartPosition = 0;
         this.globalBestMatchSP = 0;

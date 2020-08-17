@@ -76,7 +76,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet";
         String subroot_III = "/datasets/Grace_dataset/v_3/shapelet";
 
-        String shapletGenerationPath = this.aVariables.root + subroot_III;
+        String shapletGenerationPath = this.aVariables.root + subroot_II;
         JFileChooser shapeletChooser = new JFileChooser();
 //        shapeletChooser.setCurrentDirectory(new java.io.File("/Users/leone/Documents/BSPCOVER/GitHub/tsc/JMLToolkit/experimentI"));
         shapeletChooser.setCurrentDirectory(new java.io.File(shapletGenerationPath));
@@ -547,10 +547,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         // Now the unsortedArr has been a sorted array
         var dataset = new DefaultCategoryDataset();
         //
-        int topTen =10;
-        for(int i=unsortedArr.length-1; i>unsortedArr.length-topTen; i--){
+        int topTen =10; // minimum
+        for(int i=0; i<unsortedArr.length; i++){
             String key = "Class label-" + (int)unsortedArr[i][1]; // In unsortedArr, the second dimension [][*] withholds the label.
-            String columnKey = "No. " + (int)unsortedArr[i][2];
+            String columnKey = "S[" + (int)unsortedArr[i][1] + "][" + (int)unsortedArr[i][2] +  "]";
             double wight = unsortedArr[i][0];
             dataset.setValue(wight, key, columnKey);
         }
@@ -564,7 +564,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //        dataset.setValue(11, "Gold medals", "Germany");
 
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Shapelet - Top 10 weights",
+                "Shapelet - 10 Minimum Weights",
                 "",
                 "Weight value",
                 dataset,
@@ -637,7 +637,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         boolean show = true;
         boolean toolTips = true;
         boolean urls = false;
-        JFreeChart histogram = ChartFactory.createHistogram("Distance - shapelet to time sries class",
+        JFreeChart histogram = ChartFactory.createHistogram("Distance - Shapelet To Time Series",
                 "distance", "frequency", dataset, orientation, show, toolTips, urls);
 
         XYPlot plot = (XYPlot)histogram.getPlot();

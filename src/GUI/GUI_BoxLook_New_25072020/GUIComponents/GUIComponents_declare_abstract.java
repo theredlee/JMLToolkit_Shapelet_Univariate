@@ -39,6 +39,6 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJPanel --**/
     public JPanel centerChartPanel, topRightPanel, bottomChartPanel, distanceHistPanel, weightHistPanel, DOMInfoPanel;
     /*** initializeLayeredPane --**/
-    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo, layeredPane_multiCharts, layeredPane_toptenChartLabel;
+    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo, layeredPane_multiCharts, layeredPane_toptenChartLabel, layeredPane_DOMInfo;
     /*** -------------------------------------------------------**/
 }

@@ -58,7 +58,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
         String subroot_III = "/datasets/Grace_dataset/v_3/Grace_MI";
 
-        String TSGenerationPath = this.aVariables.root + subroot_III;
+        String TSGenerationPath = this.aVariables.root + subroot_II;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
@@ -289,8 +289,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
      ---------------------------------------------------------------*/
     public void runBspcover(){
-            this.aVariables.shapeletSubroot = "/datasets/Grace_dataset/v_3/shapelet/shapelet&weight";
-
+//            this.aVariables.shapeletSubroot = "/datasets/Grace_dataset/v_3/shapelet/shapelet&weight";
+            this.aVariables.shapeletSubroot = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet/shapelet&weight";
             /*---------------------------------------------------------------**
              ******   The shapelets output path is in EfficientLTS.java!   ******
              ---------------------------------------------------------------*/
@@ -371,6 +371,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             Logging.println("dataset: " + files[j].getName() + " stepRatio: " + stepRatio + " alphabetSize: "
                     + alphabetSize, Logging.LogLevel.DEBUGGING_LOG);
+            this.aGUIComponents.bspcoverInfoTextArea.setText("dataset: " + files[j].getName() + " stepRatio: " + stepRatio + " alphabetSize: "
+                    + alphabetSize);
 
             long startTime = System.currentTimeMillis();
 
@@ -405,7 +407,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             O.LoadDatasetLabels(trainSet, false);
             O.LoadDatasetLabels(testSet, true);
 
-            TimeSeries.EfficientLTS eLTS = new TimeSeries.EfficientLTS(root, subroot);
+            TimeSeries.EfficientLTS eLTS = new TimeSeries.EfficientLTS(root, subroot, this.aGUIComponents.bspcoverInfoTextArea);
             // initialize the sizes of data structures
             eLTS.ITrain = trainSet.GetNumInstances();
             eLTS.ITest = testSet.GetNumInstances();
@@ -440,13 +442,14 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             eLTS.Learn(trainSet);
             long endTime = System.currentTimeMillis();
 
-            Logging.println(
-                    String.valueOf(eLTS.ReduceGetMCRTestSet()) + " " + String.valueOf(eLTS.GetMCRTrainSet()) + " "
-                            + String.valueOf(eLTS.AccuracyLossTrainSet()) + " "
-                            + "learn time=" + (endTime - before_learn) + " "
-                            + "before_learn time=" + (before_learn - startTime), Logging.LogLevel.DEBUGGING_LOG
+            String str = String.valueOf(eLTS.ReduceGetMCRTestSet()) + " " + String.valueOf(eLTS.GetMCRTrainSet()) + " "
+                    + String.valueOf(eLTS.AccuracyLossTrainSet()) + " "
+                    + "learn time=" + (endTime - before_learn) + " "
+                    + "before_learn time=" + (before_learn - startTime);
+            Logging.println(str
+                    , Logging.LogLevel.DEBUGGING_LOG
             );
-
+            this.aGUIComponents.bspcoverInfoTextArea.append("\n" + str);
         }
     }
 
@@ -468,9 +471,15 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         if(aButton.getText().equalsIgnoreCase("DOT")){
             this.aVariables.switchDot = true;
             this.aGUIComponents.btnClearAllTraces.doClick();
+            //
+            this.aMajorMethods_Shapelet.changeSelectedShapelet();
+            changeSelectedTS();
         }else if(aButton.getText().equalsIgnoreCase("LINE")){
             this.aVariables.switchDot = false;
             this.aGUIComponents.btnClearAllTraces.doClick();
+            //
+            this.aMajorMethods_Shapelet.changeSelectedShapelet();
+            changeSelectedTS();
         }
     }
 
@@ -507,7 +516,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             lblMultiChartTSClass.setBorder(null);
 //            lblMultiChartTSClass.setFont(font);
             lblMultiChartTSClass.setFont(new Font("SansSerif", Font.BOLD, 10));
-            lblMultiChartTSClass.setForeground(Color.BLACK);
+            lblMultiChartTSClass.setForeground(Color.RED);
 
             /***  -------------------------------- **/
             JLabel lblMultiChartTSNum = new JLabel();
@@ -522,7 +531,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             lblMultiChartSPLetClass.setText("Shapelet Label.:");
             lblMultiChartSPLetClass.setBorder(null);
             lblMultiChartSPLetClass.setFont(font);
-            lblMultiChartSPLetClass.setForeground(Color.RED);
+            lblMultiChartSPLetClass.setForeground(Color.BLACK);
 
             /***  -------------------------------- **/
             JLabel lblMultiChartSPLetNum = new JLabel();

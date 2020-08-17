@@ -129,5 +129,6 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.layeredPane_logo = aGUIComponents.layeredPane_logo;
         this.layeredPane_multiCharts = aGUIComponents.layeredPane_multiCharts;
         this.layeredPane_toptenChartLabel = aGUIComponents.layeredPane_toptenChartLabel;
+        this.layeredPane_DOMInfo = aGUIComponents.layeredPane_DOMInfo;
     }
 }
