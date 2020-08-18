@@ -18,8 +18,8 @@ public class SSHFile extends SSHFile_abstract {
     //
     public void sshReadFile() {
 
-        String user = "shiwenli";
-        String password = "LIshiwen123@";
+        String user = "username";
+        String password = "password";
         String host = "csr30.comp.hkbu.edu.hk";
         int port = 22;
 
