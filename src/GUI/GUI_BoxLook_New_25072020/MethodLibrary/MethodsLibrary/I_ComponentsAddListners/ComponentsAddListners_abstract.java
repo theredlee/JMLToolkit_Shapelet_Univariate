@@ -68,7 +68,8 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     }
 
     protected void runBspcover() {
-        aMajorMethods_Timeseries.runBspcover();
+//        aMajorMethods_Timeseries.runBspcover();
+        aMajorMethods_Timeseries.runBspcoverRemote();
     }
 
     protected void stackModelChange(ActionEvent e){

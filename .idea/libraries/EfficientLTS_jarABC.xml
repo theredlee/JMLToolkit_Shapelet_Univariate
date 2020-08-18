@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="EfficientLTS-jarABC">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/external_libraries/EfficientLTS-jar.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

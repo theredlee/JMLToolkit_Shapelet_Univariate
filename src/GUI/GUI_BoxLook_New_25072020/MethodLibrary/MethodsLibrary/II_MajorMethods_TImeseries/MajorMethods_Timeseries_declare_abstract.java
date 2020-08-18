@@ -8,6 +8,8 @@ import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.VII_SortData.So
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.VI_Clear_TracesAndCharts.Clear_TracesAndCharts;
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.V_SetScaleAndPosition_AllCharts.SetScaleAndPosition_AllCharts;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.Session;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
 
 public abstract class MajorMethods_Timeseries_declare_abstract {
@@ -25,4 +27,8 @@ public abstract class MajorMethods_Timeseries_declare_abstract {
 
     /*** Local traces **/
     protected Trace2DLtd aLocalLineTrace;
+
+    protected static Session session = null;
+    protected static ChannelSftp sftpChannel = null;
+    protected static String PATHSEPARATOR = "/";
 }
