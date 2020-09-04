@@ -14,4 +14,6 @@ public abstract class SSHFile_abstract_declare {
     protected static ChannelSftp sftpChannel = null;
     protected static String PATHSEPARATOR = "/";
     protected static GUIComponents aGUIComponents;
+    protected static String sshUser;
+    protected static String sshPwd;
 }

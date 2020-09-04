@@ -289,13 +289,68 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
     //
     public void runBspcoverRemote() {
-        try {
-            SSHFile aSSHFile = new SSHFile(this.aVariables.dataSetDirectory, this.aVariables.root, this.aGUIComponents);
-            aSSHFile.writeParameter();
-            aSSHFile.sshReadFile();
-        } catch (Exception e){
-            e.printStackTrace();
+        if (getYESorNO("Using ssh tunnel or not?")) { // if using ssh tunnel
+            String[] namePwd = getUsernamePassword("Login CS Computer");
+            String sshUser = namePwd[0];
+            String sshPwd = namePwd[1];
+            if(sshUser.length()==0 || sshPwd.length()==0){
+                return;
+            }
+            try {
+                SSHFile aSSHFile = new SSHFile(this.aVariables.dataSetDirectory, this.aVariables.root, this.aGUIComponents, sshUser, sshPwd);
+                aSSHFile.writeParameter();
+                aSSHFile.sshReadFile();
+            } catch (Exception e){
+                String eTrace = e.toString();
+                this.aGUIComponents.bspcoverInfoTextArea.setText(eTrace);
+                e.printStackTrace();
+            }
         }
+        return;
+    }
+
+    /**
+     * Get YES or NO. Do not change this function.
+     *
+     * @return boolean
+     */
+    private boolean getYESorNO(String message) {
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(message));
+        JOptionPane pane = new JOptionPane(panel, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+        JDialog dialog = pane.createDialog(null, "Question");
+        dialog.setVisible(true);
+        boolean result = JOptionPane.YES_OPTION == (int) pane.getValue();
+        dialog.dispose();
+        return result;
+    }
+
+    /**
+     * Get username & password. Do not change this function.
+     *
+     * @return username & password
+     */
+    private String[] getUsernamePassword(String title) {
+        JPanel panel = new JPanel();
+        final TextField usernameField = new TextField();
+        final JPasswordField passwordField = new JPasswordField();
+        panel.setLayout(new GridLayout(2, 2));
+        panel.add(new JLabel("Username"));
+        panel.add(usernameField);
+        panel.add(new JLabel("Password"));
+        panel.add(passwordField);
+        JOptionPane pane = new JOptionPane(panel, JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void selectInitialValue() {
+                usernameField.requestFocusInWindow();
+            }
+        };
+        JDialog dialog = pane.createDialog(null, title);
+        dialog.setVisible(true);
+        dialog.dispose();
+        return new String[] { usernameField.getText(), new String(passwordField.getPassword()) };
     }
 
     /*---------------------------------------------------------------
@@ -580,8 +635,11 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             multiJpanelsPanel.add(aPanel,  "wrap");
         }
 
+        multiJpanelsPanel.setLocation(-14,-15);
         JScrollPane multiChartsScrollPane = new JScrollPane(multiJpanelsPanel);
         multiChartsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        multiChartsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//        multiChartsScrollPane.setLayout(null);
         multiChartsScrollPane.setBounds(0, 0, (905-400)/2+55, 580);
         this.aGUIComponents.layeredPane_multiCharts.add(multiChartsScrollPane);
         //

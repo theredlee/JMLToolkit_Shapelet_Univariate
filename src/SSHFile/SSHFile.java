@@ -9,17 +9,21 @@ import java.util.Vector;
 
 public class SSHFile extends SSHFile_abstract {
 
-    public SSHFile(File dataSetDirectory, String root, GUIComponents aGUIComponents) {
+    public SSHFile(File dataSetDirectory, String root, GUIComponents aGUIComponents, String sshUser, String sshPwd) {
         this.dataSetDirectory = dataSetDirectory;
         this.root = root;
         this.aGUIComponents = aGUIComponents;
+        this.sshUser = sshUser;
+        this.sshPwd = sshPwd;
     }
 
     //
     public void sshReadFile() {
 
-        String user = "username";
-        String password = "password";
+//        String user = "username";
+//        String password = "password";
+        String user = this.sshUser;
+        String password = this.sshPwd;
         String host = "csr30.comp.hkbu.edu.hk";
         int port = 22;
 
@@ -82,13 +86,16 @@ public class SSHFile extends SSHFile_abstract {
                 String localDir = this.root + "/datasets/ItalyPowerDemand_dataset/v_1/shapelet/shapelet&weight";
                 recursiveFolderDownload(remoteDirShapelet, localDir);
             }catch (Exception e){
+                String eTrace = e.toString();
+                this.aGUIComponents.bspcoverInfoTextArea.setText(eTrace);
                 e.printStackTrace();
             }
 
             //
         } catch (JSchException | SftpException | FileNotFoundException e) {
-
-            System.out.println("End of this manager! Bye...11");
+            String eTrace = e.toString();
+            this.aGUIComponents.bspcoverInfoTextArea.setText(eTrace);
+            System.out.println("End of this manager! Bye...");
             if (session != null) {
                 session.disconnect();
             }
@@ -99,6 +106,8 @@ public class SSHFile extends SSHFile_abstract {
 
             e.printStackTrace();
         } catch (IOException e) {
+            String eTrace = e.toString();
+            this.aGUIComponents.bspcoverInfoTextArea.setText(eTrace);
             e.printStackTrace();
         }
         //
