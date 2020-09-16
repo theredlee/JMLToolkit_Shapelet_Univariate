@@ -62,7 +62,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
         String subroot_III = "/datasets/Grace_dataset/v_3/Grace_MI";
 
-        String TSGenerationPath = this.aVariables.root + subroot_II;
+        String TSGenerationPath = this.aVariables.root + subroot_III;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
