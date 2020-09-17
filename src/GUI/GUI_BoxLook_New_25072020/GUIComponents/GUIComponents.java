@@ -244,7 +244,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         try{
             int width = 170;
-            BufferedImage myPicture = ImageIO.read(new File(System.getProperty("user.dir") + "/src/DB logo/group-logo copy.jpg"));
+            BufferedImage myPicture = ImageIO.read(new File(System.getProperty("user.dir") + "/src/DB_logo/group_logo_copy.jpg"));
             Image img = getScaledImage(myPicture, width, (int)(width/2.4));
 
             lblDOMInfo = new JLabel();
