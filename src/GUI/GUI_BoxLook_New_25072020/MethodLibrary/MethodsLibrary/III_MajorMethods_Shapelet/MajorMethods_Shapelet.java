@@ -548,7 +548,8 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         var dataset = new DefaultCategoryDataset();
         //
         int topTen =10; // minimum
-        for(int i=0; i<unsortedArr.length; i++){
+//        for(int i=0; i<unsortedArr.length; i++){
+        for(int i=unsortedArr.length-1; i>unsortedArr.length-1-topTen; i--){
             String key = "Class label-" + (int)unsortedArr[i][1]; // In unsortedArr, the second dimension [][*] withholds the label.
             String columnKey = "S[" + (int)unsortedArr[i][1] + "][" + (int)unsortedArr[i][2] +  "]";
             double wight = unsortedArr[i][0];
@@ -564,7 +565,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //        dataset.setValue(11, "Gold medals", "Germany");
 
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Shapelet - 10 Minimum Weights",
+                "Shapelet - 10 Maximum Weights",
                 "",
                 "Weight value",
                 dataset,
