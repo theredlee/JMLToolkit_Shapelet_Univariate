@@ -41,7 +41,7 @@ public class GUIComponents extends GUIComponents_abstract {
         //initializeCoordinate();
         initializeFont();
         initializeJLabels();
-        initializeJSpinner();
+//        initializeJSpinner();
         initializeJButton();
         initializeJRadioButton();
         initializeJTextField();
@@ -269,13 +269,13 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
     /*** initializeJSpinner --------------------------------------------**/
-    private void initializeJSpinner(){
-        /***  -------------------------------- **/
-        spinner = new JSpinner(new SpinnerNumberModel(1.0, 0.5, 2.5, .1));
-        spinner.setBounds(682-430, 440, 50, 25);
-        spinner.setPreferredSize(new Dimension(45, spinner.getPreferredSize().height));
-        frmTimeSeriesLayerFirst.add(spinner);
-    }
+//    private void initializeJSpinner(){
+//        /***  -------------------------------- **/
+//        spinner = new JSpinner(new SpinnerNumberModel(1.0, 0.5, 2.5, .1));
+//        spinner.setBounds(682-430, 440, 50, 25);
+//        spinner.setPreferredSize(new Dimension(45, spinner.getPreferredSize().height));
+//        frmTimeSeriesLayerFirst.add(spinner);
+//    }
 
 
     /*** initializeJButton --------------------------------------------**/

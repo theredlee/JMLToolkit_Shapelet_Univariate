@@ -443,8 +443,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             testSet.LoadDataSetFile(new File(testSetPath));
 
             // normalize the data instance
-            trainSet.NormalizeDatasetInstances();
-            testSet.NormalizeDatasetInstances();
+//            trainSet.NormalizeDatasetInstances();
+//            testSet.NormalizeDatasetInstances();
 
 //                    // output normalized dataset
 //                    System.out.println("trainSet:");

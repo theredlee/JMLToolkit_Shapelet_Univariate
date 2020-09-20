@@ -61,7 +61,7 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
         double aMin = minMax[0]*1.1; // Leave some spaces on the bottom
         double aMax = minMax[1]*1.1; // Leave some spaces on the top
         this.aVariables.centerChart.getAxisY().setRange(new Range(aMin, aMax*powRatio));
-        System.out.println("minMax: " + minBound + ", " + maxBound);
+//        System.out.println("minMax: " + minBound + ", " + maxBound);
     }
 
     public void setSlideZoomDefaultValue(){

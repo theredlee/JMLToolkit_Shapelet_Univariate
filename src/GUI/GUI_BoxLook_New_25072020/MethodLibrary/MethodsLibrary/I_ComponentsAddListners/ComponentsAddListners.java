@@ -45,14 +45,14 @@ public class ComponentsAddListners extends ComponentsAddListners_abstract {
      ---------------------------------------------------------------*/
     public void addChangeListener(){
         /***  -------------------------------- **/
-        this.aGUIComponents.spinner.addChangeListener(new ChangeListener()
-        {
-            public void stateChanged(ChangeEvent e)
-            {
-                float scale = ((Double) aGUIComponents.spinner.getValue()).floatValue();
-                setScale(scale);
-            }
-        });
+//        this.aGUIComponents.spinner.addChangeListener(new ChangeListener()
+//        {
+//            public void stateChanged(ChangeEvent e)
+//            {
+//                float scale = ((Double) aGUIComponents.spinner.getValue()).floatValue();
+//                setScale(scale);
+//            }
+//        });
 
         /***  -------------------------------- **/
         this.aGUIComponents.zoomSlider.addChangeListener(new ChangeListener() {
