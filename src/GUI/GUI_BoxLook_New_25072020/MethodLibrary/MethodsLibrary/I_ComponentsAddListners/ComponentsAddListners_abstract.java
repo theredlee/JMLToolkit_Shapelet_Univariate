@@ -43,6 +43,10 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
         aSetScaleAndPosition_AllCharts.setScale(scale);
     }
 
+    protected void timeSeriesZoom(int value){
+        aSetScaleAndPosition_AllCharts.timeSeriesSlideZoom(value);
+    }
+
     protected void timeSeriesZoomIn(){
         aSetScaleAndPosition_AllCharts.timeSeriesZoomIn();
     }

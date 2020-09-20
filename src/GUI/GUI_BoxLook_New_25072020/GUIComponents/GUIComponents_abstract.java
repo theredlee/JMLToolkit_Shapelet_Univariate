@@ -44,6 +44,8 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.lblDOMInfo = aGUIComponents.lblDOMInfo;
         /*** initializeJSpinner --**/
         this.spinner = aGUIComponents.spinner;
+        /*** initializeJSlider--**/
+        this.zoomSlider = aGUIComponents.zoomSlider;
         /*** initializeJButton --**/
         this.btnZoomIn = aGUIComponents.btnZoomIn;
         this.btnZoomOut = aGUIComponents.btnZoomOut;

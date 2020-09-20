@@ -20,6 +20,8 @@ public abstract class GUIComponents_declare_abstract{
     public JLabel[] lblMultiChartTSClass, lblMultiChartTSNum, lblMultiChartSPLetNum, lblMultiChartSPLetClass, lblTopk;
     /*** initializeJSpinner --**/
     public JSpinner spinner;
+    /*** initializeJSlider --**/
+    public JSlider zoomSlider;
     /*** initializeJButton --**/
     public JButton btnZoomIn, btnZoomOut, btnMoveLeft, btnMoveRight, btnSetTsIdRange, btnSetShptIdRange, btnSortedByLenShptIdASC, btnSortedByLenShptIdDESC, btnClearAllTraces, btnLoadDataset, btnLoadShapelet, btnSelectTop_K_Shapelets, btnRunBspcover, btnInvokeDT;
     /*** initializeJRadioButton --**/

@@ -136,10 +136,10 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        lblHorizontallyMove = new JLabel("Horizontal Shift / Zoom:");
-        lblHorizontallyMove.setFont(myFont);
-        lblHorizontallyMove.setBounds(762-450, 440, 200, 25);    /***209, 16, 101, 15 ***/
-        frmTimeSeriesLayerFirst.add(lblHorizontallyMove);
+//        lblHorizontallyMove = new JLabel("Horizontal Shift / Zoom:");
+//        lblHorizontallyMove.setFont(myFont);
+//        lblHorizontallyMove.setBounds(762-450, 440, 200, 25);    /***209, 16, 101, 15 ***/
+//        frmTimeSeriesLayerFirst.add(lblHorizontallyMove);
 
 
         /***  -------------------------------- **/
@@ -219,11 +219,11 @@ public class GUIComponents extends GUIComponents_abstract {
         lblStackmodel.setBounds(171,130,103,15); /*** 171,130,83,15 ***/
         frmTimeSeriesLayerFirst.add(lblStackmodel);
 
-        /***  -------------------------------- **/
-        lblDotLineSwitch = new JLabel("Line/Dot Trace:");
-        lblDotLineSwitch.setFont(myFont);
-        lblDotLineSwitch.setBounds(353 + buttonWidth/2,130,113,15); /*** 171,130,83,15 ***/
-        frmTimeSeriesLayerFirst.add(lblDotLineSwitch);
+//        /***  -------------------------------- **/
+//        lblDotLineSwitch = new JLabel("Line/Dot Trace:");
+//        lblDotLineSwitch.setFont(myFont);
+//        lblDotLineSwitch.setBounds(353 + buttonWidth/2,130,113,15); /*** 171,130,83,15 ***/
+//        frmTimeSeriesLayerFirst.add(lblDotLineSwitch);
 
         /***  -------------------------------- **/
         lblLogo = new JLabel("Visualet", SwingConstants.CENTER);
@@ -281,36 +281,51 @@ public class GUIComponents extends GUIComponents_abstract {
     /*** initializeJButton --------------------------------------------**/
     private void initializeJButton(){
         /***  -------------------------------- **/
-        btnZoomIn = new JButton("Zoom In");
-        btnZoomIn.setFont(myFont);
-        btnZoomIn.setBounds(frameCentroidX + 400-520,  frameCentroidY + 25, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
-        btnZoomIn.setBackground(Color.WHITE);
-        frmTimeSeriesLayerFirst.add(btnZoomIn);
-
+//        btnZoomIn = new JButton("Zoom In");
+//        btnZoomIn.setFont(myFont);
+//        btnZoomIn.setBounds(frameCentroidX + 400-520,  frameCentroidY + 25, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+//        btnZoomIn.setBackground(Color.WHITE);
+//        frmTimeSeriesLayerFirst.add(btnZoomIn);
+//
+//
+//        /***  -------------------------------- **/
+//        btnZoomOut = new JButton("Zoom Out");
+//        btnZoomOut.setFont(myFont);
+//        btnZoomOut.setBounds(frameCentroidX + 400-520, frameCentroidY + 65, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+//        btnZoomOut.setBackground(Color.WHITE);
+//        frmTimeSeriesLayerFirst.add(btnZoomOut);
+//
+//
+//        /***  -------------------------------- **/
+//        btnMoveLeft = new JButton("Left");
+//        btnMoveLeft.setFont(myFont);
+//        btnMoveLeft.setBounds((frameCentroidX + 400 - 20-520),  frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 460, 485, 50, 25 **/
+//        btnMoveLeft.setBackground(Color.WHITE);
+//        frmTimeSeriesLayerFirst.add(btnMoveLeft);
+//
+//
+//        /***  -------------------------------- **/
+//        btnMoveRight = new JButton("Right");
+//        btnMoveRight.setFont(myFont);
+//        btnMoveRight.setBounds(frameCentroidX + 445-520, frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 500, 485, 50, 25 **/
+//        btnMoveRight.setBackground(Color.WHITE);
+//        frmTimeSeriesLayerFirst.add(btnMoveRight);
 
         /***  -------------------------------- **/
-        btnZoomOut = new JButton("Zoom Out");
-        btnZoomOut.setFont(myFont);
-        btnZoomOut.setBounds(frameCentroidX + 400-520, frameCentroidY + 65, buttonWidth/2 + 12, buttonHeight - 10);    /** 460, 485, 50, 20 **/
-        btnZoomOut.setBackground(Color.WHITE);
-        frmTimeSeriesLayerFirst.add(btnZoomOut);
+        int FPS_MIN = 0;
+        int FPS_MAX = 10;
+        int FPS_INIT = 0;    //initial frames per second
+        zoomSlider = new JSlider(JSlider.HORIZONTAL,
+                FPS_MIN, FPS_MAX, FPS_INIT);
 
-
-        /***  -------------------------------- **/
-        btnMoveLeft = new JButton("Left");
-        btnMoveLeft.setFont(myFont);
-        btnMoveLeft.setBounds((frameCentroidX + 400 - 20-520),  frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 460, 485, 50, 25 **/
-        btnMoveLeft.setBackground(Color.WHITE);
-        frmTimeSeriesLayerFirst.add(btnMoveLeft);
-
-
-        /***  -------------------------------- **/
-        btnMoveRight = new JButton("Right");
-        btnMoveRight.setFont(myFont);
-        btnMoveRight.setBounds(frameCentroidX + 445-520, frameCentroidY + 45, buttonWidth/2 - 10, buttonHeight - 10);    /** 500, 485, 50, 25 **/
-        btnMoveRight.setBackground(Color.WHITE);
-        frmTimeSeriesLayerFirst.add(btnMoveRight);
-
+        //Turn on labels at major tick marks.
+        zoomSlider.setMajorTickSpacing(2);
+        zoomSlider.setMinorTickSpacing(1);
+        zoomSlider.setPaintTicks(true);
+        zoomSlider.setPaintLabels(true);
+        zoomSlider.setBounds(frameCentroidX - 300,  frameCentroidY + 25, buttonWidth*2, buttonHeight+10);
+        frmTimeSeriesLayerFirst.add(zoomSlider);
+        zoomSlider.setFont(font);
 
         /***  -------------------------------- **/
         btnSetTsIdRange = new JButton("Enable");
@@ -410,24 +425,24 @@ public class GUIComponents extends GUIComponents_abstract {
         GStackMode.add(radiobtnStackModelOn);
         GStackMode.add(radiobtnStackModelOff);
 
-        /***  -------------------------------- **/
-        radiobtnSwitchDot = new JRadioButton("Dot");
-        radiobtnSwitchDot.setFont(myFont);
-        radiobtnSwitchDot.setBounds(353 + buttonWidth/2 + 113, 130, buttonWidth/2 - 5, buttonHeight - 10);    /** 460, 485, 50, 20 **/
-
-        frmTimeSeriesLayerFirst.add(radiobtnSwitchDot);
-
-        /***  -------------------------------- **/
-        radiobtnSwitchLine = new JRadioButton("Line");
-        radiobtnSwitchLine.setFont(myFont);
-        radiobtnSwitchLine.setBounds(353 + buttonWidth/2 + 113 + (345-275), 130,  buttonWidth/2 - 2, buttonHeight - 10);    /** 460, 485, 50, 20 **/
-        frmTimeSeriesLayerFirst.add(radiobtnSwitchLine);
-
-        radiobtnSwitchDot.setSelected(true);
-
-        ButtonGroup GDotLineSwitch = new ButtonGroup();
-        GDotLineSwitch.add(radiobtnSwitchDot);
-        GDotLineSwitch.add(radiobtnSwitchLine);
+//        /***  -------------------------------- **/
+//        radiobtnSwitchDot = new JRadioButton("Dot");
+//        radiobtnSwitchDot.setFont(myFont);
+//        radiobtnSwitchDot.setBounds(353 + buttonWidth/2 + 113, 130, buttonWidth/2 - 5, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+//
+//        frmTimeSeriesLayerFirst.add(radiobtnSwitchDot);
+//
+//        /***  -------------------------------- **/
+//        radiobtnSwitchLine = new JRadioButton("Line");
+//        radiobtnSwitchLine.setFont(myFont);
+//        radiobtnSwitchLine.setBounds(353 + buttonWidth/2 + 113 + (345-275), 130,  buttonWidth/2 - 2, buttonHeight - 10);    /** 460, 485, 50, 20 **/
+//        frmTimeSeriesLayerFirst.add(radiobtnSwitchLine);
+//
+//        radiobtnSwitchDot.setSelected(true);
+//
+//        ButtonGroup GDotLineSwitch = new ButtonGroup();
+//        GDotLineSwitch.add(radiobtnSwitchDot);
+//        GDotLineSwitch.add(radiobtnSwitchLine);
     }
 
 

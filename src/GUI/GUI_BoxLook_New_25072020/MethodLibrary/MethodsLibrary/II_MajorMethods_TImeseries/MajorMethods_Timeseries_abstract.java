@@ -36,6 +36,7 @@ public abstract class MajorMethods_Timeseries_abstract extends MajorMethods_Time
     }
 
     protected void setScale(){
+        aSetScaleAndPosition_AllCharts.setSlideZoomDefaultValue();
         aSetScaleAndPosition_AllCharts.setScaleAndPosition();
         aSetScaleAndPosition_AllCharts.spinnerSetScale();
         aSetScaleAndPosition_AllCharts.centerChartSetRange();

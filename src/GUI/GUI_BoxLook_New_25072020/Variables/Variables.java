@@ -19,6 +19,7 @@ public class Variables extends Variables_abstract {
         this.stackModelOn = false;
         this.switchDot = true;
 
+        this.minMaxTimeSeriesDataset = new double[2];
         this.globalStartPosition = 0;
         this.globalBestMatchSP = 0;
         this.globalBestMatchEP = 0;

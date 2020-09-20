@@ -2,6 +2,7 @@ package GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.V_SetScaleAndP
 
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
+import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
 import info.monitorenter.util.Range;
 
 public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts_abstract {
@@ -15,6 +16,7 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
 
     public void initialize(GUIComponents aGUIComponents, Variables aVariables){
         initializeReferenceParameters(aGUIComponents, aVariables);
+        firstCall = true;
     }
 
     /*---------------------------------------------------------------
@@ -34,6 +36,38 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
         this.aVariables.centerChartXR = xR;
 
         this.aVariables.oldScale = scale;
+    }
+
+    /*---------------------------------------------------------------
+
+     **                    timeSeriesZoom()                        **
+
+     ---------------------------------------------------------------*/
+    public void timeSeriesSlideZoom(int val){
+        if(firstCall){
+            this.aVariables.centerChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
+            firstCall = false;
+        }
+        int minBound = this.aGUIComponents.zoomSlider.getMinimum();
+        int maxBound = this.aGUIComponents.zoomSlider.getMaximum();
+
+        if(val>=maxBound){
+            return; // Prevent approaching the upper bound since ratio = 0 when val = 100
+        }
+
+        double ratio = 1 - val*1.0/(maxBound-minBound);
+        double powRatio = Math.pow(ratio, val+1); // val starts from 0
+        double[] minMax = this.aVariables.minMaxTimeSeriesDataset;
+        double aMin = minMax[0]*1.1; // Leave some spaces on the bottom
+        double aMax = minMax[1]*1.1; // Leave some spaces on the top
+        this.aVariables.centerChart.getAxisY().setRange(new Range(aMin, aMax*powRatio));
+        System.out.println("minMax: " + minBound + ", " + maxBound);
+    }
+
+    public void setSlideZoomDefaultValue(){
+        int minBound = this.aGUIComponents.zoomSlider.getMinimum();
+        this.aGUIComponents.zoomSlider.setValue(minBound);
+        timeSeriesSlideZoom(minBound);
     }
 
     /*---------------------------------------------------------------
@@ -113,8 +147,8 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
      ---------------------------------------------------------------*/
     public void setScaleAndPosition(){
         this.aVariables.oldScale = 1.0;
-        this.aVariables.centerChartXL = -5;
-        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+5;
+        this.aVariables.centerChartXL = -1;
+        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+1;
     }
 
     public void spinnerSetScale(){

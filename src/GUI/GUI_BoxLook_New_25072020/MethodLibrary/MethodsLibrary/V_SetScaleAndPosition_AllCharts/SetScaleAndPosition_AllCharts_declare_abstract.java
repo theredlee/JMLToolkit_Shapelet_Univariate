@@ -12,6 +12,7 @@ import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 public abstract class SetScaleAndPosition_AllCharts_declare_abstract {
     protected GUIComponents aGUIComponents;
     protected Variables aVariables;
+    protected boolean firstCall;
 
     /*** No self **/
     protected ComponentsAddListners aComponentsAddListners;

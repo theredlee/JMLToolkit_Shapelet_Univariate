@@ -27,11 +27,12 @@ public abstract class SetScaleAndPosition_AllCharts_abstract extends SetScaleAnd
         /*** No self **/
         /*** No reference no need to assign as well **/
 //        this.aComponentsAddListners = aComponentsAddListners;
-//        this.aMajorMethods_Timeseries = aMajorMethods_Timeseries;
+        this.aMajorMethods_Timeseries = aMajorMethods_Timeseries;
 //        this.aMajorMethods_Shapelet = aMajorMethods_Shapelet;
 //        this.aSetInfo_Charts = aSetInfo_Charts;
 //        this.aSetScaleAndPosition_AllCharts = aSetScaleAndPosition_AllCharts;
 //        this.aClear_TracesAndCharts = aClear_TracesAndCharts;
 //        this.aSortData = aSortData;
     }
+
 }

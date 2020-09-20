@@ -28,7 +28,4 @@ public abstract class MajorMethods_Timeseries_declare_abstract {
     /*** Local traces **/
     protected Trace2DLtd aLocalLineTrace;
 
-    protected static Session session = null;
-    protected static ChannelSftp sftpChannel = null;
-    protected static String PATHSEPARATOR = "/";
 }

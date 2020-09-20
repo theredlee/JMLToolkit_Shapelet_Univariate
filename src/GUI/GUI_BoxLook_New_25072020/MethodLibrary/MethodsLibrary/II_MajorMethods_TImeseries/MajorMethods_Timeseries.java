@@ -14,10 +14,12 @@ import TimeSeries.Distorsion;
 import TimeSeries.TransformationFieldsGenerator;
 import Utilities.GlobalValues;
 import Utilities.Logging;
-import com.jcraft.jsch.*;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.IAxis;
 import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
+import info.monitorenter.gui.chart.rangepolicies.*;
+import info.monitorenter.gui.chart.rangepolicies.RangePolicyHighestValues;
+import info.monitorenter.gui.chart.rangepolicies.RangePolicyUnbounded;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
 import info.monitorenter.gui.chart.traces.painters.TracePainterDisc;
 import info.monitorenter.gui.chart.traces.painters.TracePainterLine;
@@ -29,8 +31,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,7 +50,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
     public void initialize(GUIComponents aGUIComponents, Variables aVariables){
         initializeReferenceParameters(aGUIComponents, aVariables);
     }
-
     /*** ---------------------------------------------------------------------------------------------------------* */
 
     /*---------------------------------------------------------------
@@ -119,7 +119,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             horizontalLineTransfer(this.aVariables.dataSet);
 
             /*** -> **/
-            classfyTSLabels();
+            classifyTSLabels();
 
             /*** -> **/
             setTSLabelJList();
@@ -140,7 +140,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      **                 classfyShapeletLabels()                     **
 
      ---------------------------------------------------------------*/
-    public void classfyTSLabels(){
+    public void classifyTSLabels(){
         try{
             /*** Load Label ***/
             ArrayList<Integer> TS_labelArryList = new ArrayList<> ();
@@ -287,7 +287,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
     }
 
-    //
+    /** **/
     public void runBspcoverRemote() {
         if (getYESorNO("Using ssh tunnel or not?")) { // if using ssh tunnel
             String[] namePwd = getUsernamePassword("Login CS Computer");
@@ -644,8 +644,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aGUIComponents.layeredPane_multiCharts.add(multiChartsScrollPane);
         //
 
-        this.aVariables.centerChartXL = -5;
-        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+5;
+        this.aVariables.centerChartXL = -1;
+        this.aVariables.centerChartXR = this.aVariables.dataset_withCurrentLabel.numFeatures+1;
         System.out.println("centerChartXR: " + this.aVariables.centerChartXR);
 
         this.aVariables.oldScale = 1.0;
@@ -658,7 +658,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         /***** Create trace ***/
         this.aVariables.TSTrace = new Trace2DLtd(null);
-        this.aVariables.TSTrace.setTracePainter(new TracePainterDisc(4));
+        this.aVariables.TSTrace.setTracePainter(new TracePainterDisc(3));
 
         this.aVariables.TSTrace.setColor(Color.BLUE);
         this.aVariables.TSTrace.setStroke(new BasicStroke(4));
@@ -693,12 +693,13 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.bottomChart.setSize( this.aGUIComponents.bottomChartPanel.getSize() );
 
         this.aVariables.centerChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
-//        centerChart.getAxisX().setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
-        this.aVariables.centerChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-5, this.aVariables.dataset_withCurrentLabel.numFeatures+5)));
+        this.aVariables.centerChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1)));
+
+//        this.aVariables.centerChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport()); // RangePolicyForcedPoint(-5) |
 
         this.aVariables.bottomChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
 //        bottomChart.getAxisX().setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
-        this.aVariables.bottomChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-5, this.aVariables.dataset_withCurrentLabel.numFeatures+5)));
+        this.aVariables.bottomChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1)));
 
         this.aVariables.centerChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
 
@@ -835,8 +836,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             return;
         }
         try {
+
             setCurrentTSJlistContent();
             setInfomationOnChart();
+            findMinMaxTimeSeriesDataset();
 
             /*** 1. Draw shapelet first, -> It will clear all the traces on center chart and add TS trace back
              * (Because of the temp shapelet traces) **/
@@ -1171,7 +1174,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         /*** Draw horizontal lines **/
         /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
         try{
-            setScale();
+//            setScale();
             this.aVariables.TSTrace.removeAllPoints();
 //            System.out.println("drawTSTrace_horizontally_CenterChart(ArrayList<Double> aTSAraylist) -> dataset_withCurrentLabel.numFeatures+10: " + (dataset_withCurrentLabel.numFeatures+10));
 
@@ -1511,7 +1514,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
 
     }
-    //
 
     // With vertical connecting line - top ten charts
     public void horizontalLinePlotWithVerticalLineTopTenChartController(int divider, Double[] myDataArray, int chartIndex){
@@ -1755,4 +1757,20 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
     /*** ---------------------------------------------------------------------------------------------------------* */
 
+    public void findMinMaxTimeSeriesDataset(){
+        DataInstance aDataInstance = this.aVariables.TSDataInstance;
+        double[] arr = new double[aDataInstance.features.size()];
+
+        for(int i=0; i<aDataInstance.features.size(); i++){
+            arr[i] = (aDataInstance.features.get(i).value);
+        }
+
+        Arrays.sort(arr);
+
+        double[] minMax = new double[2];
+        minMax[0] = arr[0];
+        minMax[1] = arr[aDataInstance.features.size()-1];
+
+        this.aVariables.minMaxTimeSeriesDataset = minMax;
+    }
 }

@@ -11,6 +11,7 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.TSDataInstance_bottomChart = aVariables.TSDataInstance_bottomChart;
         this.aTSLook = aVariables.aTSLook;
         this.aShapeletLook = aVariables.aShapeletLook;
+        this.minMaxTimeSeriesDataset = aVariables.minMaxTimeSeriesDataset;
         this.SPLet_double = aVariables.SPLet_double;
         this.SPLet_withCurrentLabel = aVariables.SPLet_withCurrentLabel;
         this.SPLet_weight = aVariables.SPLet_weight;

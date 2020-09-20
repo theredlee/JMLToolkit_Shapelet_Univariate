@@ -3,6 +3,7 @@ package GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.I_ComponentsAd
 import GUI.GUI_BoxLook_New_25072020.GUIComponents.GUIComponents;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -52,6 +53,55 @@ public class ComponentsAddListners extends ComponentsAddListners_abstract {
                 setScale(scale);
             }
         });
+
+        /***  -------------------------------- **/
+        this.aGUIComponents.zoomSlider.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                JSlider source = (JSlider)event.getSource();
+                int value = source.getValue();
+                timeSeriesZoom(value);
+            }
+        });
+
+        //        /***  -------------------------------- **/
+
+//        this.aGUIComponents.btnZoomIn.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+////                timeSeriesMoveLeft();
+//                timeSeriesZoomIn();
+//            }
+//        });
+//
+//        /***  -------------------------------- **/
+//
+//        this.aGUIComponents.btnZoomOut.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+////                timeSeriesMoveLeft();
+//                timeSeriesZoomOut();
+//            }
+//        });
+//
+//        /***  -------------------------------- **/
+//
+//        this.aGUIComponents.btnMoveLeft.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+////                timeSeriesMoveLeft();
+//                timeSeriesMoveRight();
+//            }
+//        });
+//
+//        /***  -------------------------------- **/
+//
+//        this.aGUIComponents.btnMoveRight.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+////                timeSeriesMoveRight();
+//                timeSeriesMoveLeft();
+//            }
+//        });
     }
 
     /*---------------------------------------------------------------
@@ -60,45 +110,6 @@ public class ComponentsAddListners extends ComponentsAddListners_abstract {
 
      ---------------------------------------------------------------*/
     public void addActionListner(){
-        /***  -------------------------------- **/
-
-        this.aGUIComponents.btnZoomIn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                timeSeriesMoveLeft();
-                timeSeriesZoomIn();
-            }
-        });
-
-        /***  -------------------------------- **/
-
-        this.aGUIComponents.btnZoomOut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                timeSeriesMoveLeft();
-                timeSeriesZoomOut();
-            }
-        });
-
-        /***  -------------------------------- **/
-
-        this.aGUIComponents.btnMoveLeft.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                timeSeriesMoveLeft();
-                timeSeriesMoveRight();
-            }
-        });
-
-        /***  -------------------------------- **/
-
-        this.aGUIComponents.btnMoveRight.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                timeSeriesMoveRight();
-                timeSeriesMoveLeft();
-            }
-        });
 
         /***  -------------------------------- **/
 
@@ -197,17 +208,17 @@ public class ComponentsAddListners extends ComponentsAddListners_abstract {
             }
         });
 
-        this.aGUIComponents.radiobtnSwitchDot.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dotLineSwitch(e);
-            }
-        });
-
-        this.aGUIComponents.radiobtnSwitchLine.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dotLineSwitch(e);
-            }
-        });
+//        this.aGUIComponents.radiobtnSwitchDot.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                dotLineSwitch(e);
+//            }
+//        });
+//
+//        this.aGUIComponents.radiobtnSwitchLine.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                dotLineSwitch(e);
+//            }
+//        });
     }
 
     /*---------------------------------------------------------------

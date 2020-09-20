@@ -19,6 +19,7 @@ public abstract class Variables_declare_abstract {
     public DataInstance TSDataInstance, TSDataInstance_bottomChart;
     public TSLook aTSLook;
     public ShapeletLook aShapeletLook;
+    public double[] minMaxTimeSeriesDataset;
     // public protected DataSet shapeletSet;
     // SP: shapelet, TS: time series
     public ArrayList<Double>[] SPLet_double, SPLet_withCurrentLabel, SPLet_weight;
