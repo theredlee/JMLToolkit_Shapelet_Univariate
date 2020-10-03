@@ -75,8 +75,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         String subroot_I = "/datasets/Grace_dataset/v_2/shapelet";
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet";
         String subroot_III = "/datasets/Grace_dataset/v_3/shapelet";
+        String subroot_IV = "/datasets/Grace_dataset/v_4/shapelet";
 
-        String shapletGenerationPath = this.aVariables.root + subroot_III;
+        String shapletGenerationPath = this.aVariables.root + subroot_IV;
         JFileChooser shapeletChooser = new JFileChooser();
 //        shapeletChooser.setCurrentDirectory(new java.io.File("/Users/leone/Documents/BSPCOVER/GitHub/tsc/JMLToolkit/experimentI"));
         shapeletChooser.setCurrentDirectory(new java.io.File(shapletGenerationPath));

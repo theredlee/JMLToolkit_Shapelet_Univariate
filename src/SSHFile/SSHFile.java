@@ -49,7 +49,7 @@ public class SSHFile extends SSHFile_abstract {
 //            sftpChannel.put(localFile, remoteDir);
             recursiveFolderUpload(localFile, remoteDir);
 
-            String parametPath = this.root + "/datasets/ItalyPowerDemand_dataset/v_1/parameter/parameter.txt";
+            String parametPath = this.root + "/datasets/Parameter/parameter.txt";
 
             remoteDir = "/home/comp/shiwenli/BSPCOVER/parameter/";
 
@@ -83,7 +83,8 @@ public class SSHFile extends SSHFile_abstract {
             //
             try {
                 String remoteDirShapelet = "/home/comp/shiwenli/BSPCOVER/shapeletOutput";
-                String localDir = this.root + "/datasets/ItalyPowerDemand_dataset/v_1/shapelet/shapelet&weight";
+                String localDir = this.root + "/datasets/Grace_dataset/v_4/shapelet/shapelet&weight";
+//                String localDir = this.shapeletDirectory.getPath();
                 recursiveFolderDownload(remoteDirShapelet, localDir);
             }catch (Exception e){
                 String eTrace = e.toString();
@@ -207,7 +208,7 @@ public class SSHFile extends SSHFile_abstract {
 
     //
     public void writeParameter() throws IOException {
-        String path = this.root + "/datasets/ItalyPowerDemand_dataset/v_1/parameter/parameter.txt";
+        String path = this.root + "/datasets/Parameter/parameter.txt";
 
         int maxEpochs = 1000;
         int alphabetSize = 5;

@@ -9,6 +9,7 @@ import java.io.File;
 
 public abstract class SSHFile_abstract_declare {
     protected static File dataSetDirectory;
+    protected static File shapeletDirectory;
     protected static String root;
     protected static Session session = null;
     protected static ChannelSftp sftpChannel = null;
