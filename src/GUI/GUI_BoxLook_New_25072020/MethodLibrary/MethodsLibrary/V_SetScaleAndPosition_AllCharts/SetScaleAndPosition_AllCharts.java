@@ -45,21 +45,36 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
      ---------------------------------------------------------------*/
     public void timeSeriesSlideZoom(int val){
         if(firstCall){
-            this.aVariables.centerChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
             firstCall = false;
+            this.aVariables.centerChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
         }
+
         int minBound = this.aGUIComponents.zoomSlider.getMinimum();
         int maxBound = this.aGUIComponents.zoomSlider.getMaximum();
 
         if(val>=maxBound){
-            return; // Prevent approaching the upper bound since ratio = 0 when val = 100
+            return; // Prevent approaching the upper bound since ratio = 0 when val = 10
         }
 
         double ratio = 1 - val*1.0/(maxBound-minBound);
         double powRatio = Math.pow(ratio, val+1); // val starts from 0
-        double[] minMax = this.aVariables.minMaxTimeSeriesDataset;
-        double aMin = minMax[0]*1.1; // Leave some spaces on the bottom
-        double aMax = minMax[1]*1.1; // Leave some spaces on the top
+        double[] minMaxTimeseries = this.aVariables.minMaxTimeSeriesDataset;
+        double[] minMaxShapelet = this.aVariables.minMaxShapeletDataset;
+        double aMin;
+        double aMax;
+
+        if(minMaxShapelet[0]<minMaxTimeseries[0]){
+            aMin = minMaxShapelet[0]-1; // Leave some spaces on the bottom
+        }else{
+            aMin = minMaxTimeseries[0]-1; // Leave some spaces on the bottom
+        }
+
+        if(minMaxShapelet[1]>minMaxTimeseries[1]){
+            aMax = minMaxShapelet[1]+1; // Leave some spaces on the bottom
+        }else{
+            aMax = minMaxTimeseries[1]+1; // Leave some spaces on the bottom
+        }
+
         this.aVariables.centerChart.getAxisY().setRange(new Range(aMin, aMax*powRatio));
 //        System.out.println("minMax: " + minBound + ", " + maxBound);
     }

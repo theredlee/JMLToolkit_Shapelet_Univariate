@@ -61,9 +61,11 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         String subroot_I = "/datasets/Grace_dataset/v_2/Grace_MEAN";
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
         String subroot_III = "/datasets/Grace_dataset/v_3/Grace_MI";
-        String subroot_IV = "/datasets/Grace_dataset/v_4/Grace_Mean_4Months";
+        String subroot_IV = "/datasets/Grace_dataset/v_4/Grace_Mean_4Months_20pts";
+        String subroot_V = "/datasets/Grace_dataset/v_5/Grace_Mean_5Months_15pts";
 
-        String TSGenerationPath = this.aVariables.root + subroot_IV;
+
+        String TSGenerationPath = this.aVariables.root + subroot_V;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
@@ -101,7 +103,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
 //            System.out.println("loadDataSet() -> dataSet.numFeatures+10: " + (dataSet.numFeatures+10));
 
-            this.aVariables.dataSet.NormalizeDatasetInstances();
+//            this.aVariables.dataSet.NormalizeDatasetInstances();
 
             /*** Two choices: **/
             /*** 1. Present the line-lot-like oldest effect look. ------------> **/
@@ -159,7 +161,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             System.out.println("shapelet_LabelCountArrayList: " + shapelet_LabelCountArrayList);
 
             this.aVariables.TS_labelArryList = TS_labelArryList;
-            this.aVariables.SPLet_labelCountArrayList = shapelet_LabelCountArrayList;
+            this.aVariables.Shapelet_labelCountArrayList = shapelet_LabelCountArrayList;
         }catch(Exception exc)
         {
             exc.printStackTrace();
@@ -276,7 +278,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             this.aGUIComponents.labelTextField.setVisible(true);
             this.aGUIComponents.labelTextField.setText("Label class: " + ((int) this.aVariables.TSDataInstance.target));
 
-            if(this.aVariables.load_SPLet_YesOrNo){
+            if(this.aVariables.load_Shapelet_YesOrNo){
 //                drawShapeletTrace_CenterChart();
 //                shapelet_dotANDLine_plot();
                 /*** stackModel **/
@@ -361,7 +363,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      ---------------------------------------------------------------*/
     public void runBspcover(){
 //            this.aVariables.shapeletSubroot = "/datasets/Grace_dataset/v_3/shapelet/shapelet&weight";
-        this.aVariables.shapeletSubroot = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet/shapelet&weight";
+        this.aVariables.shapeletSubroot = "/datasets/Grace_dataset/v_5/shapelet/shapelet&weight";
             /*---------------------------------------------------------------**
              ******   The shapelets output path is in EfficientLTS.java!   ******
              ---------------------------------------------------------------*/
@@ -564,8 +566,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.multiCharts = new Chart2D[numOfCharts];
         this.aGUIComponents.lblMultiChartTSClass = new JLabel[numOfCharts];
         this.aGUIComponents.lblMultiChartTSNum = new JLabel[numOfCharts];
-        this.aGUIComponents.lblMultiChartSPLetNum = new JLabel[numOfCharts];
-        this.aGUIComponents.lblMultiChartSPLetClass = new JLabel[numOfCharts];
+        this.aGUIComponents.lblMultiChartShapeletNum = new JLabel[numOfCharts];
+        this.aGUIComponents.lblMultiChartShapeletClass = new JLabel[numOfCharts];
         this.aGUIComponents.lblTopk = new JLabel[numOfCharts];
         Font font = new Font("SansSerif", Font.PLAIN, 8);
         for(int i=0; i<numOfCharts; i++){
@@ -591,18 +593,18 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             lblMultiChartTSNum.setForeground(Color.BLUE);
 
             /***  -------------------------------- **/
-            JLabel lblMultiChartSPLetClass = new JLabel();
-            lblMultiChartSPLetClass.setText("Shapelet Label.:");
-            lblMultiChartSPLetClass.setBorder(null);
-            lblMultiChartSPLetClass.setFont(font);
-            lblMultiChartSPLetClass.setForeground(Color.BLACK);
+            JLabel lblMultiChartShapeletClass = new JLabel();
+            lblMultiChartShapeletClass.setText("Shapelet Label.:");
+            lblMultiChartShapeletClass.setBorder(null);
+            lblMultiChartShapeletClass.setFont(font);
+            lblMultiChartShapeletClass.setForeground(Color.BLACK);
 
             /***  -------------------------------- **/
-            JLabel lblMultiChartSPLetNum = new JLabel();
-            lblMultiChartSPLetNum.setText("Shapelet No.:");
-            lblMultiChartSPLetNum.setBorder(null);
-            lblMultiChartSPLetNum.setFont(font);
-            lblMultiChartSPLetNum.setForeground(Color.ORANGE);
+            JLabel lblMultiChartShapeletNum = new JLabel();
+            lblMultiChartShapeletNum.setText("Shapelet No.:");
+            lblMultiChartShapeletNum.setBorder(null);
+            lblMultiChartShapeletNum.setFont(font);
+            lblMultiChartShapeletNum.setForeground(Color.ORANGE);
 
             /***  -------------------------------- **/
             JLabel lblTopK = new JLabel();
@@ -611,16 +613,16 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             lblTopK.setFont(new Font("SansSerif", Font.BOLD, 11));
             lblTopK.setForeground(Color.MAGENTA);
 
-            aPanel.add(lblMultiChartSPLetClass);
-            aPanel.add(lblMultiChartSPLetNum, "gapright 70");
+            aPanel.add(lblMultiChartShapeletClass);
+            aPanel.add(lblMultiChartShapeletNum, "gapright 70");
             aPanel.add(lblTopK, "wrap");
             aPanel.add(lblMultiChartTSClass);
             aPanel.add(lblMultiChartTSNum,"wrap");
 
             this.aGUIComponents.lblMultiChartTSClass[i] = lblMultiChartTSClass;
             this.aGUIComponents.lblMultiChartTSNum[i] = lblMultiChartTSNum;
-            this.aGUIComponents.lblMultiChartSPLetClass[i] = lblMultiChartSPLetClass;
-            this.aGUIComponents.lblMultiChartSPLetNum[i] = lblMultiChartSPLetNum;
+            this.aGUIComponents.lblMultiChartShapeletClass[i] = lblMultiChartShapeletClass;
+            this.aGUIComponents.lblMultiChartShapeletNum[i] = lblMultiChartShapeletNum;
             this.aGUIComponents.lblTopk[i] = lblTopK;
 
             // Charts second
@@ -844,7 +846,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             /*** 1. Draw shapelet first, -> It will clear all the traces on center chart and add TS trace back
              * (Because of the temp shapelet traces) **/
-            if(this.aVariables.load_SPLet_YesOrNo){
+            if(this.aVariables.load_Shapelet_YesOrNo){
                 /*** Normal model **/
                 /*** Why we call this? Because every time the distance between shapelet and TS is different! **/
                 if(this.aVariables.switchDot){
@@ -1034,14 +1036,14 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
 //                System.out.println("drawTSTrace_horizontally_BottomChart() -> this.aVariables.firstTSDrawing: " + this.aVariables.firstTSDrawing);
-                if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
+                if(this.aVariables.firstTSDrawing && this.aVariables.load_Shapelet_YesOrNo){
                     /***** Update to the latest shapelet ***/
 //                    System.out.println("Ever invoked");
                     this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
                     /*** -> **/
 
                     /*** **/
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
@@ -1121,14 +1123,14 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     /**** Here needs a block to set the values of i & numPoints.
                      * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
 //                System.out.println("drawTSTrace_horizontally_BottomChart() -> this.aVariables.firstTSDrawing: " + this.aVariables.firstTSDrawing);
-                    if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
+                    if(this.aVariables.firstTSDrawing && this.aVariables.load_Shapelet_YesOrNo){
                         /***** Update to the latest shapelet ***/
 //                    System.out.println("Ever invoked");
                         this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
                         /*** -> **/
 
                         /*** **/
-                        this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet.size(); /*** shapelet's length **/
+                        this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                         this.aVariables.firstTSDrawing = false;
                     }else{
@@ -1260,14 +1262,14 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
 //                System.out.println("drawTSTrace_horizontally_BottomChart() -> this.aVariables.firstTSDrawing: " + this.aVariables.firstTSDrawing);
-                if(this.aVariables.firstTSDrawing && this.aVariables.load_SPLet_YesOrNo){
+                if(this.aVariables.firstTSDrawing && this.aVariables.load_Shapelet_YesOrNo){
                     /***** Update to the latest shapelet ***/
 //                    System.out.println("Ever invoked");
                     this.aVariables.globalBestMatchSP = this.aVariables.globalStartPosition; /*** shapelet's start point **/
                     /*** -> **/
 
                     /*** **/
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentSPLet.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
@@ -1699,7 +1701,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
                 /**** Here needs a block to set the values of i & numPoints.
                  * In order to shift the trace, it can add additional zero points by two sides -> double: 0.0 ***/
-                if(this.aVariables.firstTSDrawing_linePlot && this.aVariables.load_SPLet_YesOrNo){
+                if(this.aVariables.firstTSDrawing_linePlot && this.aVariables.load_Shapelet_YesOrNo){
                     /*** -> **/
 
 //                    System.out.println("Ever invoked");

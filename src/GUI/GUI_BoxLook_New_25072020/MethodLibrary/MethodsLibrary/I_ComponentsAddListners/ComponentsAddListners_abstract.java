@@ -40,7 +40,7 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     /*** rewrite methods that need invoke outsides methods in other classes **/
 
     protected void setScale(double scale){
-        aSetScaleAndPosition_AllCharts.setScale(scale);
+//        aSetScaleAndPosition_AllCharts.setScale(scale);
     }
 
     protected void timeSeriesZoom(int value){
@@ -77,7 +77,7 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     }
 
     protected void stackModelChange(ActionEvent e){
-        aMajorMethods_Shapelet.SPLetCenterChartStackModelChange(e);
+        aMajorMethods_Shapelet.ShapeletCenterChartStackModelChange(e);
     }
 
     protected void dotLineSwitch(ActionEvent e){

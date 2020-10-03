@@ -75,7 +75,7 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.shapeletsRangeMaxTextField = aGUIComponents.shapeletsRangeMaxTextField;
         this.centerChartTSLabelTextField = aGUIComponents.centerChartTSLabelTextField;
         this.centerChartTSNumTextField = aGUIComponents.centerChartTSNumTextField;
-        this.centerChartSPLetNumTextField = aGUIComponents.centerChartSPLetNumTextField;
+        this.centerChartShapeletNumTextField = aGUIComponents.centerChartShapeletNumTextField;
         this.chartII_Shapelet_TextField = aGUIComponents.chartII_Shapelet_TextField;
         this.chartII_ShapeletLabel_TextField = aGUIComponents.chartII_ShapeletLabel_TextField;
         this.top_K_shapeletsTextField = aGUIComponents.top_K_shapeletsTextField;
@@ -89,8 +89,8 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.labelTextField = aGUIComponents.labelTextField;
         this.lblMultiChartTSClass = aGUIComponents.lblMultiChartTSClass;
         this.lblMultiChartTSNum = aGUIComponents.lblMultiChartTSNum;
-        this.lblMultiChartSPLetNum = aGUIComponents.lblMultiChartSPLetNum;
-        this.lblMultiChartSPLetClass = aGUIComponents.lblMultiChartSPLetClass;
+        this.lblMultiChartShapeletNum = aGUIComponents.lblMultiChartShapeletNum;
+        this.lblMultiChartShapeletClass = aGUIComponents.lblMultiChartShapeletClass;
         this.lblTopk = aGUIComponents.lblTopk;
         /*** initializeJTextArea --**/
         this.bspcoverInfoTextArea = aGUIComponents.bspcoverInfoTextArea;

@@ -17,7 +17,7 @@ public abstract class GUIComponents_declare_abstract{
     public JLabel lblZoomScale, lblHorizontallyMove, lblShapeletsNumSelector, lblMissingRatio,
             lblGapSizeRatio, lblImputation, eigenSeriesInterpolation, lblLabel_TS_List,
             lblLabel_shapelet_List, lblTimeseries, lblShapelet, lblStackmodel, lblDotLineSwitch, lblLogo, lblTopTenCharts, lblDOMInfo;
-    public JLabel[] lblMultiChartTSClass, lblMultiChartTSNum, lblMultiChartSPLetNum, lblMultiChartSPLetClass, lblTopk;
+    public JLabel[] lblMultiChartTSClass, lblMultiChartTSNum, lblMultiChartShapeletNum, lblMultiChartShapeletClass, lblTopk;
     /*** initializeJSpinner --**/
     public JSpinner spinner;
     /*** initializeJSlider --**/
@@ -28,7 +28,7 @@ public abstract class GUIComponents_declare_abstract{
     public JRadioButton radiobtnStackModelOn, radiobtnStackModelOff, radiobtnSwitchDot, radiobtnSwitchLine;
     /*** initializeJTextField --**/
     public JTextField iterationTextField, alphabetSizeTextField, timeSeriesRangeMinTextField, timeSeriesRangeMaxTextField, shapeletsRangeMinTextField, shapeletsRangeMaxTextField,
-            centerChartTSLabelTextField, centerChartTSNumTextField, centerChartSPLetNumTextField, chartII_Shapelet_TextField, chartII_ShapeletLabel_TextField,
+            centerChartTSLabelTextField, centerChartTSNumTextField, centerChartShapeletNumTextField, chartII_Shapelet_TextField, chartII_ShapeletLabel_TextField,
             top_K_shapeletsTextField, labelShapeletTextField, datasetTextField, noPointsTextField, numOfShapeletsTextField, distanceSTTextField, distanceSTTextField_II, pcoverTextField, labelTextField;
     /*** initializeJTextArea --**/
     public JTextArea bspcoverInfoTextArea, textAreaInOnChart_I;

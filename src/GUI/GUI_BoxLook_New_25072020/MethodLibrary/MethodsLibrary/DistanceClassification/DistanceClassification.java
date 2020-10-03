@@ -38,8 +38,8 @@ public class DistanceClassification extends DistanceClassification_abstract {
         DataSet datasetLabeled;
         ArrayList<Integer> TS_labelList = this.aVariables.TS_labelArryList;
 
-        ArrayList<Double>[] aShapeletDouble = this.aVariables.SPLet_double;
-        ArrayList<Integer> shapelet_Labellist = this.aVariables.SPLet_labelArrayList;
+        ArrayList<Double>[] aShapeletDouble = this.aVariables.Shapelet_double;
+        ArrayList<Integer> shapelet_Labellist = this.aVariables.Shapelet_labelArrayList;
 
         double minDistance;
         double distance;
@@ -160,8 +160,8 @@ public class DistanceClassification extends DistanceClassification_abstract {
         DataSet datasetLabeled;
         ArrayList<Integer> TS_labelList = this.aVariables.TS_labelArryList;
 
-        ArrayList<Double> [] aShapeletDouble = this.aVariables.SPLet_double;
-        ArrayList<Integer> shapelet_Labellist = this.aVariables.SPLet_labelArrayList;
+        ArrayList<Double> [] aShapeletDouble = this.aVariables.Shapelet_double;
+        ArrayList<Integer> shapelet_Labellist = this.aVariables.Shapelet_labelArrayList;
 
         double[] distance = new double[shapelet_Labellist.size()];
         double[] minDistance = new double[shapelet_Labellist.size()];
@@ -272,8 +272,8 @@ public class DistanceClassification extends DistanceClassification_abstract {
         DataSet datasetLabeled;
         ArrayList<Integer> TS_labelList = this.aVariables.TS_labelArryList;
 
-        ArrayList<Double>[] aShapeletDouble = this.aVariables.SPLet_double;
-        ArrayList<Integer> shapelet_Labellist = this.aVariables.SPLet_labelArrayList;
+        ArrayList<Double>[] aShapeletDouble = this.aVariables.Shapelet_double;
+        ArrayList<Integer> shapelet_Labellist = this.aVariables.Shapelet_labelArrayList;
 
         if(TS_labelList.size()!=shapelet_Labellist.size()){
             Logger logger
@@ -321,14 +321,14 @@ public class DistanceClassification extends DistanceClassification_abstract {
 
         //
         int initialLabel = -1;
-        for(int aSPLet_Label: shapelet_Labellist){
+        for(int aShapelet_Label: shapelet_Labellist){
             //
-            initialLabel = aSPLet_Label;
+            initialLabel = aShapelet_Label;
             ArrayList<ArrayList<double[]>> outterArr_ = new ArrayList<>();
             //
-            int SPlet_count = 0;
+            int Shapelet_count = 0;
             for(ArrayList<Double> aShapelet: aShapeletDouble){
-                if(aSPLet_Label != aShapelet.get(labelIndex).intValue()){
+                if(aShapelet_Label != aShapelet.get(labelIndex).intValue()){
                     continue;
                 }else{
                     ArrayList<double[]> innerArr_ = new ArrayList<>();
@@ -354,9 +354,9 @@ public class DistanceClassification extends DistanceClassification_abstract {
                     }
                     aQuickSort.sort(outterArr, 0, TScount - 1);
 //                    aQuickSort.printArray(outterArr);
-//                    System.out.println(" " + SPlet_count + "--- ");
-//                    System.out.println("\n" + "-------------------- " + SPlet_count);
-                    SPlet_count++;
+//                    System.out.println(" " + Shapelet_count + "--- ");
+//                    System.out.println("\n" + "-------------------- " + Shapelet_count);
+                    Shapelet_count++;
                     // add elements back to myArrayList
                     for (double[] arr : outterArr) {
                         innerArr_.add(arr);
@@ -372,7 +372,7 @@ public class DistanceClassification extends DistanceClassification_abstract {
                 // log messages using log(Level level, String msg)
                 logger.log(Level.WARNING, "Shapelet labels has not been initialized. Error I. ");
             }else{
-                distance_all.set(aSPLet_Label, outterArr_);
+                distance_all.set(aShapelet_Label, outterArr_);
             }
         }
 

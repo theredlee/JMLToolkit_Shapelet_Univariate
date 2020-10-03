@@ -32,9 +32,16 @@ public abstract class MajorMethods_Shapelet_abstract extends MajorMethods_Shapel
         this.aMajorMethods_Timeseries = aMajorMethods_Timeseries;
 //        this.aMajorMethods_Shapelet = aMajorMethods_Shapelet;
         this.aSetInfo_Charts = aSetInfo_Charts;
-//        this.aSetScaleAndPosition_AllCharts = aSetScaleAndPosition_AllCharts;
+        this.aSetScaleAndPosition_AllCharts = aSetScaleAndPosition_AllCharts;
         this.aClear_TracesAndCharts = aClear_TracesAndCharts;
 //        this.aSortData = aSortData;
+    }
+
+    protected void setScale(){
+        aSetScaleAndPosition_AllCharts.setSlideZoomDefaultValue();
+        aSetScaleAndPosition_AllCharts.setScaleAndPosition();
+//        aSetScaleAndPosition_AllCharts.spinnerSetScale();
+        aSetScaleAndPosition_AllCharts.centerChartSetRange();
     }
 
     protected void setInfomationOnChart(){

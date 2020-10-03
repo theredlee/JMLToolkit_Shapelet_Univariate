@@ -83,7 +83,7 @@ public class SSHFile extends SSHFile_abstract {
             //
             try {
                 String remoteDirShapelet = "/home/comp/shiwenli/BSPCOVER/shapeletOutput";
-                String localDir = this.root + "/datasets/Grace_dataset/v_4/shapelet/shapelet&weight";
+                String localDir = this.root + "/datasets/Grace_dataset/v_5/shapelet/shapelet&weight";
 //                String localDir = this.shapeletDirectory.getPath();
                 recursiveFolderDownload(remoteDirShapelet, localDir);
             }catch (Exception e){
@@ -211,10 +211,10 @@ public class SSHFile extends SSHFile_abstract {
         String path = this.root + "/datasets/Parameter/parameter.txt";
 
         int maxEpochs = 1000;
-        int alphabetSize = 5;
+        int alphabetSize = 6;
         double stepRatio = 0.5; /*** (int) (stepRatio * Tp.getDimColumns()); **/
         double paaRatio = 0.5;
-        int pcover = 2; /*** amount - shapelets **/
+        int pcover = 1; /*** amount - shapelets **/
 
         try {
             if(!this.aGUIComponents.iterationTextField.getText().equalsIgnoreCase("default")){

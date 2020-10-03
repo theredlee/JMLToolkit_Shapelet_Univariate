@@ -597,13 +597,13 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        centerChartSPLetNumTextField = new JTextField();
-        centerChartSPLetNumTextField.setText("Shapelet No.:");
-        centerChartSPLetNumTextField.setEditable(false);
-        centerChartSPLetNumTextField.setBounds(785-405,35,125, 15);
-        centerChartSPLetNumTextField.setBorder(null);
-        centerChartSPLetNumTextField.setFont(font);
-        centerChartSPLetNumTextField.setForeground(Color.GREEN);
+        centerChartShapeletNumTextField = new JTextField();
+        centerChartShapeletNumTextField.setText("Shapelet No.:");
+        centerChartShapeletNumTextField.setEditable(false);
+        centerChartShapeletNumTextField.setBounds(785-405,35,125, 15);
+        centerChartShapeletNumTextField.setBorder(null);
+        centerChartShapeletNumTextField.setFont(font);
+        centerChartShapeletNumTextField.setForeground(Color.GREEN);
 
 
         /***  -------------------------------- **/
@@ -826,7 +826,7 @@ public class GUIComponents extends GUIComponents_abstract {
         layeredPane_CenterChart.add(centerChartPanel, Integer.valueOf(0));
         layeredPane_CenterChart.add(centerChartTSLabelTextField, Integer.valueOf(1));
         layeredPane_CenterChart.add(centerChartTSNumTextField, Integer.valueOf(1));
-        layeredPane_CenterChart.add(centerChartSPLetNumTextField, Integer.valueOf(1));
+        layeredPane_CenterChart.add(centerChartShapeletNumTextField, Integer.valueOf(1));
 
 
         /***  -------------------------------- **/

@@ -20,12 +20,13 @@ public abstract class Variables_declare_abstract {
     public TSLook aTSLook;
     public ShapeletLook aShapeletLook;
     public double[] minMaxTimeSeriesDataset;
+    public double[] minMaxShapeletDataset;
     // public protected DataSet shapeletSet;
     // SP: shapelet, TS: time series
-    public ArrayList<Double>[] SPLet_double, SPLet_withCurrentLabel, SPLet_weight;
-    public ArrayList<ArrayList<ArrayList<double[]>>> SPLet_toAllTS_distances;
-    public ArrayList<Double> currentSPLet;
-    public ArrayList<Integer> SPLet_labelArrayList, SPLet_labelCountArrayList;
+    public ArrayList<Double>[] Shapelet_double, Shapelet_withCurrentLabel, Shapelet_weight;
+    public ArrayList<ArrayList<ArrayList<double[]>>> Shapelet_toAllTS_distances;
+    public ArrayList<Double> currentShapelet;
+    public ArrayList<Integer> Shapelet_labelArrayList, Shapelet_labelCountArrayList;
     public ArrayList<Integer> TS_labelArryList;
     /*** Charts **/
     public Chart2D centerChart, topRightChart, bottomChart;
@@ -37,10 +38,10 @@ public abstract class Variables_declare_abstract {
     public ITrace2D interpolatedTSMark_centerChart;
     public ITrace2D interpolatedTimeSeriesTrace;
     /*** Shapelet --- **/
-    public ITrace2D SPLet_mark_centerChart, SPLet_mark_topRightChart;
-    public ITrace2D SPLet_trace_centerChart, SPLet_trace_topRightChart;
+    public ITrace2D Shapelet_mark_centerChart, Shapelet_mark_topRightChart;
+    public ITrace2D Shapelet_trace_centerChart, Shapelet_trace_topRightChart;
 
-    public boolean initializeTS, load_SPLet_YesOrNo;
+    public boolean initializeTS, load_Shapelet_YesOrNo;
     public boolean initialize_TS_list, setting_TS_listModal;
     public boolean firstTSDrawing; /*** A sign for the first TS when a new shapelet is occurring **/
     public boolean firstTSDrawing_linePlot;
@@ -49,11 +50,11 @@ public abstract class Variables_declare_abstract {
     public double centerChartXL, centerChartXR, centerChartYU, centerChartYD;
     public double oldScale, NewScale;
     public static double centerChartWidth;
-    public Set<Integer> SPLet_container; // Label: [i][], shapelet: [][k]
+    public Set<Integer> Shapelet_container; // Label: [i][], shapelet: [][k]
     public int globalStartPosition;
     public int globalBestMatchSP, globalBestMatchEP;
     public int lastTSIndex; // Default value = 0
-    public int lastSPLetIndex; // Default value = 0
+    public int lastShapeletIndex; // Default value = 0
     public int bottomTSTraceCount;
     public String root, shapeletSubroot;
 }

@@ -11,7 +11,7 @@ public class Variables extends Variables_abstract {
 
     public void initializeVariables(){
         this.initializeTS = true;
-        this.load_SPLet_YesOrNo = false;
+        this.load_Shapelet_YesOrNo = false;
         this.initialize_TS_list = true;
         this.setting_TS_listModal = false;
         this.firstTSDrawing = true;
@@ -20,6 +20,7 @@ public class Variables extends Variables_abstract {
         this.switchDot = true;
 
         this.minMaxTimeSeriesDataset = new double[2];
+        this.minMaxShapeletDataset = new double[2];
         this.globalStartPosition = 0;
         this.globalBestMatchSP = 0;
         this.globalBestMatchEP = 0;

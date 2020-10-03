@@ -42,9 +42,9 @@ public class SetInfo_Charts extends SetInfo_Charts_abstract {
             this.aGUIComponents.centerChartTSLabelTextField.setText("Class Label No.: " + ((int) this.aVariables.dataset_withCurrentLabel.instances.get(selectedTSIndex).target));
             this.aGUIComponents.centerChartTSNumTextField.setText("Time Series No.: " + selectedTSIndex);
 
-            if(this.aVariables.load_SPLet_YesOrNo){
+            if(this.aVariables.load_Shapelet_YesOrNo){
                 if(!this.aGUIComponents.shapeletJList.isSelectionEmpty()){
-                    this.aGUIComponents.centerChartSPLetNumTextField.setText("Shapelet No.: " + this.aGUIComponents.shapeletJList.getSelectedValue().toString());
+                    this.aGUIComponents.centerChartShapeletNumTextField.setText("Shapelet No.: " + this.aGUIComponents.shapeletJList.getSelectedValue().toString());
                     this.aGUIComponents.chartII_Shapelet_TextField.setText("Shapelet No.: " + this.aGUIComponents.shapeletJList.getSelectedValue().toString());
                 }
             }
