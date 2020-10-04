@@ -12,7 +12,7 @@ import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 public abstract class SetScaleAndPosition_AllCharts_declare_abstract {
     protected GUIComponents aGUIComponents;
     protected Variables aVariables;
-    protected boolean firstCall;
+    protected boolean firstCallTimeseries_centerChart, firstCallTimeseries_bottomChart, firstCallShapelet;
 
     /*** No self **/
     protected ComponentsAddListners aComponentsAddListners;
@@ -22,4 +22,6 @@ public abstract class SetScaleAndPosition_AllCharts_declare_abstract {
 //    protected SetScaleAndPosition_AllCharts aSetScaleAndPosition_AllCharts;
     protected Clear_TracesAndCharts aClear_TracesAndCharts;
     protected SortData aSortData;
+
+    protected double globalTimeseriesMin, globalTimeseriesMax;
 }

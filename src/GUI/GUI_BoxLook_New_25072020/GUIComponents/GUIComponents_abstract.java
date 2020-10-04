@@ -45,7 +45,8 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         /*** initializeJSpinner --**/
         this.spinner = aGUIComponents.spinner;
         /*** initializeJSlider--**/
-        this.zoomSlider = aGUIComponents.zoomSlider;
+        this.zoomSliderCenterChart = aGUIComponents.zoomSliderCenterChart;
+        this.zoomSliderBottomChart = aGUIComponents.zoomSliderBottomChart;
         /*** initializeJButton --**/
         this.btnZoomIn = aGUIComponents.btnZoomIn;
         this.btnZoomOut = aGUIComponents.btnZoomOut;

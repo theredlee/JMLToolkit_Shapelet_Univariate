@@ -16,7 +16,11 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
 
     public void initialize(GUIComponents aGUIComponents, Variables aVariables){
         initializeReferenceParameters(aGUIComponents, aVariables);
-        firstCall = true;
+        firstCallTimeseries_centerChart = true;
+        firstCallTimeseries_bottomChart = true;
+        firstCallShapelet = true;
+        globalTimeseriesMin = Double.POSITIVE_INFINITY;
+        globalTimeseriesMax = Double.NEGATIVE_INFINITY;
     }
 
     /*---------------------------------------------------------------
@@ -40,17 +44,17 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
 
     /*---------------------------------------------------------------
 
-     **                    timeSeriesZoom()                        **
+     **              timeSeriesSlideZoomCenterChart()              **
 
      ---------------------------------------------------------------*/
-    public void timeSeriesSlideZoom(int val){
-        if(firstCall){
-            firstCall = false;
+    public void timeSeriesSlideZoomCenterChart(int val){
+        if(firstCallTimeseries_centerChart){
+            firstCallTimeseries_centerChart = false;
             this.aVariables.centerChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
         }
 
-        int minBound = this.aGUIComponents.zoomSlider.getMinimum();
-        int maxBound = this.aGUIComponents.zoomSlider.getMaximum();
+        int minBound = this.aGUIComponents.zoomSliderCenterChart.getMinimum();
+        int maxBound = this.aGUIComponents.zoomSliderCenterChart.getMaximum();
 
         if(val>=maxBound){
             return; // Prevent approaching the upper bound since ratio = 0 when val = 10
@@ -79,10 +83,75 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
 //        System.out.println("minMax: " + minBound + ", " + maxBound);
     }
 
+    /*---------------------------------------------------------------
+
+     **              timeSeriesSlideZoomBottomChart()              **
+
+     ---------------------------------------------------------------*/
+    public void timeSeriesSlideZoomBottomChart(int val){
+        if(firstCallTimeseries_bottomChart){
+            firstCallTimeseries_bottomChart = false;
+            this.aVariables.bottomChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
+        }
+
+        int minBound = this.aGUIComponents.zoomSliderBottomChart.getMinimum();
+        int maxBound = this.aGUIComponents.zoomSliderBottomChart.getMaximum();
+
+        if(val>=maxBound){
+            return; // Prevent approaching the upper bound since ratio = 0 when val = 10
+        }
+
+        double ratio = 1 - val*1.0/(maxBound-minBound);
+        double powRatio = Math.pow(ratio, val+1); // val starts from 0
+        double[] minMaxTimeseries = this.aVariables.minMaxTimeSeriesDataset;
+        double aMin;
+        double aMax;
+
+        if(minMaxTimeseries[0]<globalTimeseriesMin){
+            globalTimeseriesMin = minMaxTimeseries[0];
+            aMin = minMaxTimeseries[0]-1; // Leave some spaces on the bottom
+        }else{
+            aMin = globalTimeseriesMin-1;
+        }
+
+        if(minMaxTimeseries[1]>globalTimeseriesMax){
+            globalTimeseriesMax = minMaxTimeseries[1];
+            aMax = minMaxTimeseries[1]+1; // Leave some spaces on the bottom
+        }else{
+            aMax = globalTimeseriesMax+1; // Leave some spaces on the bottom
+        }
+
+        this.aVariables.bottomChart.getAxisY().setRange(new Range(aMin, aMax*powRatio));
+        System.out.println("minMax: " + minBound + ", " + maxBound);
+        System.out.println("val: " + val);
+    }
+
     public void setSlideZoomDefaultValue(){
-        int minBound = this.aGUIComponents.zoomSlider.getMinimum();
-        this.aGUIComponents.zoomSlider.setValue(minBound);
-        timeSeriesSlideZoom(minBound);
+        int minBound = this.aGUIComponents.zoomSliderCenterChart.getMinimum();
+
+        this.aGUIComponents.zoomSliderCenterChart.setValue(minBound);
+        this.aGUIComponents.zoomSliderBottomChart.setValue(minBound);
+        timeSeriesSlideZoomCenterChart(minBound);
+        timeSeriesSlideZoomBottomChart(minBound);
+    }
+
+    public void shapeletToprightChartUpdateScale() {
+        if(firstCallShapelet){
+            firstCallShapelet = false;
+            this.aVariables.topRightChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
+        }
+
+        double[] minMaxShapelet = this.aVariables.minMaxShapeletDataset;
+        double aMin;
+        double aMax;
+
+        aMin = minMaxShapelet[0]*0.99; // Leave some spaces on the bottom
+
+        aMax = minMaxShapelet[1]*1.01; // Leave some spaces on the bottom
+
+//        System.out.println("aMin:" + minMaxShapelet[0]);
+
+        this.aVariables.topRightChart.getAxisY().setRange(new Range(aMin, aMax));
     }
 
     /*---------------------------------------------------------------
@@ -176,6 +245,11 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
 
     public void bottomChartSetRange(){
         this.aVariables.bottomChart.getAxisX().setRange(new Range(this.aVariables.centerChartXL, this.aVariables.centerChartXR));
+    }
+
+    public void resetGlobalTimeseriesMinMax(){
+        globalTimeseriesMin = Double.POSITIVE_INFINITY;
+        globalTimeseriesMax = Double.NEGATIVE_INFINITY;
     }
 
     /*** ---------------------------------------------------------------------------------------------------------* */

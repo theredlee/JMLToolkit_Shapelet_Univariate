@@ -13,10 +13,10 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.aShapeletLook = aVariables.aShapeletLook;
         this.minMaxTimeSeriesDataset = aVariables.minMaxTimeSeriesDataset;
         this.minMaxShapeletDataset = aVariables.minMaxShapeletDataset;
-        this.Shapelet_double = aVariables.Shapelet_double;
-        this.Shapelet_withCurrentLabel = aVariables.Shapelet_withCurrentLabel;
+        this.Shapelet_double_firstIndexIsLable = aVariables.Shapelet_double_firstIndexIsLable;
+        this.Shapelet_withCurrentLabel_firstIndexIsLable = aVariables.Shapelet_withCurrentLabel_firstIndexIsLable;
         this.Shapelet_weight = aVariables.Shapelet_weight;
-        this.currentShapelet = aVariables.currentShapelet;
+        this.currentShapelet_firstIndexIsLable = aVariables.currentShapelet_firstIndexIsLable;
         this.Shapelet_labelArrayList = aVariables.Shapelet_labelArrayList;
         this.Shapelet_labelCountArrayList = aVariables.Shapelet_labelCountArrayList;
         this.TS_labelArryList = aVariables.TS_labelArryList;
@@ -35,6 +35,7 @@ public abstract class Variables_abstract extends Variables_declare_abstract {
         this.Shapelet_trace_topRightChart = aVariables.Shapelet_trace_topRightChart;
         this.initializeTS = aVariables.initializeTS;
         this.load_Shapelet_YesOrNo = aVariables.load_Shapelet_YesOrNo;
+        this.load_Timeseries_YesOrNo = aVariables.load_Timeseries_YesOrNo;
         this.setting_TS_listModal = aVariables.setting_TS_listModal;
         this.firstTSDrawing = aVariables.firstTSDrawing;
         this.firstTSDrawing_linePlot = aVariables.firstTSDrawing_linePlot;

@@ -23,9 +23,9 @@ public abstract class Variables_declare_abstract {
     public double[] minMaxShapeletDataset;
     // public protected DataSet shapeletSet;
     // SP: shapelet, TS: time series
-    public ArrayList<Double>[] Shapelet_double, Shapelet_withCurrentLabel, Shapelet_weight;
+    public ArrayList<Double>[] Shapelet_double_firstIndexIsLable, Shapelet_withCurrentLabel_firstIndexIsLable, Shapelet_weight;
     public ArrayList<ArrayList<ArrayList<double[]>>> Shapelet_toAllTS_distances;
-    public ArrayList<Double> currentShapelet;
+    public ArrayList<Double> currentShapelet_firstIndexIsLable;
     public ArrayList<Integer> Shapelet_labelArrayList, Shapelet_labelCountArrayList;
     public ArrayList<Integer> TS_labelArryList;
     /*** Charts **/
@@ -41,7 +41,7 @@ public abstract class Variables_declare_abstract {
     public ITrace2D Shapelet_mark_centerChart, Shapelet_mark_topRightChart;
     public ITrace2D Shapelet_trace_centerChart, Shapelet_trace_topRightChart;
 
-    public boolean initializeTS, load_Shapelet_YesOrNo;
+    public boolean initializeTS, load_Shapelet_YesOrNo, load_Timeseries_YesOrNo;
     public boolean initialize_TS_list, setting_TS_listModal;
     public boolean firstTSDrawing; /*** A sign for the first TS when a new shapelet is occurring **/
     public boolean firstTSDrawing_linePlot;

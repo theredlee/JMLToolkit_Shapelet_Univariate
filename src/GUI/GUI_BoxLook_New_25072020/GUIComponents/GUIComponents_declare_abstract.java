@@ -21,7 +21,7 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJSpinner --**/
     public JSpinner spinner;
     /*** initializeJSlider --**/
-    public JSlider zoomSlider;
+    public JSlider zoomSliderCenterChart, zoomSliderBottomChart;
     /*** initializeJButton --**/
     public JButton btnZoomIn, btnZoomOut, btnMoveLeft, btnMoveRight, btnSetTsIdRange, btnSetShptIdRange, btnSortedByLenShptIdASC, btnSortedByLenShptIdDESC, btnClearAllTraces, btnLoadDataset, btnLoadShapelet, btnSelectTop_K_Shapelets, btnRunBspcover, btnInvokeDT;
     /*** initializeJRadioButton --**/

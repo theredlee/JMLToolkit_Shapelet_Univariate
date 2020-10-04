@@ -10,7 +10,6 @@ import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.II_MajorMethods
 import GUI.GUI_BoxLook_New_25072020.MethodLibrary.MethodsLibrary.IV_SetInfo_Charts.SetInfo_Charts;
 import GUI.GUI_BoxLook_New_25072020.Variables.Variables;
 import Looks.ShapeletLook;
-import Utilities.GlobalValues;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.IAxis;
 import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
@@ -117,15 +116,15 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                             while ((line = brNum.readLine()) != null) {
                                 lineNum++;
                             }
-                            this.aVariables.Shapelet_double = new ArrayList [lineNum];
+                            this.aVariables.Shapelet_double_firstIndexIsLable = new ArrayList [lineNum];
                             try (BufferedReader br = Files.newBufferedReader(Paths.get(shapeletFile.getAbsolutePath()))) {
                                 // read line by line
                                 int i=0;
                                 while ((line = br.readLine()) != null) {
                                     shapeletWeightString = line.split(",");
-                                    this.aVariables.Shapelet_double[i] = new ArrayList<Double>();
+                                    this.aVariables.Shapelet_double_firstIndexIsLable[i] = new ArrayList<Double>();
                                     for(int k=0; k<shapeletWeightString.length; k++){
-                                        this.aVariables.Shapelet_double[i].add(Double.parseDouble(shapeletWeightString[k]));
+                                        this.aVariables.Shapelet_double_firstIndexIsLable[i].add(Double.parseDouble(shapeletWeightString[k]));
                                     }
                                     i++;
                                 }
@@ -175,7 +174,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                     }
                 }
                 /*** Transfer - shapelet **/
-                shapeletHorizontaSegmentTransfer(this.aVariables.Shapelet_double);
+                shapeletHorizontaSegmentTransfer(this.aVariables.Shapelet_double_firstIndexIsLable);
             }
             else {
                 System.err.println("Cannot open data directory!");
@@ -189,10 +188,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 
         // set the no of points text field from any of the trajectories
         this.aGUIComponents.numOfShapeletsTextField.setVisible(true);
-        this.aGUIComponents.numOfShapeletsTextField.setText("Num of shapelets: " + this.aVariables.Shapelet_double.length );
+        this.aGUIComponents.numOfShapeletsTextField.setText("Num of shapelets: " + this.aVariables.Shapelet_double_firstIndexIsLable.length );
         this.aGUIComponents.shapeletJList.setSelectedIndex(0);
         this.aGUIComponents.shapeletsRangeMinTextField.setText(String.valueOf(0));
-        this.aGUIComponents.shapeletsRangeMaxTextField.setText(String.valueOf(this.aVariables.Shapelet_double.length - 1));
+        this.aGUIComponents.shapeletsRangeMaxTextField.setText(String.valueOf(this.aVariables.Shapelet_double_firstIndexIsLable.length - 1));
         changeloadShapeletYesOrNoToTrue(); /*** Overwrite loadShapeletYesOrNo from 'false' to 'true' **/
         // Create an independent shapelet chart before invoke the following methods and mark traces
         createChartsAndTraces();
@@ -233,8 +232,8 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         int labelPosIndex = 0;
         ArrayList<Integer> shapeletLabelArrayList = new ArrayList<> ();
         ArrayList<Integer> shapeletLabelCountArrayList = new ArrayList<> ();
-        for(int i = 0; i < this.aVariables.Shapelet_double.length; i++){
-            int label = this.aVariables.Shapelet_double[i].get(labelPosIndex).intValue();
+        for(int i = 0; i < this.aVariables.Shapelet_double_firstIndexIsLable.length; i++){
+            int label = this.aVariables.Shapelet_double_firstIndexIsLable[i].get(labelPosIndex).intValue();
             if(!shapeletLabelArrayList.contains(label)){ // If shapeletLabelArrayList doesn't contain this label
                 shapeletLabelArrayList.add(label);
                 shapeletLabelCountArrayList.add(1); // Add count 1 for a new index in shapeletLabelCountArrayList
@@ -269,17 +268,17 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         int size = this.aVariables.Shapelet_labelCountArrayList.get(this.aVariables.Shapelet_labelArrayList.indexOf(currentSelectedShapeletLabel));
         /***** ***/
         // Array list of array list
-        ArrayList<Double> [] shapeletsWithCurrentLabelArray = new ArrayList [size];
+        ArrayList<Double> [] shapeletsWithCurrentLabelArray_firstIndexIsLable = new ArrayList [size];
         int myIndex = 0;
-        for(int i = 0; i<this.aVariables.Shapelet_double.length; i++){
-            int label = this.aVariables.Shapelet_double[i].get(labelPosIndex).intValue();
+        for(int i = 0; i<this.aVariables.Shapelet_double_firstIndexIsLable.length; i++){
+            int label = this.aVariables.Shapelet_double_firstIndexIsLable[i].get(labelPosIndex).intValue();
             if(label == currentSelectedShapeletLabel){
-                shapeletsWithCurrentLabelArray[myIndex] = this.aVariables.Shapelet_double[i];
+                shapeletsWithCurrentLabelArray_firstIndexIsLable[myIndex] = this.aVariables.Shapelet_double_firstIndexIsLable[i];
                 myIndex++;
             }
         }
         // Assign it to the global value
-        this.aVariables.Shapelet_withCurrentLabel = shapeletsWithCurrentLabelArray;
+        this.aVariables.Shapelet_withCurrentLabel_firstIndexIsLable = shapeletsWithCurrentLabelArray_firstIndexIsLable;
         /*** **/
     }
     /*---------------------------------------------------------------
@@ -297,7 +296,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             shapeletJListModel.addElement(String.valueOf(k));
         }
         this.aGUIComponents.shapeletsRangeMinTextField.setText(String.valueOf(0));
-        this.aGUIComponents.shapeletsRangeMaxTextField.setText(String.valueOf(this.aVariables.Shapelet_withCurrentLabel.length - 1));
+        this.aGUIComponents.shapeletsRangeMaxTextField.setText(String.valueOf(this.aVariables.Shapelet_withCurrentLabel_firstIndexIsLable.length - 1));
         this.aGUIComponents.shapeletJList.setModel(shapeletJListModel);
         // set the no of points text field from any of the trajectories
         this.aGUIComponents.numOfShapeletsTextField.setVisible(true);
@@ -313,7 +312,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             if(!this.aGUIComponents.shapeletJList.isSelectionEmpty()){
                 int selectedshapeletIndex = Integer.parseInt(this.aGUIComponents.shapeletJList.getSelectedValue().toString());
                 this.aVariables.lastShapeletIndex = selectedshapeletIndex;
-                this.aVariables.currentShapelet = this.aVariables.Shapelet_withCurrentLabel[selectedshapeletIndex];
+                this.aVariables.currentShapelet_firstIndexIsLable = this.aVariables.Shapelet_withCurrentLabel_firstIndexIsLable[selectedshapeletIndex];
                 return selectedshapeletIndex;
             }
         }catch (NullPointerException e){
@@ -353,7 +352,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     **                     selectTop_K_Shapelets()                    **
     ---------------------------------------------------------------*/
     public void selectTopKShapelets(){
-        if(this.aVariables.Shapelet_double == null){
+        if(this.aVariables.Shapelet_double_firstIndexIsLable == null){
             JOptionPane.showMessageDialog(this.aGUIComponents.frmTimeSeriesLayerFirst,
                     "Load shapelets first!");
             return;
@@ -376,6 +375,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     private void changeloadShapeletYesOrNoToTrue(){
         this.aVariables.load_Shapelet_YesOrNo = true;
     }
+
     /*---------------------------------------------------------------
     **                     createChart_TopRightChart()                           **
     ---------------------------------------------------------------*/
@@ -385,8 +385,8 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         this.aGUIComponents.topRightPanel.add(this.aVariables.topRightChart);
         this.aVariables.topRightChart.setSize( this.aGUIComponents.topRightPanel.getSize() );
         this.aVariables.topRightChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
-        this.aVariables.topRightChart.getAxisX().setRange( new Range(-10, this.aVariables.dataset_withCurrentLabel.numFeatures+10) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
-        this.aVariables.topRightChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-10, this.aVariables.dataset_withCurrentLabel.numFeatures+10)));
+        this.aVariables.topRightChart.getAxisX().setRange( new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
+        this.aVariables.topRightChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1)));
         this.aVariables.topRightChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
 
 //        this.aVariables.shapeletTrace_topRightChart = new Trace2DLtd(null);
@@ -399,7 +399,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         /*** Add the initial shapelet to centerChart_I as well ***/
 //        this.aVariables.shapeletTrace_centerChart = new Trace2DLtd(null);
         this.aVariables.Shapelet_trace_centerChart = new Trace2DLtd(null);
-        this.aVariables.Shapelet_trace_centerChart.setTracePainter(new TracePainterDisc(3));
+        this.aVariables.Shapelet_trace_centerChart.setTracePainter(new TracePainterDisc(1));
         this.aVariables.Shapelet_trace_centerChart.setStroke(new BasicStroke(3));
         this.aVariables.Shapelet_trace_centerChart.setColor(new Color(255, 77, 132));
         this.aVariables.centerChart.addTrace(this.aVariables.Shapelet_trace_centerChart);
@@ -451,7 +451,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                 return;
             }
             this.aGUIComponents.labelShapeletTextField.setVisible(true);
-            this.aGUIComponents.labelShapeletTextField.setText("Shapelet Length: " + (this.aVariables.currentShapelet.size()-1));
+            this.aGUIComponents.labelShapeletTextField.setText("Shapelet Length: " + (this.aVariables.currentShapelet_firstIndexIsLable.size()-1));
             //            drawShapeletTrace_TopRightChart();
 //            drawShapeletTrace_CenterChart();
             /*** Horizontal dot plot **/ /*** Horizontal line plot **/
@@ -720,7 +720,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                     if(index==this.aGUIComponents.shapeletJList.getSelectedIndex()){ //Avoid plot duplicate
                         continue;
                     }
-                    ArrayList<Double> tempShapelet = this.aVariables.Shapelet_withCurrentLabel[index];
+                    ArrayList<Double> tempShapelet = this.aVariables.Shapelet_withCurrentLabel_firstIndexIsLable[index];
                     getShortestDistance(tempShapelet);
 
                     shapeletLineDrawStack(tempShapelet); // both center chart and top right chart
@@ -743,10 +743,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         setScale();
         this.aVariables.Shapelet_trace_centerChart.removeAllPoints();
 
-        if(this.aVariables.currentShapelet != null){
-            System.out.println("Shapelet length: " + (this.aVariables.currentShapelet.size()-1));
+        if(this.aVariables.currentShapelet_firstIndexIsLable != null){
+//            System.out.println("Shapelet length: " + (this.aVariables.currentShapelet.size()-1));
             int labelIndex = 0;
-            if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+            if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                 this.aVariables.Shapelet_trace_centerChart.setColor(new Color(255, 51, 153));
             }else{
                 this.aVariables.Shapelet_trace_centerChart.setColor(new Color(51, 153, 255));
@@ -757,9 +757,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             this.aGUIComponents.distanceSTTextField.setText("distance TS: " + String.format("%.5g%n", distanceBetweenST));
             //System.out.println("startPosition "+startPosition);
             int lblDiscardIndex = 1;
-            for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+            for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet_firstIndexIsLable.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
                 // therefore we need to a label index discard at first
-                this.aVariables.Shapelet_trace_centerChart.addPoint((startPosition+i), this.aVariables.currentShapelet.get(i));
+                this.aVariables.Shapelet_trace_centerChart.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i));
             }
         }
     }
@@ -772,9 +772,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     public void drawShapeletTraceTopRightChart(){
         this.aVariables.Shapelet_trace_topRightChart.removeAllPoints();
 
-        if(this.aVariables.currentShapelet != null){
+        if(this.aVariables.currentShapelet_firstIndexIsLable != null){
             int labelIndex = 0;
-            if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+            if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                 this.aVariables.Shapelet_trace_topRightChart.setColor(new Color(255, 51, 153));
             }else{
                 this.aVariables.Shapelet_trace_topRightChart.setColor(new Color(51, 153, 255));
@@ -782,9 +782,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             /*** No need to calculate distance again, the center chart has got it. **/
             int startPosition = this.aVariables.globalStartPosition;
             int lblDiscardIndex = 1;
-            for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+            for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet_firstIndexIsLable.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
                 // therefore we need to a label index discard at first
-                this.aVariables.Shapelet_trace_topRightChart.addPoint((startPosition+i), this.aVariables.currentShapelet.get(i));
+                this.aVariables.Shapelet_trace_topRightChart.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i));
             }
         }
     }
@@ -799,20 +799,20 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                 this.aLocalLineShapeletTrace_center.setStroke(new BasicStroke(2));
 
                 int labelIndex = 0;
-                if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+                if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                     this.aLocalLineShapeletTrace_center.setColor(new Color(51, 153, 255));
                 }else{
                     this.aLocalLineShapeletTrace_center.setColor(new Color(255, 51, 153));
                 }
 
-                if(this.aVariables.currentShapelet != null){
+                if(this.aVariables.currentShapelet_firstIndexIsLable != null){
                     /*** No need to calculate distance again, the center chart has got it. **/
                     int startPosition = this.aVariables.globalStartPosition;
 
                     int lblDiscardIndex = 1;
-                    for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+                    for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet_firstIndexIsLable.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
                         // therefore we need to a label index discard at first
-                        this.aLocalLineShapeletTrace_center.addPoint((startPosition+i), this.aVariables.currentShapelet.get(i));
+                        this.aLocalLineShapeletTrace_center.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i));
                     }
                 }
                 /*****  ***/
@@ -824,21 +824,21 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                 this.aLocalLineShapeletTrace_topRight.setStroke(new BasicStroke(2));
 
                 int labelIndex = 0;
-                if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+                if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                     this.aLocalLineShapeletTrace_topRight.setColor(new Color(51, 153, 255));
                 }else{
                     this.aLocalLineShapeletTrace_topRight.setColor(new Color(255, 51, 153));
                 }
 
-                if(this.aVariables.currentShapelet != null){
+                if(this.aVariables.currentShapelet_firstIndexIsLable != null){
                     /*** No need to calculate distance again, the center chart has got it. **/
                     int startPosition = this.aVariables.globalStartPosition;
                     //System.out.println("startPosition "+startPosition);
 
                     int lblDiscardIndex = 1;
-                    for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
+                    for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet_firstIndexIsLable.size(); i++){ //The original shapelet array list did not discarded the label in the first index,
                         // therefore we need to a label index discard at first
-                        this.aLocalLineShapeletTrace_topRight.addPoint((startPosition+i), this.aVariables.currentShapelet.get(i));
+                        this.aLocalLineShapeletTrace_topRight.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i));
                     }
                 }
                 /*****  ***/
@@ -861,7 +861,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     public void shapeletLineDrawStack(ArrayList<Double> anArylist){
         Trace2DLtd aTrace = new Trace2DLtd(null);
         int labelIndex = 0;
-        if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+        if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
             aTrace.setColor(new Color(51, 153, 255));
         }else{
             aTrace.setColor(new Color(255, 51, 153));
@@ -876,7 +876,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             int startPosition = this.aVariables.globalStartPosition;
 
             int lblDiscardIndex = 1;
-            for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet.size(); i++){ //This passedby shapelet array list did not discarded the label in the first index,
+            for(int i = lblDiscardIndex; i<this.aVariables.currentShapelet_firstIndexIsLable.size(); i++){ //This passedby shapelet array list did not discarded the label in the first index,
                 // therefore we need to a label index discard at first
                 aTrace.addPoint((startPosition+i), anArylist.get(i));
             }
@@ -900,12 +900,12 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         int startPosition = 0;
         double distanceBetweenST = 0;
         double distanceMin = Double.MAX_VALUE;;
-        for(int i = 0; i<(this.aVariables.TSDataInstance.features.size()-(this.aVariables.currentShapelet.size()-1)); i++ ){ // Discard first label
+        for(int i = 0; i<(this.aVariables.TSDataInstance.features.size()-(this.aVariables.currentShapelet_firstIndexIsLable.size()-1)); i++ ){ // Discard first label
             // index in indexthis.aVariables.currentShapelet
             distanceBetweenST = 0;
-            for(int j = 1; j<this.aVariables.currentShapelet.size(); j++){ // j=1 -> discard first label
+            for(int j = 1; j<this.aVariables.currentShapelet_firstIndexIsLable.size(); j++){ // j=1 -> discard first label
                 // index in indexthis.aVariables.currentShapelet
-                distanceBetweenST += Math.pow(this.aVariables.TSDataInstance.features.get(j+i).value - this.aVariables.currentShapelet.get(j), 2.0);
+                distanceBetweenST += Math.pow(this.aVariables.TSDataInstance.features.get(j+i).value - this.aVariables.currentShapelet_firstIndexIsLable.get(j), 2.0);
             }
             distanceBetweenST = Math.sqrt(distanceBetweenST);
             //System.out.println("distanceBetweenST "+distanceBetweenST);
@@ -946,9 +946,9 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     ---------------------------------------------------------------*/
     public void drawShapeletTraceTopRightChart(ArrayList<Double> aArylist){
         this.aVariables.Shapelet_trace_topRightChart.removeAllPoints();
-        if(this.aVariables.currentShapelet != null){
+        if(this.aVariables.currentShapelet_firstIndexIsLable != null){
             int labelIndex = 0;
-            if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+            if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                 this.aVariables.Shapelet_trace_topRightChart.setColor(new Color(255, 51, 153));
             }else{
                 this.aVariables.Shapelet_trace_topRightChart.setColor(new Color(51, 153, 255));
@@ -974,10 +974,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
      ---------------------------------------------------------------*/
     public void drawShapeletTraceCenterChart(ArrayList<Double> aArylist){
         this.aVariables.Shapelet_trace_centerChart.removeAllPoints();
-        if(this.aVariables.currentShapelet != null){
-            System.out.println("Shapelet length: " + (this.aVariables.currentShapelet.size()-1));
+        if(this.aVariables.currentShapelet_firstIndexIsLable != null){
+            System.out.println("Shapelet length: " + (this.aVariables.currentShapelet_firstIndexIsLable.size()-1));
             int labelIndex = 0;
-            if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+            if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                 this.aVariables.Shapelet_trace_centerChart.setColor(new Color(255, 51, 153));
             }else{
                 this.aVariables.Shapelet_trace_centerChart.setColor(new Color(51, 153, 255));
@@ -1006,7 +1006,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     public void selectShapeletRange(int min, int max){
         if (max >= 0) {
             DefaultListModel newshapeletJListModel = new DefaultListModel();
-            for(int i = 0; i < this.aVariables.Shapelet_double.length; i++)
+            for(int i = 0; i < this.aVariables.Shapelet_double_firstIndexIsLable.length; i++)
             {
                 if(i>=min && i<max){
                     newshapeletJListModel.addElement(String.valueOf(i)); /*** addElement(String.valueOf(i)) ***/
@@ -1096,7 +1096,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             }
 
             int labelIndex = 0;
-            if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+            if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                 this.aLocalLineShapeletTrace_center.setColor(new Color(51, 153, 255));
             }else{
                 this.aLocalLineShapeletTrace_center.setColor(new Color(255, 51, 153));
@@ -1150,7 +1150,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //            }
             Trace2DLtd aTrace = new Trace2DLtd(null);
             int labelIndex = 0;
-            if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+            if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                 aTrace.setColor(new Color(51, 153, 255));
             }else{
                 aTrace.setColor(new Color(255, 51, 153));
@@ -1202,7 +1202,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             }
 
             int labelIndex = 0;
-            if(this.aVariables.currentShapelet.get(labelIndex).intValue()==0){ //label 0
+            if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
                 this.aLocalLineShapeletTrace_topRight.setColor(new Color(51, 153, 255));
             }else{
                 this.aLocalLineShapeletTrace_topRight.setColor(new Color(255, 51, 153));
@@ -1253,7 +1253,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                     if(index==this.aGUIComponents.shapeletJList.getSelectedIndex()){ //Avoid plot duplicate
                         continue;
                     }
-                    ArrayList<Double> tempShapelet = this.aVariables.Shapelet_withCurrentLabel[index];
+                    ArrayList<Double> tempShapelet = this.aVariables.Shapelet_withCurrentLabel_firstIndexIsLable[index];
                     getShortestDistance(tempShapelet);
                     aryList = horizontalDotLookShapelet(tempShapelet);
                     drawShapeletLineTransfer(aryList, model, index); // both center chart and top right chart
@@ -1261,7 +1261,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             }
         }
 
-        aryList = horizontalDotLookShapelet(this.aVariables.currentShapelet);
+        aryList = horizontalDotLookShapelet(this.aVariables.currentShapelet_firstIndexIsLable);
         drawShapeletTraceCenterChart(aryList); // center chart
         drawShapeletTraceTopRightChart(aryList); // top right chart
         drawShapeletLineTransfer(aryList, model, this.aVariables.lastShapeletIndex); // both center chart and top right chart, aDistance = -1 means not stack model
@@ -1307,18 +1307,23 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     }
 
     public void findMinMaxShapeletDataset(){
-        ArrayList<Double> ashapeletDouble = this.aVariables.currentShapelet;
-        double[] arr = new double[ashapeletDouble.size()];
+        int skipFirstIndex = 1;
 
-        for(int i=0; i<ashapeletDouble.size(); i++){
-            arr[i] = (ashapeletDouble.get(i));
+        ArrayList<Double> ashapeletDouble_firstIndexIsLable = this.aVariables.currentShapelet_firstIndexIsLable;
+        double[] arr = new double[ashapeletDouble_firstIndexIsLable.size()-skipFirstIndex];
+
+
+        for(int i=0; i<arr.length; i++){
+            arr[i] = (ashapeletDouble_firstIndexIsLable.get(i+skipFirstIndex));
         }
 
         Arrays.sort(arr);
 
         double[] minMax = new double[2];
         minMax[0] = arr[0];
-        minMax[1] = arr[ashapeletDouble.size()-1];
+        minMax[1] = arr[ashapeletDouble_firstIndexIsLable.size()-(1+skipFirstIndex)];
+
+        System.out.println("minMax[0]:" + minMax[0]);
 
         this.aVariables.minMaxShapeletDataset = minMax;
     }

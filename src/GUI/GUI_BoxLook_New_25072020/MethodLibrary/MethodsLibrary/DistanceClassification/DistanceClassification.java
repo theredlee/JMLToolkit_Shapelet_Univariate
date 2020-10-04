@@ -38,7 +38,7 @@ public class DistanceClassification extends DistanceClassification_abstract {
         DataSet datasetLabeled;
         ArrayList<Integer> TS_labelList = this.aVariables.TS_labelArryList;
 
-        ArrayList<Double>[] aShapeletDouble = this.aVariables.Shapelet_double;
+        ArrayList<Double>[] aShapeletDouble = this.aVariables.Shapelet_double_firstIndexIsLable;
         ArrayList<Integer> shapelet_Labellist = this.aVariables.Shapelet_labelArrayList;
 
         double minDistance;
@@ -160,7 +160,7 @@ public class DistanceClassification extends DistanceClassification_abstract {
         DataSet datasetLabeled;
         ArrayList<Integer> TS_labelList = this.aVariables.TS_labelArryList;
 
-        ArrayList<Double> [] aShapeletDouble = this.aVariables.Shapelet_double;
+        ArrayList<Double> [] aShapeletDouble = this.aVariables.Shapelet_double_firstIndexIsLable;
         ArrayList<Integer> shapelet_Labellist = this.aVariables.Shapelet_labelArrayList;
 
         double[] distance = new double[shapelet_Labellist.size()];
@@ -272,7 +272,7 @@ public class DistanceClassification extends DistanceClassification_abstract {
         DataSet datasetLabeled;
         ArrayList<Integer> TS_labelList = this.aVariables.TS_labelArryList;
 
-        ArrayList<Double>[] aShapeletDouble = this.aVariables.Shapelet_double;
+        ArrayList<Double>[] aShapeletDouble = this.aVariables.Shapelet_double_firstIndexIsLable;
         ArrayList<Integer> shapelet_Labellist = this.aVariables.Shapelet_labelArrayList;
 
         if(TS_labelList.size()!=shapelet_Labellist.size()){

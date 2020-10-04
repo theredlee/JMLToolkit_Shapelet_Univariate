@@ -55,13 +55,23 @@ public class ComponentsAddListners extends ComponentsAddListners_abstract {
 //        });
 
         /***  -------------------------------- **/
-        this.aGUIComponents.zoomSlider.addChangeListener(new ChangeListener() {
+        this.aGUIComponents.zoomSliderCenterChart.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 JSlider source = (JSlider)event.getSource();
                 int value = source.getValue();
-                timeSeriesZoom(value);
+                timeSeriesZoomCenterChart(value);
             }
         });
+
+        /***  -------------------------------- **/
+        this.aGUIComponents.zoomSliderBottomChart.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent event) {
+                JSlider source = (JSlider)event.getSource();
+                int value = source.getValue();
+                timeSeriesZoomBottomChart(value);
+            }
+        });
+
 
         //        /***  -------------------------------- **/
 
@@ -154,6 +164,7 @@ public class ComponentsAddListners extends ComponentsAddListners_abstract {
                 clearShapletContainer();
                 clearAllTSTraces_AllCharts();
                 btnClearAll_addBack();
+                resetGlobalTimeseriesMinMax();
             }
         });
 

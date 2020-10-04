@@ -43,8 +43,12 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
 //        aSetScaleAndPosition_AllCharts.setScale(scale);
     }
 
-    protected void timeSeriesZoom(int value){
-        aSetScaleAndPosition_AllCharts.timeSeriesSlideZoom(value);
+    protected void timeSeriesZoomCenterChart(int value){
+        aSetScaleAndPosition_AllCharts.timeSeriesSlideZoomCenterChart(value);
+    }
+
+    protected void timeSeriesZoomBottomChart(int value){
+        aSetScaleAndPosition_AllCharts.timeSeriesSlideZoomBottomChart(value);
     }
 
     protected void timeSeriesZoomIn(){
@@ -134,6 +138,10 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     protected void clearShapletContainer(){
         aMajorMethods_Shapelet.clearShapletContainer();
 
+    }
+
+    protected void resetGlobalTimeseriesMinMax(){
+        this.aSetScaleAndPosition_AllCharts.resetGlobalTimeseriesMinMax();
     }
 
 }

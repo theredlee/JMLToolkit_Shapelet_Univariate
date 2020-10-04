@@ -8,7 +8,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public class GUIComponents extends GUIComponents_abstract {
@@ -131,7 +130,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         lblZoomScale = new JLabel("Zoom Scale:");
         lblZoomScale.setFont(myFont);
-        lblZoomScale.setBounds(596-430, 440, 100, 25);    /***209, 16, 101, 15 ***/
+        lblZoomScale.setBounds(596-430, 440-10, 100, 25);    /***209, 16, 101, 15 ***/
         frmTimeSeriesLayerFirst.add(lblZoomScale);
 
 
@@ -315,23 +314,39 @@ public class GUIComponents extends GUIComponents_abstract {
         int FPS_MIN = 0;
         int FPS_MAX = 10;
         int FPS_INIT = 0;    //initial frames per second
-        zoomSlider = new JSlider(JSlider.HORIZONTAL,
+
+        zoomSliderCenterChart = new JSlider(JSlider.HORIZONTAL,
                 FPS_MIN, FPS_MAX, FPS_INIT);
 
         //Turn on labels at major tick marks.
-        zoomSlider.setMajorTickSpacing(2);
-        zoomSlider.setMinorTickSpacing(1);
-        zoomSlider.setPaintTicks(true);
-        zoomSlider.setPaintLabels(true);
-        zoomSlider.setBounds(frameCentroidX - 300,  frameCentroidY + 25, buttonWidth*2, buttonHeight+10);
-        frmTimeSeriesLayerFirst.add(zoomSlider);
-        zoomSlider.setFont(font);
+        zoomSliderCenterChart.setMajorTickSpacing(2);
+        zoomSliderCenterChart.setMinorTickSpacing(1);
+        zoomSliderCenterChart.setPaintTicks(true);
+        zoomSliderCenterChart.setPaintLabels(true);
+        zoomSliderCenterChart.setBounds(frameCentroidX - 300,  frameCentroidY + 15, buttonWidth*2, buttonHeight+10);
+        frmTimeSeriesLayerFirst.add(zoomSliderCenterChart);
+        zoomSliderCenterChart.setFont(font);
+
+
+        zoomSliderBottomChart = new JSlider(JSlider.HORIZONTAL,
+                FPS_MIN, FPS_MAX, FPS_INIT);
+
+        //Turn on labels at major tick marks.
+        zoomSliderBottomChart.setMajorTickSpacing(2);
+        zoomSliderBottomChart.setMinorTickSpacing(1);
+        zoomSliderBottomChart.setPaintTicks(true);
+        zoomSliderBottomChart.setPaintLabels(true);
+        zoomSliderBottomChart.setBounds(frameCentroidX - 300,675-15, buttonWidth*2, buttonHeight+10);
+        frmTimeSeriesLayerFirst.add(zoomSliderBottomChart);
+        zoomSliderBottomChart.setFont(font);
+
 
         /***  -------------------------------- **/
         btnSetTsIdRange = new JButton("Enable");
         btnSetTsIdRange.setFont(myFont);
         btnSetTsIdRange.setBounds(12, 388, buttonWidth, buttonHeight);    /** 110, 172, 40, 25 **/
         frmTimeSeriesLayerFirst.add(btnSetTsIdRange);
+        btnSetTsIdRange.setEnabled(false);
 
 
         /***  -------------------------------- **/
@@ -339,6 +354,7 @@ public class GUIComponents extends GUIComponents_abstract {
         btnSetShptIdRange.setFont(myFont);
         btnSetShptIdRange.setBounds(12, 716, buttonWidth, buttonHeight);    /** 12, 716, 130, 25 **/
         frmTimeSeriesLayerFirst.add(btnSetShptIdRange);
+        btnSetShptIdRange.setEnabled(false);
 
 
         /***  -------------------------------- **/
@@ -347,6 +363,7 @@ public class GUIComponents extends GUIComponents_abstract {
         btnSortedByLenShptIdASC.setFont(myFont);
         btnSortedByLenShptIdASC.setBounds(12, 745, buttonWidth/2, buttonHeight);    /** 12, 745, 60, 25 **/
         frmTimeSeriesLayerFirst.add(btnSortedByLenShptIdASC);
+        btnSortedByLenShptIdASC.setEnabled(false);
 
 
         /***  -------------------------------- **/
@@ -355,6 +372,7 @@ public class GUIComponents extends GUIComponents_abstract {
         btnSortedByLenShptIdDESC.setFont(myFont);
         btnSortedByLenShptIdDESC.setBounds(76, 745, buttonWidth/2, buttonHeight);    /** 12, 716, 130, 25 **/
         frmTimeSeriesLayerFirst.add(btnSortedByLenShptIdDESC);
+        btnSortedByLenShptIdDESC.setEnabled(false);
 
 
 
@@ -363,6 +381,7 @@ public class GUIComponents extends GUIComponents_abstract {
         btnClearAllTraces.setFont(myFont);
         btnClearAllTraces.setBounds(12, 420, buttonWidth, buttonHeight); /*** timeSeriesList new Bounds: 12, 112, 130, 303 -> y = 112 + 303 ***/
         frmTimeSeriesLayerFirst.add(btnClearAllTraces);
+        btnClearAllTraces.setEnabled(false);
 
 
         /***  -------------------------------- **/
@@ -378,6 +397,7 @@ public class GUIComponents extends GUIComponents_abstract {
         btnLoadShapelet.setFont(myFont);
         btnLoadShapelet.setBounds(12, 475, buttonWidth, buttonHeight);     /*** 12,508,83,15 ***/
         frmTimeSeriesLayerFirst.add(btnLoadShapelet);
+        btnLoadShapelet.setEnabled(false);
 
 
 
@@ -386,6 +406,7 @@ public class GUIComponents extends GUIComponents_abstract {
         btnSelectTop_K_Shapelets.setFont(myFont);
         btnSelectTop_K_Shapelets.setBounds(470, 10, buttonWidth + 15, buttonHeight);  /*** 12,508,83,15 ***/
         frmTimeSeriesLayerFirst.add(btnSelectTop_K_Shapelets);
+        btnSelectTop_K_Shapelets.setEnabled(false);
 
 
 
@@ -394,13 +415,14 @@ public class GUIComponents extends GUIComponents_abstract {
         btnRunBspcover.setFont(myFont);
         btnRunBspcover.setBounds(165, 10, buttonWidth, buttonHeight);
         frmTimeSeriesLayerFirst.add(btnRunBspcover);
+        btnRunBspcover.setEnabled(false);
 
 
 
-        /***  -------------------------------- **/
-        btnInvokeDT = new JButton("Enable DTW");
-        btnInvokeDT.setFont(myFont);
-        btnInvokeDT.setBounds(frameX + 170, frameCentroidY + 40, buttonWidth, buttonHeight);     /*** 12,508,83,15 ***/
+//        /***  -------------------------------- **/
+//        btnInvokeDT = new JButton("Enable DTW");
+//        btnInvokeDT.setFont(myFont);
+//        btnInvokeDT.setBounds(frameX + 170, frameCentroidY + 40, buttonWidth, buttonHeight);     /*** 12,508,83,15 ***/
 //        frmTimeSeriesLayerFirst.add(btnInvokeDT);
     }
 
@@ -633,7 +655,7 @@ public class GUIComponents extends GUIComponents_abstract {
         bspcoverInfoTextArea = new JTextArea();
         bspcoverInfoTextArea.setText("BSPCOVER Console: ");
         bspcoverInfoTextArea.setEditable(false);
-        bspcoverInfoTextArea.setBounds(171,675,905-400,100);
+        bspcoverInfoTextArea.setBounds(171,675+30,905-400,100-20);
     }
 
 
@@ -841,7 +863,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_BottomChart = new JLayeredPane();
-        layeredPane_BottomChart.setBounds(171, 480, 905-400, 188);
+        layeredPane_BottomChart.setBounds(171, 480-15, 905-400, 188);
         layeredPane_BottomChart.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_BottomChart);
@@ -902,6 +924,20 @@ public class GUIComponents extends GUIComponents_abstract {
 
         layeredPane_DOMInfo.add(DOMInfoPanel, Integer.valueOf(0));
 
+    }
+
+    /*** Enable buttons ***/
+
+    public void enableButtons() {
+        btnSetTsIdRange.setEnabled(true);
+        btnSetShptIdRange.setEnabled(true);
+        btnSortedByLenShptIdASC.setEnabled(true);
+        btnSortedByLenShptIdDESC.setEnabled(true);
+        btnClearAllTraces.setEnabled(true);
+        btnLoadDataset.setEnabled(true);
+        btnLoadShapelet.setEnabled(true);
+        btnSelectTop_K_Shapelets.setEnabled(true);
+        btnRunBspcover.setEnabled(true);
     }
 
     /*** main --------------------------------------------**/

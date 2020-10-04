@@ -12,6 +12,7 @@ public class Variables extends Variables_abstract {
     public void initializeVariables(){
         this.initializeTS = true;
         this.load_Shapelet_YesOrNo = false;
+        this.load_Timeseries_YesOrNo = false;
         this.initialize_TS_list = true;
         this.setting_TS_listModal = false;
         this.firstTSDrawing = true;

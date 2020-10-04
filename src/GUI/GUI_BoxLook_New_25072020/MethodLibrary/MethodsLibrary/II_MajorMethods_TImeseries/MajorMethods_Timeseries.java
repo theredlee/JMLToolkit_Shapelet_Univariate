@@ -17,9 +17,6 @@ import Utilities.Logging;
 import info.monitorenter.gui.chart.Chart2D;
 import info.monitorenter.gui.chart.IAxis;
 import info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport;
-import info.monitorenter.gui.chart.rangepolicies.*;
-import info.monitorenter.gui.chart.rangepolicies.RangePolicyHighestValues;
-import info.monitorenter.gui.chart.rangepolicies.RangePolicyUnbounded;
 import info.monitorenter.gui.chart.traces.Trace2DLtd;
 import info.monitorenter.gui.chart.traces.painters.TracePainterDisc;
 import info.monitorenter.gui.chart.traces.painters.TracePainterLine;
@@ -126,16 +123,28 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             /*** -> **/
             setTSLabelJList();
-
         }
         catch(Exception exc)
         {
             exc.printStackTrace();
         }
 
+        changeloadTimeseriesYesOrNoToTrue();
+
+        if(this.aVariables.load_Timeseries_YesOrNo){
+            enableButtons();
+        }
+
         // populate the list with the time series trajectory indexes
 
         this.aGUIComponents.noPointsTextField.setVisible(true);
+    }
+
+    /*---------------------------------------------------------------
+    **              changeloadTimeseriesYesOrNoToTrue()            **
+    ---------------------------------------------------------------*/
+    private void changeloadTimeseriesYesOrNoToTrue(){
+        this.aVariables.load_Timeseries_YesOrNo = true;
     }
 
     /*---------------------------------------------------------------
@@ -1043,7 +1052,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     /*** -> **/
 
                     /*** **/
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet_firstIndexIsLable.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{
@@ -1130,7 +1139,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                         /*** -> **/
 
                         /*** **/
-                        this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
+                        this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet_firstIndexIsLable.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                         this.aVariables.firstTSDrawing = false;
                     }else{
@@ -1269,7 +1278,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     /*** -> **/
 
                     /*** **/
-                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet.size(); /*** shapelet's length **/
+                    this.aVariables.globalBestMatchEP = this.aVariables.currentShapelet_firstIndexIsLable.size(); /*** shapelet's length **/
 //                    System.out.println("globalBestMatchEP: " + this.aVariables.globalBestMatchEP);
                     this.aVariables.firstTSDrawing = false;
                 }else{

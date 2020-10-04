@@ -42,6 +42,10 @@ public abstract class MajorMethods_Timeseries_abstract extends MajorMethods_Time
         aSetScaleAndPosition_AllCharts.centerChartSetRange();
     }
 
+    protected void enableButtons() {
+        this.aGUIComponents.enableButtons();
+    }
+
     protected void setScale_bottomChartSetRange(){
         aSetScaleAndPosition_AllCharts.bottomChartSetRange();
     }
