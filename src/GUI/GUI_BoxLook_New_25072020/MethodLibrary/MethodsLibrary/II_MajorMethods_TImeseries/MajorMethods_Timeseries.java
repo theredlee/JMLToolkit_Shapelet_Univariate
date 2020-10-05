@@ -668,6 +668,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.centerChart = new Chart2D();
         this.aVariables.bottomChart = new Chart2D();
 
+        /*** initialize the localTrace **/
+        this.aLocalLineTrace = new Trace2DLtd(null);;
+        this.aVariables.centerChart.addTrace(this.aLocalLineTrace);
+
         /***** Create trace ***/
         this.aVariables.TSTrace = new Trace2DLtd(null);
         this.aVariables.TSTrace.setTracePainter(new TracePainterDisc(2));
@@ -678,10 +682,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         this.aVariables.centerChart.addTrace(this.aVariables.TSTrace);
 
         /*** **/
-
-        /*** initialize the localTrace **/
-        this.aLocalLineTrace = new Trace2DLtd(null);;
-        this.aVariables.centerChart.addTrace(this.aLocalLineTrace);
 
         // Test
         /*** **/
@@ -999,8 +999,19 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 System.out.println("-> TSDataInstance.features.size():" + numPoints);
                 for(int i = 0; i < numPoints; i++) {
                     FeaturePoint p = this.aVariables.TSDataInstance.features.get(i);
-                    if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE )
+                    if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE ){
                         this.aVariables.TSTrace.addPoint(i, p.value);
+                        /*--------------------------*/
+//                        int lblAtFirstIndexDiscard = 1;
+//                        int globalPosition = this.aVariables.globalStartPosition;
+//                        int totalLength = (globalPosition+this.aVariables.currentShapelet_firstIndexIsLable.size()-lblAtFirstIndexDiscard);
+//                        if(i>= globalPosition && i<totalLength){
+//                            this.aVariables.TSTrace.addPoint(i, p.value);
+//                        }else{
+////                            this.aVariables.TSTrace.addPoint(i, 0);
+//                        }
+                        /*--------------------------*/
+                    }
                 }
             }
 
@@ -1099,8 +1110,20 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     System.out.println("-> TSDataInstance.features.size():" + numPoints);
                     for(int i = 0; i < numPoints; i++) {
                         FeaturePoint p = this.aVariables.TSDataInstance.features.get(i);
-                        if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE )
+                        if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE ){
                             this.aLocalLineTrace.addPoint(i, p.value);
+
+                            /*--------------------------*/
+//                            int lblAtFirstIndexDiscard = 1;
+//                            int globalPosition = this.aVariables.globalStartPosition;
+//                            int totalLength = (globalPosition+this.aVariables.currentShapelet_firstIndexIsLable.size()-lblAtFirstIndexDiscard);
+//                            if(i>= globalPosition && i<totalLength){
+//                                this.aLocalLineTrace.addPoint(i, p.value);
+//                            }else{
+////                                this.aLocalLineTrace.addPoint(i, 0);
+//                            }
+                            /*--------------------------*/
+                        }
                     }
                 }
                 /*****  ***/
