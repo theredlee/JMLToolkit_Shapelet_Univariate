@@ -145,9 +145,9 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
         double aMin;
         double aMax;
 
-        aMin = minMaxShapelet[0]*0.99; // Leave some spaces on the bottom
+        aMin = minMaxShapelet[0]; // Leave some spaces on the bottom
 
-        aMax = minMaxShapelet[1]*1.01; // Leave some spaces on the bottom
+        aMax = minMaxShapelet[1]; // Leave some spaces on the bottom
 
 //        System.out.println("aMin:" + minMaxShapelet[0]);
 
