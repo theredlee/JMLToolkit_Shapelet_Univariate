@@ -771,7 +771,7 @@ public class GUIComponents extends GUIComponents_abstract {
                 null, null, null, null),
                 "Shapelets only", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        topRightShapeletPanel.setBounds(0, 0, 300, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
+        topRightShapeletPanel.setBounds(0, 0, 330, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
 
         /***  -------------------------------- **/
         topRightTimeseriesPanel = new JPanel();
@@ -779,7 +779,7 @@ public class GUIComponents extends GUIComponents_abstract {
                 null, null, null, null),
                 "Subtimeseries", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        topRightTimeseriesPanel.setBounds(0, 0, 365, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
+        topRightTimeseriesPanel.setBounds(0, 0, 330, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
 
 
         /***  -------------------------------- * */
@@ -861,7 +861,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_TopRightShapeletChart = new JLayeredPane();
-        layeredPane_TopRightShapeletChart.setBounds(860, 7, topRightShapeletPanel.getWidth(), topRightShapeletPanel.getHeight()); /***Interpolation JComboBox: 559, 16, 142, 25 ***/
+        layeredPane_TopRightShapeletChart.setBounds(820, 7, topRightShapeletPanel.getWidth(), topRightShapeletPanel.getHeight()); /***Interpolation JComboBox: 559, 16, 142, 25 ***/
         layeredPane_TopRightShapeletChart.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_TopRightShapeletChart);

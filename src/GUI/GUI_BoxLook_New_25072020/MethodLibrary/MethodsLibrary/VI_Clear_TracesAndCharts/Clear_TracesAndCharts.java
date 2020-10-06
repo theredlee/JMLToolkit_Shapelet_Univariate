@@ -43,8 +43,12 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
      **                 removeAllTraces_topRightChart()            **
 
      ******************************************************************/
-    public void removeAllTraces_topRightChart(){
+    public void removeAllTraces_topRightShapeletChart(){
         this.aVariables.topRightShapeletChart.removeAllTraces();
+    }
+
+    public void removeAllTraceTopRightTimeseriesChart(){
+        this.aVariables.topRightTimeseriesChart.removeAllTraces();
     }
 
     /*---------------------------------------------------------------
@@ -98,7 +102,7 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
         removeAllTraces_BottomChart();
         /*** **/
         if(getLoadShapeletYesOrNo()){
-            removeAllTraces_topRightChart();
+            removeAllTraces_topRightShapeletChart();
         }
         /*** **/
         removeMultiTraces();

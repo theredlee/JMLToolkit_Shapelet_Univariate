@@ -66,6 +66,10 @@ public abstract class MajorMethods_Timeseries_abstract extends MajorMethods_Time
         this.aMajorMethods_Shapelet.drawShapeletTraceTopRightTimeseriesChart();
     }
 
+    protected void removeAllTraceTopRightTimeseriesChart(){
+        this.aClear_TracesAndCharts.removeAllTraceTopRightTimeseriesChart();
+    }
+
     protected int updateTolatest_aShapelet(){
         return this.aMajorMethods_Shapelet.latestShapelet();
     }

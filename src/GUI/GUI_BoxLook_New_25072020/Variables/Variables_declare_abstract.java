@@ -38,8 +38,8 @@ public abstract class Variables_declare_abstract {
     public ITrace2D interpolatedTSMark_centerChart;
     public ITrace2D interpolatedTimeSeriesTrace;
     /*** Shapelet --- **/
-    public ITrace2D Shapelet_mark_centerChart, Shapelet_mark_topRightChart;
-    public ITrace2D Shapelet_dotTrace_centerChart, Shapelet_trace_topRightChart;
+    public ITrace2D shapeletMarkCenterChart, shapeletMarkTopRightChart;
+    public ITrace2D shapeletDotTraceCenterChart, shapeletLineTraceTopRightChart;
 
     public boolean initializeTS, load_Shapelet_YesOrNo, load_Timeseries_YesOrNo;
     public boolean initialize_TS_list, setting_TS_listModal;

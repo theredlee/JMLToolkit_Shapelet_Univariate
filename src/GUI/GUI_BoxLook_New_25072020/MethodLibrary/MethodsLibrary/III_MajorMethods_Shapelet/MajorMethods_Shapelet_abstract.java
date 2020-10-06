@@ -42,7 +42,7 @@ public abstract class MajorMethods_Shapelet_abstract extends MajorMethods_Shapel
         aSetScaleAndPosition_AllCharts.setScaleAndPosition();
 //        aSetScaleAndPosition_AllCharts.spinnerSetScale();
         aSetScaleAndPosition_AllCharts.centerChartSetRange();
-        aSetScaleAndPosition_AllCharts.shapeletToprightChartUpdateScale();
+//        aSetScaleAndPosition_AllCharts.shapeletToprightChartUpdateScale();
     }
 
     protected void setInfomationOnChart(){
@@ -59,7 +59,7 @@ public abstract class MajorMethods_Shapelet_abstract extends MajorMethods_Shapel
     }
 
     protected void topRightChartTimeseriesAndShapeletDraw(){
-        this.aMajorMethods_Timeseries.traceCleanTopRightTimeseriesChart();
+        this.aClear_TracesAndCharts.removeAllTraceTopRightTimeseriesChart();
         this.aMajorMethods_Timeseries.TSLineTraceTopRightTimeseriesChartDraw();
     }
 
