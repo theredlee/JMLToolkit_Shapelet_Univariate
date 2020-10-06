@@ -62,7 +62,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         String subroot_V = "/datasets/Grace_dataset/v_5/Grace_Mean_5Months_15pts";
 
 
-        String TSGenerationPath = this.aVariables.root + subroot_V;
+        String TSGenerationPath = this.aVariables.root + subroot_II;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
@@ -100,7 +100,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
 //            System.out.println("loadDataSet() -> dataSet.numFeatures+10: " + (dataSet.numFeatures+10));
 
-//            this.aVariables.dataSet.NormalizeDatasetInstances();
+            this.aVariables.dataSet.NormalizeDatasetInstances();
 
             /*** Two choices: **/
             /*** 1. Present the line-lot-like oldest effect look. ------------> **/
@@ -372,6 +372,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
      ---------------------------------------------------------------*/
     public void runBspcover(){
 //            this.aVariables.shapeletSubroot = "/datasets/Grace_dataset/v_3/shapelet/shapelet&weight";
+//        this.aVariables.shapeletSubroot = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet/shapelet&weight";
         this.aVariables.shapeletSubroot = "/datasets/Grace_dataset/v_5/shapelet/shapelet&weight";
             /*---------------------------------------------------------------**
              ******   The shapelets output path is in EfficientLTS.java!   ******
@@ -455,8 +456,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             testSet.LoadDataSetFile(new File(testSetPath));
 
             // normalize the data instance
-//            trainSet.NormalizeDatasetInstances();
-//            testSet.NormalizeDatasetInstances();
+            trainSet.NormalizeDatasetInstances();
+            testSet.NormalizeDatasetInstances();
 
 //                    // output normalized dataset
 //                    System.out.println("trainSet:");

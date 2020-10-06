@@ -1021,8 +1021,8 @@ public class EfficientLTS {
             testSet.LoadDataSetFile(new File(testSetPath));
 
             // normalize the data instance
-//            trainSet.NormalizeDatasetInstances();
-//            testSet.NormalizeDatasetInstances();
+            trainSet.NormalizeDatasetInstances();
+            testSet.NormalizeDatasetInstances();
 
 //                    // output normalized dataset
 //                    System.out.println("trainSet:");

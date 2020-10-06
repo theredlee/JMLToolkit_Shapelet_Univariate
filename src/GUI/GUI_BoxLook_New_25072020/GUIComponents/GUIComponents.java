@@ -632,7 +632,7 @@ public class GUIComponents extends GUIComponents_abstract {
         chartII_Shapelet_TextField = new JTextField();
         chartII_Shapelet_TextField.setText("Shapelet No.:");
         chartII_Shapelet_TextField.setEditable(false);
-        chartII_Shapelet_TextField.setBounds(295,5,125, 15);
+        chartII_Shapelet_TextField.setBounds(295-80,5,125, 15);
         chartII_Shapelet_TextField.setBorder(null);
         chartII_Shapelet_TextField.setFont(font);
         chartII_Shapelet_TextField.setForeground(Color.GREEN);
@@ -642,7 +642,7 @@ public class GUIComponents extends GUIComponents_abstract {
         chartII_ShapeletLabel_TextField = new JTextField();
         chartII_ShapeletLabel_TextField.setText("Shapelet Label.:");
         chartII_ShapeletLabel_TextField.setEditable(false);
-        chartII_ShapeletLabel_TextField.setBounds(295,20,125, 15);
+        chartII_ShapeletLabel_TextField.setBounds(295-80,20,125, 15);
         chartII_ShapeletLabel_TextField.setBorder(null);
         chartII_ShapeletLabel_TextField.setFont(font);
         chartII_ShapeletLabel_TextField.setForeground(Color.GREEN);
@@ -771,7 +771,7 @@ public class GUIComponents extends GUIComponents_abstract {
                 null, null, null, null),
                 "Shapelets only", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        topRightPanel.setBounds(0, 0, 420, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
+        topRightPanel.setBounds(0, 0, 420-80, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
 
 
         /***  -------------------------------- * */
@@ -853,7 +853,7 @@ public class GUIComponents extends GUIComponents_abstract {
 
         /***  -------------------------------- **/
         layeredPane_TopRightChart = new JLayeredPane();
-        layeredPane_TopRightChart.setBounds(656, 7, 420, 131); /***Interpolation JComboBox: 559, 16, 142, 25 ***/
+        layeredPane_TopRightChart.setBounds(656+80, 7, topRightPanel.getWidth(), topRightPanel.getHeight()); /***Interpolation JComboBox: 559, 16, 142, 25 ***/
         layeredPane_TopRightChart.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_TopRightChart);

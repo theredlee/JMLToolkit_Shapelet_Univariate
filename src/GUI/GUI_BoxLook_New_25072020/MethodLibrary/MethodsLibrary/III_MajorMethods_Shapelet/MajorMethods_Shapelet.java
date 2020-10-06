@@ -78,7 +78,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         String subroot_IV = "/datasets/Grace_dataset/v_4/shapelet";
         String subroot_V = "/datasets/Grace_dataset/v_5/shapelet";
 
-        String shapletGenerationPath = this.aVariables.root + subroot_V;
+        String shapletGenerationPath = this.aVariables.root + subroot_II;
         JFileChooser shapeletChooser = new JFileChooser();
 //        shapeletChooser.setCurrentDirectory(new java.io.File("/Users/leone/Documents/BSPCOVER/GitHub/tsc/JMLToolkit/experimentI"));
         shapeletChooser.setCurrentDirectory(new java.io.File(shapletGenerationPath));
@@ -380,13 +380,14 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
     **                     createChart_TopRightChart()                           **
     ---------------------------------------------------------------*/
     public void createChartsAndTraces(){
+        int lblAtFirstIndexDiscard = 1;
         System.out.println("Invoke createChart_TopRightChart().");
         this.aVariables.topRightChart = new Chart2D();
         this.aGUIComponents.topRightPanel.add(this.aVariables.topRightChart);
         this.aVariables.topRightChart.setSize( this.aGUIComponents.topRightPanel.getSize() );
         this.aVariables.topRightChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
-        this.aVariables.topRightChart.getAxisX().setRange( new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
-        this.aVariables.topRightChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1)));
+//        this.aVariables.topRightChart.getAxisX().setRange( new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
+//        this.aVariables.topRightChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1)));
         this.aVariables.topRightChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
 
 
