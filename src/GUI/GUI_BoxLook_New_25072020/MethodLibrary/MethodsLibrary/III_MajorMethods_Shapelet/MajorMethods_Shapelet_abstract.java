@@ -56,7 +56,12 @@ public abstract class MajorMethods_Shapelet_abstract extends MajorMethods_Shapel
     protected void selectShapletPlotModel_centerChart(){
         this.aClear_TracesAndCharts.removeAllTraces_centerChart();
         this.aClear_TracesAndCharts.addTraceBack_pointsKept_centerChart();
-    };
+    }
+
+    protected void topRightChartTimeseriesAndShapeletDraw(){
+        this.aMajorMethods_Timeseries.traceCleanTopRightTimeseriesChart();
+        this.aMajorMethods_Timeseries.TSLineTraceTopRightTimeseriesChartDraw();
+    }
 
     protected void infoClassificaationTest(String str){
         this.aSetInfo_Charts.infoClassificaationTest(str);

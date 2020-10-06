@@ -60,11 +60,11 @@ public class GUIComponents extends GUIComponents_abstract {
     /*** initializeMeasurements --------------------------------------------**/
     private void initializeMeasurements() {
         /***  -------------------------------- **/
-        deskTopX = 50;
+        deskTopX = 10;
         deskTopY = 30;
         frameX = 0;
         frameY = 0;
-        frameWidth = 1110+250;
+        frameWidth = 1110+330;
         frameHeight = 820;
         frameCentroidX = (frameX + frameWidth)/2;
         frameCentroidY = (frameY + frameHeight)/2;
@@ -142,9 +142,9 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        lblShapeletsNumSelector = new JLabel("Top k shapelets:");
+        lblShapeletsNumSelector = new JLabel("K:");
         lblShapeletsNumSelector.setFont(myFont);
-        lblShapeletsNumSelector.setBounds(295, 12, 130, 15);    /***209, 16, 101, 15 ***/
+        lblShapeletsNumSelector.setBounds(305, 12, 20, 15);    /***209, 16, 101, 15 ***/
         frmTimeSeriesLayerFirst.add(lblShapeletsNumSelector);
 
 
@@ -402,9 +402,9 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        btnSelectTop_K_Shapelets = new JButton("Top k shapelets");
+        btnSelectTop_K_Shapelets = new JButton("Top K Shapelets");
         btnSelectTop_K_Shapelets.setFont(myFont);
-        btnSelectTop_K_Shapelets.setBounds(470, 10, buttonWidth + 15, buttonHeight);  /*** 12,508,83,15 ***/
+        btnSelectTop_K_Shapelets.setBounds(345, 8, buttonWidth + 15, buttonHeight);  /*** 12,508,83,15 ***/
         frmTimeSeriesLayerFirst.add(btnSelectTop_K_Shapelets);
         btnSelectTop_K_Shapelets.setEnabled(false);
 
@@ -473,7 +473,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         top_K_shapeletsTextField = new JTextField();
         top_K_shapeletsTextField.setText("5");
-        top_K_shapeletsTextField.setBounds(420, 12, 30, 19); /***328, 12, 114, 19**/
+        top_K_shapeletsTextField.setBounds(320, 10, 30, 20); /***328, 12, 114, 19**/
         frmTimeSeriesLayerFirst.add(top_K_shapeletsTextField);
         top_K_shapeletsTextField.setColumns(10);
 
@@ -481,7 +481,7 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         iterationTextField = new JTextField();
         iterationTextField.setText("1000");
-        iterationTextField.setBounds(303, 40, 114, 19); /***328, 12, 114, 19**/
+        iterationTextField.setBounds(285, 40, 114, 19); /***328, 12, 114, 19**/
         frmTimeSeriesLayerFirst.add(iterationTextField);
         iterationTextField.setColumns(10);
 
@@ -490,7 +490,7 @@ public class GUIComponents extends GUIComponents_abstract {
         alphabetSizeTextField = new JTextField();
         alphabetSizeTextField.setText("DefaultValue");
         alphabetSizeTextField.setColumns(10);
-        alphabetSizeTextField.setBounds(303, 70, 114, 19);  /***328, 43, 114, 19 ***/
+        alphabetSizeTextField.setBounds(285, 70, 114, 19);  /***328, 43, 114, 19 ***/
         frmTimeSeriesLayerFirst.add(alphabetSizeTextField);
 
 
@@ -498,7 +498,7 @@ public class GUIComponents extends GUIComponents_abstract {
         pcoverTextField = new JTextField();
         pcoverTextField.setText("DefaultValue");
         pcoverTextField.setColumns(10);
-        pcoverTextField.setBounds(303, 100, 114, 25);
+        pcoverTextField.setBounds(285, 100, 114, 25);
         frmTimeSeriesLayerFirst.add(pcoverTextField);
 
 
@@ -622,20 +622,20 @@ public class GUIComponents extends GUIComponents_abstract {
         centerChartShapeletNumTextField = new JTextField();
         centerChartShapeletNumTextField.setText("Shapelet No.:");
         centerChartShapeletNumTextField.setEditable(false);
-        centerChartShapeletNumTextField.setBounds(785-405,35,125, 15);
+        centerChartShapeletNumTextField.setBounds(380,35,125, 15);
         centerChartShapeletNumTextField.setBorder(null);
         centerChartShapeletNumTextField.setFont(font);
         centerChartShapeletNumTextField.setForeground(Color.GREEN);
 
 
         /***  -------------------------------- **/
-        chartII_Shapelet_TextField = new JTextField();
-        chartII_Shapelet_TextField.setText("Shapelet No.:");
-        chartII_Shapelet_TextField.setEditable(false);
-        chartII_Shapelet_TextField.setBounds(295-80,5,125, 15);
-        chartII_Shapelet_TextField.setBorder(null);
-        chartII_Shapelet_TextField.setFont(font);
-        chartII_Shapelet_TextField.setForeground(Color.GREEN);
+        topRightShapeletchart_Shapelet_TextField = new JTextField();
+        topRightShapeletchart_Shapelet_TextField.setText("Shapelet No.:");
+        topRightShapeletchart_Shapelet_TextField.setEditable(false);
+        topRightShapeletchart_Shapelet_TextField.setBounds(195,5,125, 15);
+        topRightShapeletchart_Shapelet_TextField.setBorder(null);
+        topRightShapeletchart_Shapelet_TextField.setFont(font);
+        topRightShapeletchart_Shapelet_TextField.setForeground(Color.GREEN);
 
 
         /***  -------------------------------- **/
@@ -664,21 +664,21 @@ public class GUIComponents extends GUIComponents_abstract {
         /***  -------------------------------- **/
         imputeCheckBox = new JCheckBox("Impute", false);
         imputeCheckBox.setFont(myFont);
-        imputeCheckBox.setBounds(464, 40, 100, 15); /***720, 16, 110, 15***/ /*******??????******/
+        imputeCheckBox.setBounds(400, 40, 100, 15); /***720, 16, 110, 15***/ /*******??????******/
         frmTimeSeriesLayerFirst.add(imputeCheckBox);
 
 
         /***  -------------------------------- **/
         shuffleDataSetCheckBox = new JCheckBox("Shuffle", false);
         shuffleDataSetCheckBox.setFont(myFont);
-        shuffleDataSetCheckBox.setBounds(464, 70, 110, 15); /***720, 47, 110, 15***/
+        shuffleDataSetCheckBox.setBounds(400, 70, 110, 15); /***720, 47, 110, 15***/
         frmTimeSeriesLayerFirst.add(shuffleDataSetCheckBox);
 
 
         /***  -------------------------------- **/
         enableSupervisionCheckBox = new JCheckBox("ED", false);
         enableSupervisionCheckBox.setFont(myFont);
-        enableSupervisionCheckBox.setBounds(464, 100, 110, 15);  /***820, 16, 110, 15***/
+        enableSupervisionCheckBox.setBounds(400, 100, 110, 15);  /***820, 16, 110, 15***/
         frmTimeSeriesLayerFirst.add(enableSupervisionCheckBox);
 
 
@@ -766,12 +766,20 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        topRightPanel = new JPanel();
-        topRightPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED,
+        topRightShapeletPanel = new JPanel();
+        topRightShapeletPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED,
                 null, null, null, null),
                 "Shapelets only", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
 
-        topRightPanel.setBounds(0, 0, 420-80, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
+        topRightShapeletPanel.setBounds(0, 0, 300, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
+
+        /***  -------------------------------- **/
+        topRightTimeseriesPanel = new JPanel();
+        topRightTimeseriesPanel.setBorder(new TitledBorder(new BevelBorder(BevelBorder.RAISED,
+                null, null, null, null),
+                "Subtimeseries", TitledBorder.LEADING, TitledBorder.TOP, new Font("SansSerif", Font.PLAIN, 15), null));
+
+        topRightTimeseriesPanel.setBounds(0, 0, 365, 131); /***Interpolation JComboBox: 0, 0, 142, 25 -> in a panel layer***/
 
 
         /***  -------------------------------- * */
@@ -852,13 +860,21 @@ public class GUIComponents extends GUIComponents_abstract {
 
 
         /***  -------------------------------- **/
-        layeredPane_TopRightChart = new JLayeredPane();
-        layeredPane_TopRightChart.setBounds(656+80, 7, topRightPanel.getWidth(), topRightPanel.getHeight()); /***Interpolation JComboBox: 559, 16, 142, 25 ***/
-        layeredPane_TopRightChart.setBorder(BorderFactory.createTitledBorder(
+        layeredPane_TopRightShapeletChart = new JLayeredPane();
+        layeredPane_TopRightShapeletChart.setBounds(860, 7, topRightShapeletPanel.getWidth(), topRightShapeletPanel.getHeight()); /***Interpolation JComboBox: 559, 16, 142, 25 ***/
+        layeredPane_TopRightShapeletChart.setBorder(BorderFactory.createTitledBorder(
                 ""));
-        frmTimeSeriesLayerFirst.add(layeredPane_TopRightChart);
-        layeredPane_TopRightChart.add(topRightPanel, Integer.valueOf(0));
-        layeredPane_TopRightChart.add(chartII_Shapelet_TextField, Integer.valueOf(1));
+        frmTimeSeriesLayerFirst.add(layeredPane_TopRightShapeletChart);
+        layeredPane_TopRightShapeletChart.add(topRightShapeletPanel, Integer.valueOf(0));
+        layeredPane_TopRightShapeletChart.add(topRightShapeletchart_Shapelet_TextField, Integer.valueOf(1));
+
+        /***  -------------------------------- **/
+        layeredPane_TopRightTimeseriesChart = new JLayeredPane();
+        layeredPane_TopRightTimeseriesChart.setBounds(490, 7, topRightTimeseriesPanel.getWidth(), topRightTimeseriesPanel.getHeight()); /***Interpolation JComboBox: 559, 16, 142, 25 ***/
+        layeredPane_TopRightTimeseriesChart.setBorder(BorderFactory.createTitledBorder(
+                ""));
+        frmTimeSeriesLayerFirst.add(layeredPane_TopRightTimeseriesChart);
+        layeredPane_TopRightTimeseriesChart.add(topRightTimeseriesPanel, Integer.valueOf(0));
 
 
         /***  -------------------------------- **/
@@ -917,7 +933,7 @@ public class GUIComponents extends GUIComponents_abstract {
         layeredPane_DOMInfo = new JLayeredPane();
         layeredPane_DOMInfo.setOpaque(true);
         layeredPane_DOMInfo.setBackground(new Color(254, 255, 249));
-        layeredPane_DOMInfo.setBounds(1080, 7, 275, 131);
+        layeredPane_DOMInfo.setBounds(1080+80, 7, 275, 131);
         layeredPane_DOMInfo.setBorder(BorderFactory.createTitledBorder(
                 ""));
         frmTimeSeriesLayerFirst.add(layeredPane_DOMInfo);

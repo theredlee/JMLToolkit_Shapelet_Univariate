@@ -28,7 +28,7 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
         /*** set back to default scale **/
         setScale();
 
-        this.aVariables.TSTrace.removeAllPoints();
+        this.aVariables.TSDotTrace.removeAllPoints();
         /*
         interpolatedTSMark_centerChart.removeAllPoints();
         */
@@ -44,7 +44,7 @@ public class Clear_TracesAndCharts extends Clear_TracesAndCharts_abstract {
 
      ******************************************************************/
     public void removeAllTraces_topRightChart(){
-        this.aVariables.topRightChart.removeAllTraces();
+        this.aVariables.topRightShapeletChart.removeAllTraces();
     }
 
     /*---------------------------------------------------------------

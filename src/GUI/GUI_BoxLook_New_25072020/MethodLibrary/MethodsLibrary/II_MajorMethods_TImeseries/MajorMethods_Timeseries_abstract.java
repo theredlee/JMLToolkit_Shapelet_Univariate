@@ -47,7 +47,7 @@ public abstract class MajorMethods_Timeseries_abstract extends MajorMethods_Time
     }
 
     protected void setScale_bottomChartSetRange(){
-        aSetScaleAndPosition_AllCharts.bottomChartSetRange();
+        this.aSetScaleAndPosition_AllCharts.bottomChartSetRange();
     }
 
     protected void setInfomationOnChart(){
@@ -55,15 +55,19 @@ public abstract class MajorMethods_Timeseries_abstract extends MajorMethods_Time
     };
 
     protected void shapeletDotHorizontallyTransferredLinePlot(String model){
-        aMajorMethods_Shapelet.shapeletDotHorizontallyTransferredLinePlot(model);
+        this.aMajorMethods_Shapelet.shapeletDotHorizontallyTransferredLinePlot(model);
     }
 
     protected void shapeletDotDirectlyConnectLinePlot(String model){
-        aMajorMethods_Shapelet.shapeletDotDirectlyConnectLinePlot(model);
+        this.aMajorMethods_Shapelet.shapeletDotDirectlyConnectLinePlot(model);
+    }
+
+    protected void drawShapeletTraceTopRightTimeseriesChart(){
+        this.aMajorMethods_Shapelet.drawShapeletTraceTopRightTimeseriesChart();
     }
 
     protected int updateTolatest_aShapelet(){
-        return aMajorMethods_Shapelet.latestShapelet();
+        return this.aMajorMethods_Shapelet.latestShapelet();
     }
 
 }

@@ -77,7 +77,7 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.centerChartTSLabelTextField = aGUIComponents.centerChartTSLabelTextField;
         this.centerChartTSNumTextField = aGUIComponents.centerChartTSNumTextField;
         this.centerChartShapeletNumTextField = aGUIComponents.centerChartShapeletNumTextField;
-        this.chartII_Shapelet_TextField = aGUIComponents.chartII_Shapelet_TextField;
+        this.topRightShapeletchart_Shapelet_TextField = aGUIComponents.topRightShapeletchart_Shapelet_TextField;
         this.chartII_ShapeletLabel_TextField = aGUIComponents.chartII_ShapeletLabel_TextField;
         this.top_K_shapeletsTextField = aGUIComponents.top_K_shapeletsTextField;
         this.labelShapeletTextField = aGUIComponents.labelShapeletTextField;
@@ -118,14 +118,16 @@ public abstract class GUIComponents_abstract extends GUIComponents_declare_abstr
         this.bspcoverInfoScrollPane = aGUIComponents.bspcoverInfoScrollPane;
         /*** initializeJPanel --**/
         this.centerChartPanel = aGUIComponents.centerChartPanel;
-        this.topRightPanel = aGUIComponents.topRightPanel;
+        this.topRightShapeletPanel = aGUIComponents.topRightShapeletPanel;
+        this.topRightTimeseriesPanel = aGUIComponents.topRightTimeseriesPanel;
         this.bottomChartPanel = aGUIComponents.bottomChartPanel;
         this.distanceHistPanel = aGUIComponents.distanceHistPanel;
         this.weightHistPanel = aGUIComponents.weightHistPanel;
         this.DOMInfoPanel = aGUIComponents.DOMInfoPanel;
         /*** initializeLayeredPane --**/
         this.layeredPane_CenterChart = aGUIComponents.layeredPane_CenterChart;
-        this.layeredPane_TopRightChart = aGUIComponents.layeredPane_TopRightChart;
+        this.layeredPane_TopRightShapeletChart = aGUIComponents.layeredPane_TopRightShapeletChart;
+        this.layeredPane_TopRightTimeseriesChart = aGUIComponents.layeredPane_TopRightTimeseriesChart;
         this.layeredPane_BottomChart = aGUIComponents.layeredPane_BottomChart;
         this.layeredPane_distanceHist = aGUIComponents.layeredPane_distanceHist;
         this.layeredPane_weightHist = aGUIComponents.layeredPane_weightHist;

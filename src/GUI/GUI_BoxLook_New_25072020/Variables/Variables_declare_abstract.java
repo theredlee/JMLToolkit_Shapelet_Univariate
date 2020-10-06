@@ -29,17 +29,17 @@ public abstract class Variables_declare_abstract {
     public ArrayList<Integer> Shapelet_labelArrayList, Shapelet_labelCountArrayList;
     public ArrayList<Integer> TS_labelArryList;
     /*** Charts **/
-    public Chart2D centerChart, topRightChart, bottomChart;
+    public Chart2D topRightShapeletChart, topRightTimeseriesChart, centerChart, bottomChart;
     public Chart2D[] multiCharts;
     /*** TS --- **/
     public ITrace2D TSMark_centerChart, TSMark_bottomChart;
-    public ITrace2D TSTrace;
+    public ITrace2D TSDotTrace;
     /*** interpolated TS --- **/
     public ITrace2D interpolatedTSMark_centerChart;
     public ITrace2D interpolatedTimeSeriesTrace;
     /*** Shapelet --- **/
     public ITrace2D Shapelet_mark_centerChart, Shapelet_mark_topRightChart;
-    public ITrace2D Shapelet_trace_centerChart, Shapelet_trace_topRightChart;
+    public ITrace2D Shapelet_dotTrace_centerChart, Shapelet_trace_topRightChart;
 
     public boolean initializeTS, load_Shapelet_YesOrNo, load_Timeseries_YesOrNo;
     public boolean initialize_TS_list, setting_TS_listModal;

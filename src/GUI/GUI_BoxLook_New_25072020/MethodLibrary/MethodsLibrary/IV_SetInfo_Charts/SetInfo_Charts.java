@@ -45,7 +45,7 @@ public class SetInfo_Charts extends SetInfo_Charts_abstract {
             if(this.aVariables.load_Shapelet_YesOrNo){
                 if(!this.aGUIComponents.shapeletJList.isSelectionEmpty()){
                     this.aGUIComponents.centerChartShapeletNumTextField.setText("Shapelet No.: " + this.aGUIComponents.shapeletJList.getSelectedValue().toString());
-                    this.aGUIComponents.chartII_Shapelet_TextField.setText("Shapelet No.: " + this.aGUIComponents.shapeletJList.getSelectedValue().toString());
+                    this.aGUIComponents.topRightShapeletchart_Shapelet_TextField.setText("Shapelet No.: " + this.aGUIComponents.shapeletJList.getSelectedValue().toString());
                 }
             }
         }

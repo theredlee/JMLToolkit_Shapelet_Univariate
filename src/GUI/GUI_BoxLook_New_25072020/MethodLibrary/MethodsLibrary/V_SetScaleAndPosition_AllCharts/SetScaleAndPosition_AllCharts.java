@@ -122,8 +122,8 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
         }
 
         this.aVariables.bottomChart.getAxisY().setRange(new Range(aMin, aMax*powRatio));
-        System.out.println("minMax: " + minBound + ", " + maxBound);
-        System.out.println("val: " + val);
+//        System.out.println("minMax: " + minBound + ", " + maxBound);
+//        System.out.println("val: " + val);
     }
 
     public void setSlideZoomDefaultValue(){
@@ -138,7 +138,7 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
     public void shapeletToprightChartUpdateScale() {
         if(firstCallShapelet){
             firstCallShapelet = false;
-            this.aVariables.topRightChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
+            this.aVariables.topRightShapeletChart.getAxisY().setRangePolicy( new RangePolicyFixedViewport());
         }
 
         double[] minMaxShapelet = this.aVariables.minMaxShapeletDataset;
@@ -151,7 +151,7 @@ public class SetScaleAndPosition_AllCharts extends SetScaleAndPosition_AllCharts
 
 //        System.out.println("aMin:" + minMaxShapelet[0]);
 
-        this.aVariables.topRightChart.getAxisY().setRange(new Range(aMin, aMax));
+        this.aVariables.topRightShapeletChart.getAxisY().setRange(new Range(aMin, aMax));
     }
 
     /*---------------------------------------------------------------

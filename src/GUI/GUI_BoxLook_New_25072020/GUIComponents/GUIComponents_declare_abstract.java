@@ -28,7 +28,7 @@ public abstract class GUIComponents_declare_abstract{
     public JRadioButton radiobtnStackModelOn, radiobtnStackModelOff, radiobtnSwitchDot, radiobtnSwitchLine;
     /*** initializeJTextField --**/
     public JTextField iterationTextField, alphabetSizeTextField, timeSeriesRangeMinTextField, timeSeriesRangeMaxTextField, shapeletsRangeMinTextField, shapeletsRangeMaxTextField,
-            centerChartTSLabelTextField, centerChartTSNumTextField, centerChartShapeletNumTextField, chartII_Shapelet_TextField, chartII_ShapeletLabel_TextField,
+            centerChartTSLabelTextField, centerChartTSNumTextField, centerChartShapeletNumTextField, topRightShapeletchart_Shapelet_TextField, chartII_ShapeletLabel_TextField,
             top_K_shapeletsTextField, labelShapeletTextField, datasetTextField, noPointsTextField, numOfShapeletsTextField, distanceSTTextField, distanceSTTextField_II, pcoverTextField, labelTextField;
     /*** initializeJTextArea --**/
     public JTextArea bspcoverInfoTextArea, textAreaInOnChart_I;
@@ -39,8 +39,8 @@ public abstract class GUIComponents_declare_abstract{
     /*** initializeJScrollPane --**/
     public JScrollPane TS_labelScrollPane, labelScrollPane, timeSeriesScrollPane, shapeLetScrollPane, labelListScrollPane, bspcoverInfoScrollPane;
     /*** initializeJPanel --**/
-    public JPanel centerChartPanel, topRightPanel, bottomChartPanel, distanceHistPanel, weightHistPanel, DOMInfoPanel;
+    public JPanel centerChartPanel, topRightShapeletPanel, topRightTimeseriesPanel, bottomChartPanel, distanceHistPanel, weightHistPanel, DOMInfoPanel;
     /*** initializeLayeredPane --**/
-    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo, layeredPane_multiCharts, layeredPane_toptenChartLabel, layeredPane_DOMInfo;
+    public JLayeredPane layeredPane_CenterChart, layeredPane_TopRightShapeletChart, layeredPane_TopRightTimeseriesChart, layeredPane_BottomChart, layeredPane_distanceHist, layeredPane_weightHist, layeredPane_logo, layeredPane_multiCharts, layeredPane_toptenChartLabel, layeredPane_DOMInfo;
     /*** -------------------------------------------------------**/
 }

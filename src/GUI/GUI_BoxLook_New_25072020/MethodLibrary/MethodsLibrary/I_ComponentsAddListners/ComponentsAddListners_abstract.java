@@ -81,7 +81,7 @@ public abstract class ComponentsAddListners_abstract extends ComponentsAddListne
     }
 
     protected void stackModelChange(ActionEvent e){
-        aMajorMethods_Shapelet.ShapeletCenterChartStackModelChange(e);
+        aMajorMethods_Shapelet.shapeletCenterChartStackModelChange(e);
     }
 
     protected void dotLineSwitch(ActionEvent e){

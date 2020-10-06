@@ -668,19 +668,20 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         this.aVariables.centerChart = new Chart2D();
         this.aVariables.bottomChart = new Chart2D();
+        this.aVariables.topRightTimeseriesChart = new Chart2D();
 
         /*** initialize the localTrace **/
         this.aLocalLineTrace = new Trace2DLtd(null);;
         this.aVariables.centerChart.addTrace(this.aLocalLineTrace);
 
         /***** Create trace ***/
-        this.aVariables.TSTrace = new Trace2DLtd(null);
-        this.aVariables.TSTrace.setTracePainter(new TracePainterDisc(2));
+        this.aVariables.TSDotTrace = new Trace2DLtd(null);
+        this.aVariables.TSDotTrace.setTracePainter(new TracePainterDisc(2));
 
-        this.aVariables.TSTrace.setColor(Color.BLUE);
-        this.aVariables.TSTrace.setStroke(new BasicStroke(2));
+        this.aVariables.TSDotTrace.setColor(Color.BLUE);
+        this.aVariables.TSDotTrace.setStroke(new BasicStroke(2));
 
-        this.aVariables.centerChart.addTrace(this.aVariables.TSTrace);
+        this.aVariables.centerChart.addTrace(this.aVariables.TSDotTrace);
 
         /*** **/
 
@@ -701,9 +702,11 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
         this.aGUIComponents.centerChartPanel.add(this.aVariables.centerChart);
         this.aGUIComponents.bottomChartPanel.add(this.aVariables.bottomChart);
+        this.aGUIComponents.topRightTimeseriesPanel.add(this.aVariables.topRightTimeseriesChart);
 
         this.aVariables.centerChart.setSize( this.aGUIComponents.centerChartPanel.getSize() );
         this.aVariables.bottomChart.setSize( this.aGUIComponents.bottomChartPanel.getSize() );
+        this.aVariables.topRightTimeseriesChart.setSize( this.aGUIComponents.topRightTimeseriesPanel.getSize() );
 
         this.aVariables.centerChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
         this.aVariables.centerChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1)));
@@ -714,9 +717,13 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 //        bottomChart.getAxisX().setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); /*** setRange( new Range(-1, dataset_withCurrentLabel.numFeatures+1) ); ***/
         this.aVariables.bottomChart.getAxisX().setRangePolicy( new RangePolicyFixedViewport(new Range(-1, this.aVariables.dataset_withCurrentLabel.numFeatures+1)));
 
-        this.aVariables.centerChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
+        this.aVariables.topRightTimeseriesChart.getAxisX().setAxisTitle(new IAxis.AxisTitle("Time"));
 
+        this.aVariables.centerChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
+//
         this.aVariables.bottomChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
+//
+        this.aVariables.topRightTimeseriesChart.getAxisY().setAxisTitle(new IAxis.AxisTitle("Value"));
 
         /*---------------------------------------------------------------
          ---------------------------------------------------------------*/
@@ -763,7 +770,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
      ---------------------------------------------------------------*/
     public void addGlobalTSTraceOnCenterChart(){
-        this.aVariables.centerChart.addTrace(this.aVariables.TSTrace);
+        this.aVariables.centerChart.addTrace(this.aVariables.TSDotTrace);
     }
 
     /*---------------------------------------------------------------
@@ -880,6 +887,12 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             }else{
                 TSDotHorizontallyTransferredLinePlot();
             }
+
+            if(this.aVariables.load_Shapelet_YesOrNo){
+                traceCleanTopRightTimeseriesChart();
+                TSLineTraceTopRightTimeseriesChartDraw();
+                drawShapeletTraceTopRightTimeseriesChart();
+            }
         }
         catch( Exception exc ) {
             exc.printStackTrace();
@@ -980,9 +993,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
     public void TSDotDirectlyConnectLinePlot(){
         drawTSTraceCenterChart(); // centerChart
         drawTSTraceBottomChart();
-        TSLineDraw("center chart");
-        TSLineDraw("bottom chart");
+        TSLineTraceCenterChartDraw("center chart");
+        TSLineTraceCenterChartDraw("bottom chart");
     }
+
     /*---------------------------------------------------------------
 
      **                    drawTSTrace_CenterChart()                    **
@@ -993,7 +1007,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
         try{
             setScale();
-            this.aVariables.TSTrace.removeAllPoints();
+            this.aVariables.TSDotTrace.removeAllPoints();
             //
             if( this.aVariables.TSDataInstance != null ){
                 int numPoints = this.aVariables.TSDataInstance.features.size();
@@ -1001,7 +1015,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 for(int i = 0; i < numPoints; i++) {
                     FeaturePoint p = this.aVariables.TSDataInstance.features.get(i);
                     if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE ){
-                        this.aVariables.TSTrace.addPoint(i, p.value);
+                        this.aVariables.TSDotTrace.addPoint(i, p.value);
                         /*--------------------------*/
 //                        int lblAtFirstIndexDiscard = 1;
 //                        int globalPosition = this.aVariables.globalStartPosition;
@@ -1094,12 +1108,69 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         }
     }
 
-    public void TSLineDraw(String chartChoiceStr){
+    /*---------------------------------------------------------------
+
+     **               TSLineTraceTopRightChartDraw()                **
+
+     ---------------------------------------------------------------*/
+    public void TSLineTraceTopRightTimeseriesChartDraw() { /****** Bug  ***/
+        try{
+            int startPoint = 0; /*** Best match piece's start point **/
+
+            Trace2DLtd aTSDotTrace = new Trace2DLtd(null);
+            Trace2DLtd aTSLineTrace = new Trace2DLtd("Sub-Timeseries (best match) ————————— ");
+
+            aTSDotTrace.setColor(Color.BLUE);
+            aTSDotTrace.setTracePainter(new TracePainterDisc(3));
+
+            aTSLineTrace.setColor(Color.ORANGE);
+            aTSLineTrace.setStroke(new BasicStroke(2));
+            aTSLineTrace.setTracePainter(new TracePainterLine());
+
+            this.aVariables.topRightTimeseriesChart.addTrace(aTSLineTrace);
+//            this.aVariables.topRightTimeseriesChart.addTrace(aTSDotTrace);
+
+            if( this.aVariables.TSDataInstance != null ){
+                int numPoints = this.aVariables.TSDataInstance.features.size();
+//                System.out.println("-> TSDataInstance.features.size():" + numPoints);
+                for(int i = 0; i < numPoints; i++) {
+                    FeaturePoint p = this.aVariables.TSDataInstance.features.get(i);
+                    if( p.status == FeaturePoint.PointStatus.PRESENT && p.value != GlobalValues.MISSING_VALUE ){
+                        /*--------------------------*/
+                        int lblAtFirstIndexDiscard = 1;
+                        int globalPosition = this.aVariables.globalStartPosition;
+                        int totalLength = (globalPosition+this.aVariables.currentShapelet_firstIndexIsLable.size()-lblAtFirstIndexDiscard);
+                        if(i>= globalPosition && i<totalLength){
+                            aTSLineTrace.addPoint(i, p.value);
+//                            aTSDotTrace.addPoint(i, p.value);
+                        }
+                        /*--------------------------*/
+                    }
+                }
+            }
+        }catch (NullPointerException e){
+//            // Create a Logger
+//            Logger logger
+//                    = Logger.getLogger(
+//                    MajorMethods_Timeseries.class.getName());
+//
+//            // log messages using log(Level level, String msg)
+//            logger.log(Level.WARNING, e.toString());
+            e.printStackTrace();
+        }
+    }
+
+    public void traceCleanTopRightTimeseriesChart(){
+        this.aVariables.topRightTimeseriesChart.removeAllTraces();
+    }
+
+    public void TSLineTraceCenterChartDraw(String chartChoiceStr){
         try{
             if(chartChoiceStr.equalsIgnoreCase("center chart")){
                 removeLocalTSTracePointsCenterChart();
 //                System.out.println("I am here!");
-                //
+
+                // centerChart lineTrace
                 this.aLocalLineTrace.setColor(Color.ORANGE);
                 this.aLocalLineTrace.setStroke(new BasicStroke(3));
                 this.aLocalLineTrace.setTracePainter(new TracePainterLine());
@@ -1137,7 +1208,6 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                 aTSTrace.setTracePainter(new TracePainterLine());
 
                 if(this.aVariables.TSDataInstance_bottomChart.target <= 0.0){
-//                aTSTrace.setColor(Color.DARK_GRAY);
                     aTSTrace.setColor(colorHSLAdjust("DARK", this.aVariables.bottomTSTraceCount));
                 }else{
 //                aTSTrace.setColor(Color.RED);
@@ -1211,7 +1281,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         /*** Why I decide to comment these two "RemoveAlLPoints"? ***/
         try{
 //            setScale();
-            this.aVariables.TSTrace.removeAllPoints();
+            this.aVariables.TSDotTrace.removeAllPoints();
 //            System.out.println("drawTSTrace_horizontally_CenterChart(ArrayList<Double> aTSAraylist) -> dataset_withCurrentLabel.numFeatures+10: " + (dataset_withCurrentLabel.numFeatures+10));
 
             /*
@@ -1248,7 +1318,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
                     }else{
                         oldVal=newVal;
                     }
-                    this.aVariables.TSTrace.addPoint(i, newVal);
+                    this.aVariables.TSDotTrace.addPoint(i, newVal);
                 }
             }
 
