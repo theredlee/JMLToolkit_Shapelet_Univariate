@@ -73,10 +73,13 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         String subroot_I = "/datasets/Grace_dataset/v_2/shapelet";
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/shapelet";
         String subroot_III = "/datasets/Grace_dataset/v_3/shapelet";
-        String subroot_IV = "/datasets/Grace_dataset/v_4/shapelet";
+//        String subroot_IV = "/datasets/Grace_dataset/v_4/shapelet";
         String subroot_V = "/datasets/Grace_dataset/v_5/shapelet";
+//        String subroot_VI = "/datasets/Grace_dataset/v_6/shapelet";
+        String subroot_VII = "/datasets/Grace_dataset/v_7/shapelet";
 
-        String shapletGenerationPath = this.aVariables.root + subroot_V;
+
+        String shapletGenerationPath = this.aVariables.root + subroot_VII;
         JFileChooser shapeletChooser = new JFileChooser();
 //        shapeletChooser.setCurrentDirectory(new java.io.File("/Users/leone/Documents/BSPCOVER/GitHub/tsc/JMLToolkit/experimentI"));
         shapeletChooser.setCurrentDirectory(new java.io.File(shapletGenerationPath));
@@ -409,7 +412,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //        this.aVariables.shapeletTrace_centerChart = new Trace2DLtd(null);
         this.aVariables.shapeletDotTraceCenterChart = new Trace2DLtd(null);
         this.aVariables.shapeletDotTraceCenterChart.setTracePainter(new TracePainterDisc(2));
-        this.aVariables.shapeletDotTraceCenterChart.setStroke(new BasicStroke(3));
+        this.aVariables.shapeletDotTraceCenterChart.setStroke(new BasicStroke(2));
         this.aVariables.shapeletDotTraceCenterChart.setColor(new Color(255, 77, 132));
         this.aVariables.centerChart.addTrace(this.aVariables.shapeletDotTraceCenterChart);
     }
@@ -798,47 +801,6 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
 //                this.aVariables.shapeletLineTraceTopRightChart.addPoint(i, this.aVariables.currentShapelet_firstIndexIsLable.get(i));
             }
         }
-
-        try{
-            Trace2DLtd aShapeletDotTrace = new Trace2DLtd(null);
-            Trace2DLtd aShapeletLineTrace = new Trace2DLtd("Shapelet ————————— ");
-
-            aShapeletDotTrace.setTracePainter(new TracePainterDisc(3));
-
-            aShapeletLineTrace.setStroke(new BasicStroke(2));
-            aShapeletLineTrace.setTracePainter(new TracePainterLine());
-
-            this.aVariables.topRightTimeseriesChart.addTrace(aShapeletLineTrace);
-//            this.aVariables.topRightTimeseriesChart.addTrace(aShapeletDotTrace);
-
-            if(this.aVariables.currentShapelet_firstIndexIsLable != null){
-                int labelIndex = 0;
-                if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
-//                    aShapeletDotTrace.setColor(new Color(255, 77, 132));
-                    aShapeletLineTrace.setColor(new Color(51, 153, 255));
-                }else{
-//                    aShapeletDotTrace.setColor(new Color(51, 153, 255));
-                    aShapeletLineTrace.setColor(new Color(255, 51, 153));
-                }
-                double distanceBetweenST = getShortestDistance();
-                int startPosition = this.aVariables.globalStartPosition;
-                int lblAtFirstIndexDiscard = 1;
-                for(int i = 0; i<this.aVariables.currentShapelet_firstIndexIsLable.size()-lblAtFirstIndexDiscard; i++){ //The original shapelet array list did not discarded the label in the first index,
-                    // therefore we need to a label index discard at first
-                    aShapeletLineTrace.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i+lblAtFirstIndexDiscard));
-//                    aShapeletDotTrace.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i+lblAtFirstIndexDiscard));
-                }
-            }
-        }catch (NullPointerException e){
-//            // Create a Logger
-//            Logger logger
-//                    = Logger.getLogger(
-//                    MajorMethods_Timeseries.class.getName());
-//
-//            // log messages using log(Level level, String msg)
-//            logger.log(Level.WARNING, e.toString());
-            e.printStackTrace();
-        }
     }
 
     /*---------------------------------------------------------------
@@ -851,21 +813,22 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
             Trace2DLtd aShapeletDotTrace = new Trace2DLtd(null);
             Trace2DLtd aShapeletLineTrace = new Trace2DLtd("Shapelet ————————— ");
 
-            aShapeletDotTrace.setTracePainter(new TracePainterDisc(3));
+            aShapeletDotTrace.setTracePainter(new TracePainterDisc(2));
+            aShapeletDotTrace.setStroke(new BasicStroke(3));
 
             aShapeletLineTrace.setStroke(new BasicStroke(2));
             aShapeletLineTrace.setTracePainter(new TracePainterLine());
 
             this.aVariables.topRightTimeseriesChart.addTrace(aShapeletLineTrace);
-//            this.aVariables.topRightTimeseriesChart.addTrace(aShapeletDotTrace);
+            this.aVariables.topRightTimeseriesChart.addTrace(aShapeletDotTrace);
 
             if(this.aVariables.currentShapelet_firstIndexIsLable != null){
                 int labelIndex = 0;
                 if(this.aVariables.currentShapelet_firstIndexIsLable.get(labelIndex).intValue()==0){ //label 0
-//                    aShapeletDotTrace.setColor(new Color(255, 77, 132));
+                    aShapeletDotTrace.setColor(new Color(255, 77, 132));
                     aShapeletLineTrace.setColor(new Color(51, 153, 255));
                 }else{
-//                    aShapeletDotTrace.setColor(new Color(51, 153, 255));
+                    aShapeletDotTrace.setColor(new Color(51, 153, 255));
                     aShapeletLineTrace.setColor(new Color(255, 51, 153));
                 }
                 double distanceBetweenST = getShortestDistance();
@@ -875,6 +838,12 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                     // therefore we need to a label index discard at first
                     aShapeletLineTrace.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i+lblAtFirstIndexDiscard));
 //                    aShapeletDotTrace.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i+lblAtFirstIndexDiscard));
+                }
+
+                for(int i = 0; i<this.aVariables.currentShapelet_firstIndexIsLable.size()-lblAtFirstIndexDiscard; i++){ //The original shapelet array list did not discarded the label in the first index,
+                    // therefore we need to a label index discard at first
+//                    aShapeletLineTrace.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i+lblAtFirstIndexDiscard));
+                    aShapeletDotTrace.addPoint((startPosition+i), this.aVariables.currentShapelet_firstIndexIsLable.get(i+lblAtFirstIndexDiscard));
                 }
             }
         }catch (NullPointerException e){

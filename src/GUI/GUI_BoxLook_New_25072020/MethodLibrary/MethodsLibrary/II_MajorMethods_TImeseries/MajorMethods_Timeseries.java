@@ -58,11 +58,13 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         String subroot_I = "/datasets/Grace_dataset/v_2/Grace_MEAN";
         String subroot_II = "/datasets/ItalyPowerDemand_dataset/v_1/ItalyPowerDemand";
         String subroot_III = "/datasets/Grace_dataset/v_3/Grace_MI";
-        String subroot_IV = "/datasets/Grace_dataset/v_4/Grace_Mean_4Months_20pts";
+//        String subroot_IV = "/datasets/Grace_dataset/v_4/Grace_Mean_4Months_20pts";
         String subroot_V = "/datasets/Grace_dataset/v_5/Grace_Mean_5Months_15pts";
+//        String subroot_VI = "/datasets/Grace_dataset/v_6/Grace_Mean_4Months_20pts(log)";
+        String subroot_VII = "/datasets/Grace_dataset/v_7/Grace_Mean_5Months_15pts(log)";
 
 
-        String TSGenerationPath = this.aVariables.root + subroot_V;
+        String TSGenerationPath = this.aVariables.root + subroot_VII;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
@@ -1127,7 +1129,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
             Trace2DLtd aTSDotTrace = new Trace2DLtd(null);
             aTSDotTrace.setColor(Color.BLUE);
-            aTSDotTrace.setTracePainter(new TracePainterDisc(3));
+            aTSDotTrace.setTracePainter(new TracePainterDisc(2));
+            aTSDotTrace.setStroke(new BasicStroke(2));
 
             this.aVariables.topRightTimeseriesChart.addTrace(aTSDotTrace);
 
