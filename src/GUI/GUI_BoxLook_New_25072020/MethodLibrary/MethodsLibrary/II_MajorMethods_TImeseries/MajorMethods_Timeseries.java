@@ -62,9 +62,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
         String subroot_V = "/datasets/Grace_dataset/v_5/Grace_Mean_5Months_15pts";
 //        String subroot_VI = "/datasets/Grace_dataset/v_6/Grace_Mean_4Months_20pts(log)";
         String subroot_VII = "/datasets/Grace_dataset/v_7/Grace_Mean_5Months_15pts(log)";
+        String subroot_VIII = "/datasets/Grace_dataset/v_8(15pts_updated)Log/Grace_Mean_5Months_15pts(Log)";
 
 
-        String TSGenerationPath = this.aVariables.root + subroot_VII;
+        String TSGenerationPath = this.aVariables.root + subroot_VIII;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
@@ -102,7 +103,7 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 
 //            System.out.println("loadDataSet() -> dataSet.numFeatures+10: " + (dataSet.numFeatures+10));
 
-//            this.aVariables.dataSet.NormalizeDatasetInstances();
+            this.aVariables.dataSet.NormalizeDatasetInstances();
 
             /*** Two choices: **/
             /*** 1. Present the line-lot-like oldest effect look. ------------> **/
@@ -458,8 +459,8 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
             testSet.LoadDataSetFile(new File(testSetPath));
 
             // normalize the data instance
-            trainSet.NormalizeDatasetInstances();
-            testSet.NormalizeDatasetInstances();
+//            trainSet.NormalizeDatasetInstances();
+//            testSet.NormalizeDatasetInstances();
 
 //                    // output normalized dataset
 //                    System.out.println("trainSet:");

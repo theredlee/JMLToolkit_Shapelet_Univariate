@@ -77,9 +77,10 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
         String subroot_V = "/datasets/Grace_dataset/v_5/shapelet";
 //        String subroot_VI = "/datasets/Grace_dataset/v_6/shapelet";
         String subroot_VII = "/datasets/Grace_dataset/v_7/shapelet";
+        String subroot_VIII = "/datasets/Grace_dataset/v_8(15pts_updated)Log/shapelet-normalized";
 
 
-        String shapletGenerationPath = this.aVariables.root + subroot_VII;
+        String shapletGenerationPath = this.aVariables.root + subroot_VIII;
         JFileChooser shapeletChooser = new JFileChooser();
 //        shapeletChooser.setCurrentDirectory(new java.io.File("/Users/leone/Documents/BSPCOVER/GitHub/tsc/JMLToolkit/experimentI"));
         shapeletChooser.setCurrentDirectory(new java.io.File(shapletGenerationPath));
@@ -149,6 +150,7 @@ public class MajorMethods_Shapelet extends MajorMethods_Shapelet_abstract {
                                     shapeletWeightString = line.split(",");
                                     this.aVariables.Shapelet_weight[i] = new ArrayList<Double>();
                                     for(int k=0; k<shapeletWeightString.length; k++){
+//                                        System.out.println("shapeletWeightString[k]: " + shapeletWeightString[k]);
                                         this.aVariables.Shapelet_weight[i].add(Double.parseDouble(shapeletWeightString[k]));
                                     }
                                     i++;
