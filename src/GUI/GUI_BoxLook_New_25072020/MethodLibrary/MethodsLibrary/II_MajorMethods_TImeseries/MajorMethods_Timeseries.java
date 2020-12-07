@@ -63,9 +63,10 @@ public class MajorMethods_Timeseries extends MajorMethods_Timeseries_abstract {
 //        String subroot_VI = "/datasets/Grace_dataset/v_6/Grace_Mean_4Months_20pts(log)";
         String subroot_VII = "/datasets/Grace_dataset/v_7/Grace_Mean_5Months_15pts(log)";
         String subroot_VIII = "/datasets/Grace_dataset/v_8(15pts_updated)Log/Grace_Mean_5Months_15pts(Log)";
+        String subroot_IX = "/datasets/Grace_dataset/v_9(ALT&AFP&Log)/Grace_ALTandAFP";
 
 
-        String TSGenerationPath = this.aVariables.root + subroot_VIII;
+        String TSGenerationPath = this.aVariables.root + subroot_IX;
         JFileChooser chooser = new JFileChooser();
 
         chooser.setCurrentDirectory(new File(TSGenerationPath));
